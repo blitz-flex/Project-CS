@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Admin
+{% endblock %}
+
+{% block main %}
+
+{% for cupon in cupon %}
+<p></p>
+<form action="/admin_cupon" method="post">
+<div class="input-group mb-3">
+    <input name="id" hidden="" value="{{ cupon.id }}">
+    <span class="input-group-text">Value</span>
+    <input type="text" class="form-control" name="value" value="{{ cupon.value }}" aria-label="Username">
+    <span class="input-group-text">Name</span>
+    <input type="text" class="form-control"  name="name" value="{{ cupon.name }}" aria-label="Server">
+    <button class="btn btn-warning" name="submit" type="submit" name="">Submit</button>
+    <button class="btn btn-danger" name="delete" type="submit" name="">Delete</button>
+  </div>
+
+
+</form>
+{% endfor %}
+
+{% endblock %}

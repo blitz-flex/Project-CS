@@ -1,0 +1,115 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block main %}
+<div id="carousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+              <div class="carousel-caption">
+          <h1>Welcome</h1>
+          <p>Some representative placeholder content for the first slide of the carousel.</p>
+          <p><a class="btn btn-lg btn-light" href="/courses">Enroll Today</a></p>
+        </div>
+      </div>
+
+      <div class="carousel-item" data-bs-interval="5000">
+        <img class="img-fluid bd-placeholder-img bd-placeholder-img-lg d-block w-100"  src="../static/images/carousel/car2.png" role="img" aria-label="Placeholder: Second slide" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#666"></rect></img>
+
+        <div class="carousel-caption">
+          <h1>Welcome</h1>
+          <p>Some representative placeholder content for the first slide of the carousel.</p>
+          <p><a class="btn btn-lg btn-light" href="/courses">Enroll Today</a></p>
+        </div>
+
+      </div>
+
+
+      <div class="carousel-item" data-bs-interval="5000">
+        <img class="img-fluid bd-placeholder-img bd-placeholder-img-lg d-block w-100" src="../static/images/carousel/car3.png" role="img" aria-label="Placeholder: Third slide" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#555"></rect></img>
+
+        <div class="carousel-caption">
+          <h1>Welcome</h1>
+          <p>Some representative placeholder content for the first slide of the carousel.</p>
+          <p><a class="btn btn-lg btn-light" href="/courses">Enroll Today</a></p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+<!-- Container -->
+
+
+{% if ids %}
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+      <p class="text-center fs-5 fw-semibold">Latest Courses</p>
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+        {% for id in ids %}
+
+        <form action="/info" method="get">
+
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="../static/images/courses/{{ id.id }}.png" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="...">
+
+            <div class="card-body">
+              <p class="card-text fw-bold">{{ id.name }}</p>
+              <p class="card-text">{{ id.text }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-outline-secondary" id="id" name="id" value="{{ id.id }}">Enroll</a>
+                </div>
+                <small class="fs-6 fw-semibold">{% if id.price == 0 %}Free{% else %}${{ id.price }}{% endif %}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+        {% endfor %}
+
+
+
+      </div>
+    </div>
+  </div>
+
+{% endif %}
+
+
+
+
+
+
+
+
+<!-- Container -->
+
+
+<div class="album bg-light">
+
+
+
+</div>
+
+
+{% endblock %}

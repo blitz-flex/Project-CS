@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block main %}
+
+{% if not session["user_id"] %}
+
+
+
+
+
+{% endif %}
+
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+        {% for id in ids %}
+
+        <form action="/info" method="get">
+
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="../static/images/courses/{{ id.id }}.png" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="...">
+
+            <div class="card-body">
+              <p class="card-text fw-bold">{{ id.name }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-outline-secondary" id="id" name="id" value="{{ id.id }}">Enroll</a>
+                </div>
+                <small class="fs-6 fw-semibold">{% if id.price == 0 %}Free{% else %}${{ id.price }}{% endif %}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+        {% endfor %}
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock %}

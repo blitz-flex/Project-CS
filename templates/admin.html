@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Admin
+{% endblock %}
+
+{% block main %}
+    
+<p class="fs-5 fw-semibold text-center">Change Cupons info:</p>
+
+
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Value</th>
+        <th scope="col">Name</th>
+      </tr>
+    </thead>
+    <tbody>
+
+        {% for cupon in cupon %}
+      <tr>
+        <th scope="row">{{ cupon.id }}</th>
+        <td>${{ cupon.value }}</td>
+        <td>{{ cupon.name }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+
+<form action="/admin_cupon" method="post">
+    <div class="mb-3 text-center">
+        <p></p>
+        <select class="form-select mx-auto w-auto" name="id">
+            <option disabled="" selected="" value="name">Select Cupon</option>
+
+            {% for cupon in cupon %}
+            <option value="{{ cupon.id }}">{{ cupon.name }}</option>
+            {% endfor %}
+            <option value="New Cupon">New Cupon</option>
+
+        </select>
+        <p></p>
+    </div>
+
+    <div class="mb-3 text-center">
+      <button class="btn btn-danger" name="change_info" type="submit">Change Info</button>
+    </div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Account
+{% endblock %}
+
+{% block main %}
+
+{% if ids %}
+
+<p></p>
+<div>
+<p class="fs-5 fw-semibold text-center">My Courses</p>
+
+
+<div class="album">
+  <div class="container">
+
+    <div class="row row-cols-1 row-cols-sm-3 row-cols-md-3 g-3">
+
+      {% for id in ids %}
+
+      <form action="/course" method="post">
+
+      <div class="col">
+        <div class="card shadow-sm">
+          <img src="../static/images/courses/{{ id.id }}.png" class="bd-placeholder-img card-img-top" width="100%" height="255" alt="...">
+
+          <div class="card-body">
+            <p class="card-text fw-bold">{{ id.name }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+              </div>
+              <small class="fs-6 fw-semibold">Enrolled</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+
+
+
+
+{% else %}
+
+
+
+
+
+<div class="album py-5">
+  <div class="container text-center">
+
+    <p class="fs-5 fw-semibold">You haven't Enrolled in any course</p>
+    <a class="fs-5 fw-semibold" href="/courses">Check our Courses!</a>
+
+
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+{% endif %}
+
+{% endblock %}

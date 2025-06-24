@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block main %}
+
+{% for id in ids %}
+
+<div id="carousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+
+
+      <div class="py-5 carousel-caption center-top">
+        <h1>{{ id.name }}</h1>
+        <p>Some representative placeholder content for the first slide of the carousel.</p>
+      </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<main class="container">
+<p></p>
+
+
+
+    <div class="row g-5">
+      <div class="col-md-8">
+
+
+        <article class="blog-post">
+          <h2 class="blog-post-title mb-1">Sample blog post</h2>
+          <hr>
+
+            <p>Lorem ipsum dolor sit amet. Et quibusdam reiciendis eos illo nobis eos unde facilis. Rem natus ducimus et enim perspiciatis eum maxime dolor. Quo libero corrupti non reiciendis sapiente eum cupiditate omnis eum provident enim in quia iusto et facilis repellendus sed vero internos. Hic enim aperiam qui unde doloribus ut dolor quibusdam est amet molestias non esse iusto.
+
+
+
+          </p>
+
+        </div>
+
+
+
+      <div class="col-md-4">
+        <div class="position-sticky" style="top: 5rem;">
+
+        {% for id in ids %}
+
+        <form action="/buy" method="post">
+
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="../static/images/courses/{{ id.id }}.png" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="...">
+
+            <div class="card-body">
+              <p class="card-text">{{ id.name }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-outline-secondary" id="id" name="id" value="{{ id.id }}">Enroll</a>
+                </div>
+                <small class="fs-6 fw-semibold">{% if id.price == 0 %}FREE{% else %}${{ id.price }}{% endif %}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+        {% endfor %}
+
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+{% endfor %}
+
+{% endblock %}
