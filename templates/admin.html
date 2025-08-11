@@ -6,7 +6,7 @@ Admin
 
 {% block main %}
     
-<p class="fs-5 fw-semibold text-center">Change Cupons info:</p>
+<p class="fs-5 fw-semibold text-center">Change Coupons info:</p>
 
 
 
@@ -34,17 +34,15 @@ Admin
 
 <form action="/admin_cupon" method="post">
     <div class="mb-3 text-center">
-        <p></p>
         <select class="form-select mx-auto w-auto" name="id">
-            <option disabled="" selected="" value="name">Select Cupon</option>
+            <option disabled selected value="">Select Coupon</option>
 
             {% for cupon in cupon %}
             <option value="{{ cupon.id }}">{{ cupon.name }}</option>
             {% endfor %}
-            <option value="New Cupon">New Cupon</option>
+            <option value="new">New Coupon</option>
 
         </select>
-        <p></p>
     </div>
 
     <div class="mb-3 text-center">

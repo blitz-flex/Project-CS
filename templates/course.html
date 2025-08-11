@@ -10,63 +10,42 @@ Home
 
 {% for id in ids %}
 
-<div id="carousel" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-
-    <img class="img-fluid bd-placeholder-img bd-placeholder-img-lg d-block w-100" src="../static/img.png" role="img" aria-label="Placeholder: First slide" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect></img>
-
-
-
-
-
-
-
-
+<div class="hero-section py-5 bg-primary text-white text-center">
+  <div class="container">
+    <h1>{{ id.name }}</h1>
+    <p>{{ id.text }}</p>
+  </div>
+</div>
 
 <main class="container">
-<p></p>
+  <div class="row g-5">
+    <div class="col-md-8">
+      <article class="blog-post">
+        <h2 class="blog-post-title mb-1">{{ id.name }}</h2>
+        <hr>
+        <p>{{ id.description }}</p>
+      </article>
+    </div>
 
-
-
-   
-
-
-
-
-      <div class="col-md-4">
-        <div class="position-sticky" style="top: 5rem;">
-
-        {% for id in ids %}
-
+    <div class="col-md-4">
+      <div class="position-sticky" style="top: 5rem;">
         <form action="/buy" method="post">
-
-        <div class="col">
           <div class="card shadow-sm">
-            <img src="../static/courses/{{ id.id }}.png" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="...">
-
+            <img src="../static/images/courses/{{ id.id }}.png" class="card-img-top" alt="{{ id.name }}">
             <div class="card-body">
-              <p class="card-text fw-bold">{{}}</p>
+              <h5 class="card-title">{{ id.name }}</h5>
               <p class="card-text">{{ id.text }}</p>
               <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button class="btn btn-sm btn-outline-secondary" id="id" name="id" value="{{ id.id }}">Enroll</a>
-                </div>
-                <small class="fs-6 fw-semibold">{{ id.price }}</small>
+                <button class="btn btn-primary" name="id" value="{{ id.id }}">Enroll</button>
+                <span class="fs-5 fw-bold">{% if id.price == 0 %}FREE{% else %}${{ id.price }}{% endif %}</span>
               </div>
             </div>
           </div>
-        </div>
-
-      </form>
-
-        {% endfor %}
-
-
-        </div>
+        </form>
       </div>
     </div>
-
-  </main>
+  </div>
+</main>
 
 {% endfor %}
 {% endif %}
