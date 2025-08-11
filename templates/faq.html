@@ -1,16 +1,154 @@
 {% extends "layout.html" %}
 
 {% block title %}
-FAQ
+    FAQ - ხშირად დასმული კითხვები
 {% endblock %}
 
 {% block main %}
+<style>
+.accordion-item {
+    border: none;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
 
-<div class="text-center">
+.accordion-button {
+    border-radius: 8px;
+    font-weight: 500;
+}
 
-<p></p>
-<p class="fs-5 fw-bold"> None till today !</p>
+.accordion-button:not(.collapsed) {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+}
 
+.accordion-body {
+    padding: 1.5rem;
+    line-height: 1.6;
+}
+</style>
+
+<div class="container py-5">
+    <h1 class="text-center mb-5">ხშირად დასმული კითხვები</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="accordion" id="faqAccordion">
+                <!-- FAQ Item 1 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading1">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                            როგორ შევიძინო კურსი?
+                        </button>
+                    </h2>
+                    <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="heading1" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            კურსის შესაძენად გადადით კურსების გვერდზე, აირჩიეთ სასურველი კურსი და დააჭირეთ "შეძენა" ღილაკს. შემდეგ მიჰყევით გადახდის ინსტრუქციებს.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading2">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                            რამდენი ხნის განმავლობაში მექნება წვდომა კურსზე?
+                        </button>
+                    </h2>
+                    <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            ფასიანი კურსების შემთხვევაში წვდომა 3 თვის ვადით იქნება შესაძლებელი. უფასო კურსებზე წვდომა შეუზღუდავია კურსის რეგისტრაციის მომენტიდან.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading3">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                            შემიძლია კურსის დაბრუნება?
+                        </button>
+                    </h2>
+                    <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            ფასიანი კურსის შეძენიდან 7 დღის განმავლობაში შეგიძლიათ მოითხოვოთ თანხის დაბრუნება. თანხის დაბრუნების მოთხოვნა შეგიძლიათ თქვენი პროფილის "შეკვეთები" განყოფილებაში. თანხის დაბრუნება შესაძლებელია მხოლოდ იმ შემთხვევაში, თუ კურსის 30%-ზე ნაკლებია გავლილი.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading4">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                            როგორ მივიღო სერტიფიკატი?
+                        </button>
+                    </h2>
+                    <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            კურსის წარმატებით დასრულების შემდეგ ავტომატურად მიიღებთ სერტიფიკატს, რომელიც ჩამოტვირთვადია თქვენი პროფილიდან. სერტიფიკატის მისაღებად საჭიროა კურსის მინიმუმ 85%-ის დასრულება.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading5">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                            რა ფორმატშია კურსის მასალები?
+                        </button>
+                    </h2>
+                    <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            კურსის მასალები მოიცავს ვიდეო ლექციებს, პრაქტიკულ სავარჯიშოებს და დამატებით რესურსებს PDF ფორმატში.   
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading6">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+                            რა განსხვავებაა ფასიან და უფასო კურსებს შორის?
+                        </button>
+                    </h2>
+                    <div id="collapse6" class="accordion-collapse collapse" aria-labelledby="heading6" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            ფასიანი კურსები მოიცავს ღრმა და დეტალურ მასალას, პირადი მენტორის მხარდაჭერას, შეუზღუდავ წვდომას და დამატებით პრაქტიკულ დავალებებს. უფასო კურსები შედარებით მოკლეა, ზოგადი მიმოხილვისა და ხელმისაწვდომია 3 თვის განმავლობაში.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 7 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading7">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
+                            შემიძლია კურსის გადახდა ნაწილ-ნაწილ?
+                        </button>
+                    </h2>
+                    <div id="collapse7" class="accordion-collapse collapse" aria-labelledby="heading7" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            კი, ვთავაზობთ გადახდის მოქნილ სისტემას. შეგიძლიათ ისარგებლოთ განვადებით ან გადაიხადოთ რამდენიმე ნაწილად. დეტალური ინფორმაციისთვის დაგვიკავშირდით.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 8 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading8">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="false" aria-controls="collapse8">
+                            როგორ მივიღო ტექნიკური დახმარება?
+                        </button>
+                    </h2>
+                    <div id="collapse8" class="accordion-collapse collapse" aria-labelledby="heading8" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            ტექნიკური პრობლემების შემთხვევაში დაგვიკავშირდით ელ-ფოსტაზე support@example.com ან ისარგებლოთ ონლაინ ჩათით სამუშაო საათებში (10:00-18:00). 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
