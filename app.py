@@ -197,6 +197,13 @@ def faq():
     return render_template("faq.html")
 
 
+# Contact
+@app.route("/contact")
+def contact():
+
+    return render_template("contact.html")
+
+
 # Courses Info
 @app.route("/info", methods=["GET", "POST"])
 def info():
