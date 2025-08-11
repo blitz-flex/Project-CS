@@ -5,8 +5,184 @@ Home
 {% endblock %}
 
 {% block main %}
+<style>
+.hero-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+.feature-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    border: none;
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.course-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    border: none;
+    height: 100%;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+}
+
+.course-image {
+    height: 200px;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-modern {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 25px;
+    padding: 12px 25px;
+    font-weight: 600;
+    transition: transform 0.3s ease;
+}
+
+.btn-modern:hover {
+    transform: translateY(-2px);
+}
+
+.stats-section {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+</style>
+
+<!-- Hero Section -->
+<section class="hero-gradient">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold text-white mb-4">
+                    მომავლის უნარები დღესვე 
+                </h1>
+                <p class="lead text-white-50 mb-4">
+                    აღმოაჩინეთ ახალი უნარები და განავითარეთ კარიერა ჩვენი ინოვაციური საგანმანათლებლო პლატფორმით.
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="/courses" class="btn btn-modern btn-lg text-white">კურსების ნახვა</a>
+                    <a href="/signup" class="btn btn-outline-light btn-lg">რეგისტრაცია</a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="bg-white bg-opacity-10 rounded-circle p-5 mx-auto" style="width: 300px; height: 300px; display: flex; align-items: center; justify-content: center;">
+                    <div class="text-center">
+                        <div style="font-size: 4rem;">🚀</div>
+                        <h4 class="text-white mt-3">ინოვაციური სწავლა</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 mb-3">
+                <div class="stat-number">100</div>
+                <p>აქტიური სტუდენტი</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stat-number">20+</div>
+                <p>ხარისხიანი კურსი</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stat-number">10+</div>
+                <p>ექსპერტი ლექტორი</p>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stat-number">95%</div>
+                <p>კმაყოფილება</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="h1 fw-bold mb-3">რატომ ჩვენი პლატფორმა?</h2>
+            <p class="lead text-muted">ჩვენ გთავაზობთ უნიკალურ საგანმანათლებლო გამოცდილებას</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">🎯</div>
+                    <h4 class="mb-3">პერსონალიზებული სწავლა</h4>
+                    <p class="text-muted">ინდივიდუალური სასწავლო გეგმები თქვენი მიზნებისთვის</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">⚡</div>
+                    <h4 class="mb-3">ინტერაქტიული კონტენტი</h4>
+                    <p class="text-muted">თანამედროვე ტექნოლოგიები და რეალური პროექტები</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">🏆</div>
+                    <h4 class="mb-3">სერტიფიკატები</h4>
+                    <p class="text-muted">მიიღეთ აღიარებული სერტიფიკატები</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 
-<div class="album bg-light">
+<!-- CTA Section -->
+<section class="hero-gradient py-5">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="display-5 fw-bold text-white mb-4">მზად ხართ დაწყებისთვის?</h2>
+                <p class="lead text-white-50 mb-4">
+                    შემოუერთდით ათასობით წარმატებულ სტუდენტს
+                </p>
+                <div class="d-flex gap-3 justify-content-center">
+                    <a href="/signup" class="btn btn-modern btn-lg text-white">დაიწყეთ უფასოდ</a>
+                    <a href="/contact" class="btn btn-outline-light btn-lg">კონტაქტი</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock %}
