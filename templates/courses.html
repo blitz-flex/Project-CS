@@ -1,49 +1,166 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Home
+    კურსები
 {% endblock %}
 
 {% block main %}
+<style>
+.course-card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
 
+.course-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
 
+.course-card:hover .price-badge {
+    opacity: 1;
+    visibility: visible;
+}
 
+.course-image {
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
 
-  <div class="album py-5 bg-light">
-    <div class="container">
+.course-card:hover .course-image {
+    transform: scale(1.05);
+}
 
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+.price-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+    z-index: 10;
+    pointer-events: none;
+}
 
-        {% for id in ids %}
+.free-badge {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
 
-        <form action="/info" method="get">
+.course-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
 
-        <div class="col">
-          <div class="card shadow-sm">
-            <img src="../static/images/courses/{{ id.id }}.png" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="...">
+.course-description {
+    color: #718096;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
 
-            <div class="card-body">
-              <p class="card-text fw-bold">{{ id.name }}</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button class="btn btn-sm btn-outline-secondary" name="id" value="{{ id.id }}">Enroll</button>
-                </div>
-                <small class="fs-6 fw-semibold">{% if id.price == 0 %}Free{% else %}${{ id.price }}{% endif %}</small>
-              </div>
-            </div>
-          </div>
-        </div>
+.enroll-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 100%;
+}
 
-      </form>
+.enroll-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    color: white;
+}
 
-        {% endfor %}
+.courses-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 4rem 0;
+    margin-bottom: 3rem;
+}
 
+.placeholder-icon {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: #a0aec0;
+}
+</style>
 
-
-      </div>
+<!-- Header -->
+<div class="courses-header">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-3">📚 ყველა კურსი</h1>
+        <p class="lead">აირჩიეთ თქვენთვის სასურველი კურსი და დაიწყეთ სწავლა</p>
     </div>
-  </div>
+</div>
 
-
+<div class="container pb-5">
+    <div class="row g-4">
+        {% for id in ids %}
+        <div class="col-lg-4 col-md-6">
+            <form action="/info" method="get">
+                <div class="course-card card h-100 position-relative">
+                    <!-- Price Badge -->
+                    <div class="price-badge {% if id.price == 0 %}free-badge{% endif %}">
+                        {% if id.price == 0 %}უფასო{% else %}{{ id.price }}₾{% endif %}
+                    </div>
+                    
+                    <!-- Course Image -->
+                    {% if id.image and id.image != '' %}
+                        <img src="/{{ id.image }}" class="course-image" alt="{{ id.name }}">
+                    {% else %}
+                        <div class="placeholder-icon">
+                            📚
+                        </div>
+                    {% endif %}
+                    
+                    <!-- Course Content -->
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="course-title">{{ id.name }}</h5>
+                        
+                        {% if id.description %}
+                            <p class="course-description">{{ id.description[:100] }}{% if id.description|length > 100 %}...{% endif %}</p>
+                        {% else %}
+                            <p class="course-description">კურსის დეტალური აღწერა მალე იქნება ხელმისაწვდომი</p>
+                        {% endif %}
+                        
+                        <div class="mt-auto">
+                            <button class="enroll-btn" name="id" value="{{ id.id }}">
+                                {% if id.price == 0 %}🎓 უფასო ჩარიცხვა{% else %}💳 ყიდვა{% endif %}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+    
+    {% if not ids %}
+    <div class="text-center py-5">
+        <div style="font-size: 4rem; color: #a0aec0; margin-bottom: 1rem;">📚</div>
+        <h3 class="text-muted">კურსები ჯერ არ არის დამატებული</h3>
+        <p class="text-muted">მალე დაემატება ახალი საინტერესო კურსები</p>
+    </div>
+    {% endif %}
+</div>
 
 {% endblock %}

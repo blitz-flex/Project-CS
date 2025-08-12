@@ -1,53 +1,116 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Admin
+Admin Dashboard
 {% endblock %}
 
 {% block main %}
-    
-<p class="fs-5 fw-semibold text-center">Change Coupons info:</p>
+<style>
+.admin-card {
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 
+.stat-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid #dee2e6;
+}
 
+.stat-number {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #495057;
+}
 
-<table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Value</th>
-        <th scope="col">Name</th>
-      </tr>
-    </thead>
-    <tbody>
+.admin-header {
+    background: #495057;
+    color: white;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+}
 
-        {% for cupon in cupon %}
-      <tr>
-        <th scope="row">{{ cupon.id }}</th>
-        <td>${{ cupon.value }}</td>
-        <td>{{ cupon.name }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+.action-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+    color: #6c757d;
+}
 
+.simple-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 1rem;
+}
+</style>
 
+<!-- Admin Header -->
+<div class="admin-header">
+    <div class="container text-center">
+        <h1 class="h2 mb-3">ადმინისტრაციის პანელი</h1>
+        <p class="mb-0">სისტემის მართვა</p>
+    </div>
+</div>
 
-<form action="/admin_cupon" method="post">
-    <div class="mb-3 text-center">
-        <select class="form-select mx-auto w-auto" name="id">
-            <option disabled selected value="">Select Coupon</option>
-
-            {% for cupon in cupon %}
-            <option value="{{ cupon.id }}">{{ cupon.name }}</option>
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 15px; border: none;">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
             {% endfor %}
-            <option value="new">New Coupon</option>
+        </div>
+    {% endif %}
+{% endwith %}
 
-        </select>
+<div class="container">
+
+
+    <!-- Main Admin Actions -->
+    <div class="row">
+        <div class="col-lg-4 mb-4">
+            <div class="admin-card p-4 text-center">
+                <div class="action-icon">📚</div>
+                <h3 class="simple-title">კურსების მართვა</h3>
+                <p class="text-muted mb-4">კურსების ნახვა და რედაქტირება</p>
+                <div class="d-grid gap-2">
+                    <a href="/admin/courses" class="btn btn-primary">კურსების ნახვა</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+            <div class="admin-card p-4 text-center">
+                <div class="action-icon">👥</div>
+                <h3 class="simple-title">მომხმარებლები</h3>
+                <p class="text-muted mb-4">მომხმარებლების მონიტორინგი</p>
+                <div class="d-grid gap-2">
+                    <a href="/admin/users" class="btn btn-primary">მომხმარებლები</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+            <div class="admin-card p-4 text-center">
+                <div class="action-icon">📊</div>
+                <h3 class="simple-title">სტატისტიკა</h3>
+                <p class="text-muted mb-4">დეტალური ანგარიშები</p>
+                <div class="d-grid gap-2">
+                    <a href="/admin/stats" class="btn btn-primary">სტატისტიკა</a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="mb-3 text-center">
-      <button class="btn btn-danger" name="change_info" type="submit">Change Info</button>
-    </div>
-</form>
+</div>
 
 {% endblock %}

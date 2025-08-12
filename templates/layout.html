@@ -36,6 +36,9 @@
                     <li><a href="/courses" class="nav-link px-2 text-dark">Courses</a></li>
                     <li><a href="/faq" class="nav-link px-2 text-dark">FAQs</a></li>
                     <li><a href="/contact" class="nav-link px-2 text-dark">Contact</a></li>
+                    {% if session.get("admin") %}
+                    <li><a href="/admin" class="nav-link px-2 text-danger fw-bold">🛠️ Admin</a></li>
+                    {% endif %}
 
                   </ul>
 
@@ -44,10 +47,12 @@
                   </form>
 
 
-                  <div class="text-end">
-
-
-
+                  <div class="text-end d-flex align-items-center gap-2">
+                    {% if session.get("admin") %}
+                      <span class="badge bg-danger">🛡️ Admin</span>
+                    {% else %}
+                      <span class="badge bg-primary">👤 User</span>
+                    {% endif %}
                     <a href="/account" class="nav-link px-2 text-dark">Account</a>
                     <a class="btn btn-danger" href="/logout" role="button">Logout</a>
                   </div>
@@ -59,6 +64,9 @@
                   <li><a href="/courses" class="nav-link px-2 text-dark">Courses</a></li>
                   <li><a href="/faq" class="nav-link px-2 text-dark">FAQs</a></li>
                   <li><a href="/contact" class="nav-link px-2 text-dark">Contact</a></li>
+                  {% if session.get("admin") %}
+                  <li><a href="/admin" class="nav-link px-2 text-danger fw-bold">🛠️ Admin</a></li>
+                  {% endif %}
                 </ul>
 
                 <form action="/search" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -77,15 +85,16 @@
           </header>
 
         <!-- Show Error Messages -->
-
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <div class="alert alert-danger mb-0 text-center" role="alert">
-          {% for message in messages %}
-          {{ message }}
-          {% endfor %}
-        </div>
-        {% endif %}
+        
+        {% with messages = get_flashed_messages (with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category or 'info' }} alert-dismissible fade show text-center mb-0" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
         {% endwith %}
 
         <!-- End -->

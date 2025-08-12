@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}მომხმარებლების მართვა{% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>👥 მომხმარებლების მართვა</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>მომხმარებელი</th>
+                            <th>სტატუსი</th>
+                            <th>მოქმედება</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if users %}
+                            {% for user in users %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>
+                                    {% if user.admin %}
+                                        <span class="badge bg-danger">ადმინი</span>
+                                    {% else %}
+                                        <span class="badge bg-success">მომხმარებელი</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-info">დეტალები</button>
+                                    {% if not user.admin %}
+                                        <button class="btn btn-sm btn-outline-danger">წაშლა</button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center py-4">
+                                    მომხმარებლები არ არის
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a href="/admin" class="btn btn-secondary">← უკან</a>
+    </div>
+</div>
+{% endblock %}

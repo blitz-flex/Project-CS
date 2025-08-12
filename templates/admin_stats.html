@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block title %}სტატისტიკა{% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+    <h2>📊 სისტემის სტატისტიკა</h2>
+
+    <!-- Main Stats -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-center bg-primary text-white">
+                <div class="card-body">
+                    <h3>{{ stats.total_users }}</h3>
+                    <p>სულ მომხმარებელი</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center bg-success text-white">
+                <div class="card-body">
+                    <h3>{{ stats.total_courses }}</h3>
+                    <p>სულ კურსი</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center bg-info text-white">
+                <div class="card-body">
+                    <h3>{{ stats.total_enrollments }}</h3>
+                    <p>სულ ჩარიცხვა</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Users -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>ბოლო მომხმარებლები</h5>
+                </div>
+                <div class="card-body">
+                    {% if stats.recent_users %}
+                        <ul class="list-group list-group-flush">
+                            {% for user in stats.recent_users %}
+                                <li class="list-group-item">{{ user.username }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted">მომხმარებლები არ არის</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Popular Courses -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>პოპულარული კურსები</h5>
+                </div>
+                <div class="card-body">
+                    {% if stats.popular_courses %}
+                        <ul class="list-group list-group-flush">
+                            {% for course in stats.popular_courses %}
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>{{ course.name }}</span>
+                                    <span class="badge bg-primary">{{ course.enrollments }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted">კურსები არ არის</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a href="/admin" class="btn btn-secondary">← უკან</a>
+    </div>
+</div>
+{% endblock %}

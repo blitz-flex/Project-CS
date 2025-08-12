@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}ახალი კურსის დამატება{% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+    <h2>📚 ახალი კურსის დამატება</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">კურსის სახელი</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="price" class="form-label">ფასი (₾)</label>
+                            <input type="number" class="form-control" id="price" name="price" min="0" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">აღწერა</label>
+                            <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="image" class="form-label">კურსის ფოტო <span class="text-danger">*</span></label>
+                            <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                            <div class="form-text">მხარდაჭერილი ფორმატები: JPG, PNG, GIF</div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">კურსის დამატება</button>
+                            <a href="/admin/courses" class="btn btn-secondary">გაუქმება</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

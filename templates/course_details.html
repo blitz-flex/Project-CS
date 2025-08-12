@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ course.name }}{% endblock %}
+
+{% block main %}
+<div class="hero-section py-5 bg-primary text-white text-center">
+  <div class="container">
+    <h1>{{ course.name }}</h1>
+    <p>{{ course.description[:150] }}...</p> <!-- მოკლე აღწერა ჰედერში -->
+  </div>
+</div>
+
+<main class="container mt-5">
+    <div class="row g-5">
+      <div class="col-md-8">
+        <article class="blog-post">
+          <h2 class="blog-post-title mb-1">{{ course.name }}</h2>
+          <hr>
+          <p>{{ course.description | safe }}</p> <!-- სრული აღწერა -->
+        </article>
+      </div>
+
+      <div class="col-md-4">
+        <div class="position-sticky" style="top: 5rem;">
+          <div class="card shadow-sm">
+            {% if course.image %}
+              <img src="{{ url_for('static', filename=course.image) }}" class="card-img-top" alt="{{ course.name }}">
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ course.name }}</h5>
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="fs-5 fw-bold">
+                  {% if course.price == 0 %}უფასო{% else %}{{ course.price }}₾{% endif %}
+                </span>
+              </div>
+              <!-- ყიდვის ფორმა -->
+              <form action="/buy" method="post">
+                <input type="hidden" name="id" value="{{ course.id }}">
+                <button type="submit" class="btn btn-primary w-100">
+                  {% if course.price == 0 %}ჩარიცხვა{% else %}ყიდვა{% endif %}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</main>
+{% endblock %}

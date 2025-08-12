@@ -30,3 +30,16 @@ def register_required(f):
             return redirect("/signup")
         return f(*args, **kwargs)
     return decorated_function
+
+def admin_required(f):
+    """
+    Decorate routes to require admin access.
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("user_id") is None:
+            return redirect("/login")
+        if not session.get("admin"):
+            return redirect("/")
+        return f(*args, **kwargs)
+    return decorated_function
