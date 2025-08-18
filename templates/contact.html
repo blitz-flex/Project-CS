@@ -117,7 +117,7 @@
                     <div class="contact-icon text-warning">📍</div>
                     <h5 class="card-title">მისამართი</h5>
                     <p class="card-text text-muted">
-                        რუსთაველის N1<br>
+                        თბილისის N1<br>
                         თბილისი <br>
                         საქართველო
                     </p>
@@ -133,21 +133,21 @@
                     <h3 class="card-title section-title mb-0">გამოგვიგზავნეთ შეტყობინება</h3>
                 </div>
                 <div class="card-body pt-4">
-                    <form>
+                    <form method="POST" action="{{ url_for('contact') }}">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="name" class="form-label">სახელი და გვარი *</label>
-                                <input type="text" class="form-control" id="name" required>
+                                <input type="text" class="form-control" id="name" name="name" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="email" class="form-label">ელ-ფოსტა *</label>
-                                <input type="email" class="form-control" id="email" required>
+                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                         </div>
                         
                         <div class="mb-3">
                             <label for="subject" class="form-label">თემა *</label>
-                            <select class="form-select" id="subject" required>
+                            <select class="form-select" id="subject" name="subject" required>
                                 <option value="">აირჩიეთ თემა</option>
                                 <option value="general">ზოგადი ინფორმაცია</option>
                                 <option value="courses">კურსების შესახებ</option>
@@ -159,7 +159,7 @@
                         
                         <div class="mb-3">
                             <label for="message" class="form-label">შეტყობინება *</label>
-                            <textarea class="form-control" id="message" rows="5" placeholder="დაწერეთ თქვენი შეტყობინება აქ..." required></textarea>
+                            <textarea class="form-control" id="message" name="message" rows="5" placeholder="დაწერეთ თქვენი შეტყობინება აქ..." required></textarea>
                         </div>
                         
                         <div class="d-grid">

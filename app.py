@@ -213,9 +213,25 @@ def faq():
 
 
 # Contact
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
-
+    if request.method == "POST":
+        name = request.form.get("name")
+        email = request.form.get("email")
+        subject = request.form.get("subject")
+        message = request.form.get("message")
+        
+        # ვალიდაცია
+        if not name or not email or not subject or not message:
+            flash("გთხოვთ შეავსოთ ყველა ველი", "error")
+            return render_template("contact.html")
+        
+        # აქ შეგიძლიათ დაამატოთ ემაილის გაგზავნის ლოგიკა
+        # ან მონაცემთა ბაზაში შენახვა
+        
+        flash("თქვენი შეტყობინება წარმატებით გაიგზავნა! ჩვენ მალე დაგიკავშირდებით.", "success")
+        return redirect(url_for("contact"))
+    
     return render_template("contact.html")
 
 
