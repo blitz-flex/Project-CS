@@ -221,13 +221,11 @@ def contact():
         subject = request.form.get("subject")
         message = request.form.get("message")
         
-        # ვალიდაცია
+        # validation
         if not name or not email or not subject or not message:
             flash("გთხოვთ შეავსოთ ყველა ველი", "error")
             return render_template("contact.html")
         
-        # აქ შეგიძლიათ დაამატოთ ემაილის გაგზავნის ლოგიკა
-        # ან მონაცემთა ბაზაში შენახვა
         
         flash("თქვენი შეტყობინება წარმატებით გაიგზავნა! ჩვენ მალე დაგიკავშირდებით.", "success")
         return redirect(url_for("contact"))
