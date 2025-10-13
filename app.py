@@ -699,3 +699,6 @@ def settings():
     else:
         name = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
         return render_template("account_settings.html", name=name)
+
+if __name__ == "__main__":
+    app.run(debug=True)
