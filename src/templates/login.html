@@ -7,7 +7,7 @@ Login
 {% block main %}
 <form action="/login" method="post" class="needs-validation" novalidate>
 
-  <img class="mb-4" src="../static/images/logo/logo2.png" alt="" width="100" height="200">
+  <img class="mb-4" src="../src/static/images/logo/logo2.png" alt="" width="100" height="200">
   <h1 class="h3 mb-3 fw-normal">Sign In</h1>
 
   {% with messages = get_flashed_messages() %}
@@ -51,6 +51,6 @@ Login
 
 </form>
 
-<script src="../static/form-validation.js"></script>
+<script src="../src/static/form-validation.js"></script>
 
 {% endblock %}

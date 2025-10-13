@@ -1,22 +1,20 @@
 import os
-import re
 
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
-from tempfile import mkdtemp
-from requests import delete, post
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 
 from helpers import login_required, register_required, admin_required
 
-# Configure application
-app = Flask(__name__)
+app = Flask(__name__,
+           template_folder='src/templates',
+           static_folder='src/static')
 
 # Configure upload folder
-UPLOAD_FOLDER = "./static/images/users"
-COURSE_UPLOAD_FOLDER = "./static/images/courses"
+UPLOAD_FOLDER = "./src/static/images/users"
+COURSE_UPLOAD_FOLDER = "./src/static/images/courses"
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
@@ -26,7 +24,7 @@ app.config["COURSE_UPLOAD_FOLDER"] = COURSE_UPLOAD_FOLDER
 @app.route('/static/images/courses/<filename>')
 def course_images(filename):
     from flask import send_from_directory
-    return send_from_directory('static/images/courses', filename)
+    return send_from_directory('src/static/images/courses', filename)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -495,7 +493,7 @@ def admin_add_course():
                     
                     file_path = os.path.join(app.config["COURSE_UPLOAD_FOLDER"], unique_filename)
                     file.save(file_path)
-                    image_path = f"static/images/courses/{unique_filename}"
+                    image_path = f"src/static/images/courses/{unique_filename}"
                     print(f"Image saved to: {image_path}")
                 except Exception as e:
                     print(f"Error saving image: {e}")
@@ -552,7 +550,7 @@ def admin_edit_course(course_id):
                 
                 file_path = os.path.join(app.config["COURSE_UPLOAD_FOLDER"], unique_filename)
                 file.save(file_path)
-                image_path = f"static/images/courses/{unique_filename}"
+                image_path = f"src/static/images/courses/{unique_filename}"
         
         if name and price is not None:
             db.execute("UPDATE courses SET name = ?, price = ?, description = ?, image = ? WHERE id = ?", 
