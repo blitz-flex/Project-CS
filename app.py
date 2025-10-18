@@ -574,6 +574,28 @@ def admin_delete_course(course_id):
     
     return redirect("/admin/courses")
 
+# Admin - Delete user
+@app.route("/admin/users/delete/<int:user_id>")
+@admin_required
+def admin_delete_user(user_id):
+    # Prevent deleting admin users
+    user = db.execute("SELECT username, admin FROM users WHERE id = ?", user_id)
+
+    if not user:
+        flash("მომხმარებელი ვერ მოიძებნა")
+        return redirect("/admin/users")
+
+    if user[0]['admin']:
+        flash("ადმინის წაშლა შეუძლებელია!")
+        return redirect("/admin/users")
+
+    # Delete user and their enrollments
+    db.execute("DELETE FROM users_courses WHERE user_id = ?", user_id)
+    db.execute("DELETE FROM users WHERE id = ?", user_id)
+    flash(f"მომხმარებელი '{user[0]['username']}' წარმატებით წაიშალა!")
+
+    return redirect("/admin/users")
+
 # Create admin user (temporary route)
 @app.route("/create_admin_user")
 def create_admin_user():
