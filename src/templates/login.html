@@ -7,12 +7,12 @@ Login
 {% block main %}
 <form action="/login" method="post" class="needs-validation" novalidate>
 
-  <img class="mb-4" src="../src/static/images/logo/logo2.png" alt="" width="100" height="200">
+  <img class="mb-4" src="{{ url_for('static', filename='images/logo/logo2.png') }}" alt="Logo" width="120" height="120" style="object-fit: contain;">
   <h1 class="h3 mb-3 fw-normal">Sign In</h1>
 
   {% with messages = get_flashed_messages() %}
   {% if messages %}
-  <div class="alert alert-danger mb-0 text-center" role="alert">
+  <div class="alert alert-danger mb-3 text-center" role="alert">
     {% for message in messages %}
     {{ message }}
     {% endfor %}
@@ -20,7 +20,7 @@ Login
   {% endif %}
   {% endwith %}
 
-  <div class="form-floating">
+  <div class="form-floating mb-2">
     <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="" required>
     <label for="username">Username</label>
     <div class="invalid-feedback">
@@ -36,18 +36,15 @@ Login
     </div>
   </div>
 
+  <button class="w-100 btn btn-lg btn-danger mt-2 mb-2" type="submit">Login</button>
 
-  <button class="w-100 btn btn-lg btn-danger" type="submit">Login</button>
+  <div class="text-center mb-4">
+    <a href="/signup"><strong>Not a member? Register!</strong></a>
+  </div>
 
-  <p></p>
-  <a href="/signup"><strong>Not a member? Register!</strong></a>
-
-
-  <p></p>
-  <ul class="nav justify-content-center">
+  <ul class="nav justify-content-center mb-3">
     <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Home</a></li>
   </ul>
-  <p class="mt-5 mb-3 text-muted">© 2024 Copyright: Designed By tech-flex</p>
 
 </form>
 

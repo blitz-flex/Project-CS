@@ -1,18 +1,18 @@
 {% extends "layout-users.html" %}
 
 {% block title %}
-Sign-up
+Sign Up
 {% endblock %}
 
 {% block main %}
 <form action="/signup" method="post" class="needs-validation" novalidate>
 
-    <img class="mb-4" src="../static/images/logo/logo2.png" alt="" width="72" height="57">
-    <h1 class="h3 mb-3 fw-normal">Register</h1>
+    <img class="mb-4" src="{{ url_for('static', filename='images/logo/logo2.png') }}" alt="Logo" width="120" height="120" style="object-fit: contain;">
+    <h1 class="h3 mb-3 fw-normal">Create Account</h1>
 
     {% with messages = get_flashed_messages() %}
     {% if messages %}
-    <div class="alert alert-danger mb-0 text-center" role="alert">
+    <div class="alert alert-danger mb-3 text-center" role="alert">
       {% for message in messages %}
       {{ message }}
       {% endfor %}
@@ -20,41 +20,41 @@ Sign-up
     {% endif %}
     {% endwith %}
 
-    <div class="form-floating">
-      <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="" required>
+    <div class="form-floating mb-2">
+      <input type="text" class="form-control" id="username" name="username" placeholder=" " value="" required>
       <label for="username">Username</label>
       <div class="invalid-feedback">
         Please provide a Username.
       </div>
     </div>
 
-    <div class="form-floating">
-      <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="" required>
+    <div class="form-floating mb-2">
+      <input type="password" class="form-control" id="password" name="password" placeholder=" " value="" required>
       <label for="password">Password</label>
       <div class="invalid-feedback">
         Please provide a password.
       </div>
     </div>
 
-    <div class="form-floating">
-        <input type="password" class="form-control" id="confirmation" name="confirmation" placeholder="Password" value="" required>
+    <div class="form-floating mb-2">
+        <input type="password" class="form-control" id="confirmation" name="confirmation" placeholder=" " value="" required>
         <label for="confirmation">Confirm Password</label>
         <div class="invalid-feedback">
           Please confirm your password.
         </div>
     </div>
 
+    <button class="w-100 btn btn-lg btn-danger mb-3" type="submit">Create Account</button>
 
-    <button class="w-100 btn btn-lg btn-danger" type="submit">Create Account</button>
+    <div class="text-center mb-4">
+      <a href="/login"><strong>Already have an account? Login!</strong></a>
+    </div>
 
-    <p><a href="/login"><strong>Already have an account? Login!</strong></a></p>
-
-    <ul class="nav justify-content-center">
+    <ul class="nav justify-content-center mb-3">
       <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Home</a></li>
     </ul>
-    <p class="mt-5 mb-3 text-muted">© 2024 Copyright: Designed By tech-flex</p>
+
 
 </form>
-
 
 {% endblock %}
