@@ -7,6 +7,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 
 from helpers import login_required, register_required, admin_required
+from models.user import User
+from models.course import Course, Promo
 
 app = Flask(__name__,
            template_folder='src/templates',
@@ -39,6 +41,11 @@ Session(app)
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///project.db")
 
+# Initialize models
+user_model = User(db)
+course_model = Course(db)
+promo_model = Promo(db)
+
 @app.after_request
 def after_request(response):
     """Ensure responses aren't cached"""
@@ -51,9 +58,8 @@ def after_request(response):
 # Main Page
 @app.route("/")
 def index():
-
-    courses = db.execute("SELECT * FROM courses ORDER BY id DESC LIMIT 3")
-    return render_template("index.html", ids = courses)
+    courses = course_model.get_latest(3)
+    return render_template("index.html", ids=courses)
 
 
 # About Page
@@ -67,18 +73,15 @@ def about():
 @app.route("/account")
 @login_required
 def account():
-
     session["cart"] = []
 
-    users_courses = db.execute("SELECT * FROM users_courses, courses WHERE courses.id = users_courses.course_id AND user_id = ?",
-         session["user_id"])
+    users_courses = course_model.get_user_courses(session["user_id"])
 
     # See if user has enroled in any course
     if len(users_courses) == 0:
-
         return render_template("account.html")
 
-    return render_template("account.html", ids = users_courses)
+    return render_template("account.html", ids=users_courses)
 
 
 
@@ -86,7 +89,6 @@ def account():
 @app.route("/buy", methods=["GET", "POST"])
 @register_required
 def buy():
-
     if "cart" not in session:
         session["cart"] = []
 
@@ -95,7 +97,6 @@ def buy():
 
     # POST
     if request.method == "POST":
-
         id = request.form.get("id")
         payment = request.form.get("email")
         print(payment)
@@ -103,22 +104,17 @@ def buy():
 
         # If buying a course
         if id:
-
-            course = db.execute("SELECT * FROM courses WHERE id = ?", id)
-            users_courses = db.execute("SELECT * FROM users_courses WHERE course_id = ? AND user_id = ?", id, session["user_id"])
+            course = course_model.get_by_id(id)
+            users_courses = course_model.is_user_enrolled(session["user_id"], id)
             price = course[0]["price"]
 
             # Enroll if it's a free course
-            if price == 0 and len(users_courses) == 0:
-
-                db.execute("INSERT INTO users_courses (user_id, course_id) VALUES (?, ?)",
-                            session["user_id"], course[0]["id"])
-
+            if price == 0 and not users_courses:
+                course_model.enroll_user(session["user_id"], course[0]["id"])
                 return redirect("/account")
 
             # Go to an alreaady owned course
-            elif len(users_courses) == 1:
-
+            elif users_courses:
                 return render_template(f"courses/{id}.html")
 
             # Else add item to the cart
@@ -127,21 +123,17 @@ def buy():
                     session["cart"].append(id)
 
         elif payment:
-
-            db.execute("INSERT INTO users_courses (user_id, course_id) VALUES (?, ?)",
-                        session["user_id"], session["cart"])
-
+            for course_id in session["cart"]:
+                course_model.enroll_user(session["user_id"], course_id)
             return redirect("/account")
 
         # If redeeming a promo code
         elif promo:
-
             promo = promo.upper()
-            check_promo = db.execute("SELECT * FROM promo WHERE name = ?", promo)
+            check_promo = promo_model.get_by_name(promo)
 
             try:
                 promo_id = check_promo[0]["id"]
-
             except IndexError:
                 return redirect("/buy")
 
@@ -152,21 +144,20 @@ def buy():
                 return redirect("/buy")
 
     # GET
-    cart = db.execute("SELECT * FROM courses WHERE id IN (?)", session["cart"])
-    cart_sum = db.execute("SELECT SUM(price) FROM courses WHERE id IN (?)", session["cart"])
+    cart = course_model.get_cart_courses(session["cart"])
+    cart_sum = course_model.get_cart_total(session["cart"])
 
-    promo = db.execute("SELECT * FROM promo WHERE id IN (?)", session["promo"])
-    promo_sum = db.execute("SELECT SUM(value) FROM promo WHERE id IN (?)", session["promo"])
+    promo = promo_model.get_by_ids(session["promo"])
+    promo_sum = promo_model.get_total_value(session["promo"])
 
-    cart_count = db.execute("SELECT COUNT(*) FROM courses WHERE id IN (?)", session["cart"])
-    count = cart_count[0]["COUNT(*)"]
+    count = course_model.get_cart_count(session["cart"])
 
     if len(promo) >= 1 and len(cart) >= 1:
-        total = cart_sum[0]["SUM(price)"] - promo_sum[0]["SUM(value)"]
+        total = cart_sum - promo_sum
         return render_template("buy.html", cart=cart, promo=promo, total=total, count=count)
 
     elif len(promo) == 0 and len(cart) >= 1:
-        total = cart_sum[0]["SUM(price)"]
+        total = cart_sum
         return render_template("buy.html", cart=cart, promo=promo, total=total, count=count)
 
     elif len(promo) == 0 and len(cart) == 0:
@@ -193,7 +184,7 @@ def courses():
 
     # Query database for all courses and return them
     try:
-        courses = db.execute("SELECT * FROM courses")
+        courses = course_model.get_all()
         print(f"Found {len(courses)} courses")
         for course in courses:
             print(f"Course: {course['name']}, Image: {course.get('image', 'No image')}")
@@ -224,7 +215,7 @@ def contact():
             flash("გთხოვთ შეავსოთ ყველა ველი", "error")
             return render_template("contact.html")
         
-        
+
         flash("თქვენი შეტყობინება წარმატებით გაიგზავნა! ჩვენ მალე დაგიკავშირდებით.", "success")
         return redirect(url_for("contact"))
     
@@ -234,30 +225,28 @@ def contact():
 # Courses Info
 @app.route("/info", methods=["GET", "POST"])
 def info():
-
     # Delete all cart information
     session["cart"] = []
 
     # Try to get course ID if exists
     try:
         id = int(request.args.get("id"))
-        course = db.execute("SELECT * FROM courses WHERE id = ?", id)
-        all_courses = db.execute("SELECT * FROM courses")
+        course = course_model.get_by_id(id)
+        all_courses = course_model.get_all()
 
         if int(id) < 0 or int(id) > len(all_courses):
             return redirect("/courses")
 
-        return render_template("info.html", ids = course)
+        return render_template("info.html", ids=course)
 
     # If it's not a valid input redirect the page
     except ValueError:
-        return redirect("/courses")
+       return redirect("/courses")
 
 
 # Login
 @app.route("/login", methods=["GET", "POST"])
 def login():
-
     # Forget any user_id
     session["user_id"] = []
     session["cart"] = []
@@ -267,7 +256,6 @@ def login():
     """Login user"""
 
     if request.method == "POST":
-
         # Ensure username was submitted
         if not request.form.get("username"):
             return render_template("login.html")
@@ -277,7 +265,7 @@ def login():
             return render_template("login.html")
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+        rows = user_model.get_by_username(request.form.get("username"))
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
@@ -340,13 +328,11 @@ def password_check(password):
 # Register user
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
-
     # Forget any user_id
     session["user_id"] = []
     session["cart"] = []
     session["admin"] = []
     session.clear()
-
 
     """Register user"""
     username = request.form.get("username")
@@ -355,7 +341,6 @@ def signup():
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-
         # Ensure username was submitted
         if not request.form.get("username"):
             return render_template("signup.html")
@@ -376,20 +361,19 @@ def signup():
         # Run password_check function
         else:
             if password_check(password):
-
                 # Query database for username
-                rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+                rows = user_model.get_by_username(request.form.get("username"))
 
                 # Check if user is allready taken
                 if len(rows) == 1:
                     flash("Username allready exists!")
                     return render_template("signup.html")
 
-                # Create new row in people table
-                db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", username, generate_password_hash(password))
+                # Create new user
+                user_model.create(username, password)
 
                 # Query database for username
-                rows = db.execute("SELECT * FROM users WHERE username = ?", request.form.get("username"))
+                rows = user_model.get_by_username(request.form.get("username"))
 
                 # Remember which user has logged in
                 session["user_id"] = rows[0]["id"]
@@ -422,9 +406,8 @@ def allowed_file(filename):
 # Search bar
 @app.route("/search")
 def search():
-
     # GET - Search query and return
-    sql = db.execute("SELECT * FROM courses WHERE name LIKE ?", "%" + request.args.get("q") + "%")
+    sql = course_model.search(request.args.get("q"))
     return render_template("search.html", ids=sql)
 
 # Admin Panel - Only for admin users
@@ -432,41 +415,45 @@ def search():
 @admin_required
 def admin():
     # Get real statistics
-    user_count = db.execute("SELECT COUNT(*) as count FROM users WHERE admin = 0")[0]["count"]
-    course_count = db.execute("SELECT COUNT(*) as count FROM courses")[0]["count"]
-    enrollment_count = db.execute("SELECT COUNT(*) as count FROM users_courses")[0]["count"]
-    
+    user_count = user_model.count_non_admin()
+    course_count = course_model.count()
+    enrollment_count = course_model.count_enrollments()
+
     return render_template("admin.html", 
                          user_count=user_count,
                          course_count=course_count, 
                          enrollment_count=enrollment_count)
 
+
 # Admin - View all courses
 @app.route("/admin/courses")
 @admin_required
 def admin_courses():
-    courses = db.execute("SELECT * FROM courses ORDER BY id DESC")
+    courses = course_model.get_all()
     return render_template("admin_courses.html", courses=courses)
+
 
 # Admin - View all users
 @app.route("/admin/users")
 @admin_required
 def admin_users():
-    users = db.execute("SELECT id, username, admin FROM users ORDER BY id DESC")
+    users = user_model.get_all()
     return render_template("admin_users.html", users=users)
+
 
 # Admin - Statistics
 @app.route("/admin/stats")
 @admin_required
 def admin_stats():
     stats = {
-        'total_users': db.execute("SELECT COUNT(*) as count FROM users WHERE admin = 0")[0]["count"],
-        'total_courses': db.execute("SELECT COUNT(*) as count FROM courses")[0]["count"],
-        'total_enrollments': db.execute("SELECT COUNT(*) as count FROM users_courses")[0]["count"],
-        'recent_users': db.execute("SELECT username FROM users WHERE admin = 0 ORDER BY id DESC LIMIT 5"),
-        'popular_courses': db.execute("SELECT c.name, COUNT(uc.user_id) as enrollments FROM courses c LEFT JOIN users_courses uc ON c.id = uc.course_id GROUP BY c.id ORDER BY enrollments DESC LIMIT 5")
+        'total_users': user_model.count_non_admin(),
+        'total_courses': course_model.count(),
+        'total_enrollments': course_model.count_enrollments(),
+        'recent_users': user_model.get_recent(5),
+        'popular_courses': course_model.get_popular(5)
     }
     return render_template("admin_stats.html", stats=stats)
+
 
 # Admin - Add new course
 @app.route("/admin/courses/new", methods=["GET", "POST"])
@@ -501,8 +488,7 @@ def admin_add_course():
         
         if name and price is not None and image_path:
             try:
-                db.execute("INSERT INTO courses (name, price, description, image) VALUES (?, ?, ?, ?)", 
-                           name, int(price), description, image_path)
+                course_model.create(name, int(price), description, image_path)
                 flash(f"კურსი '{name}' წარმატებით დაემატა!")
                 return redirect("/admin/courses")
             except Exception as e:
@@ -515,11 +501,12 @@ def admin_add_course():
     
     return render_template("admin_add_course.html")
 
+
 # Admin - Edit course
 @app.route("/admin/courses/edit/<int:course_id>", methods=["GET", "POST"])
 @admin_required
 def admin_edit_course(course_id):
-    course = db.execute("SELECT * FROM courses WHERE id = ?", course_id)
+    course = course_model.get_by_id(course_id)
     if not course:
         flash("კურსი ვერ მოიძებნა")
         return redirect("/admin/courses")
@@ -553,33 +540,33 @@ def admin_edit_course(course_id):
                 image_path = f"src/static/images/courses/{unique_filename}"
         
         if name and price is not None:
-            db.execute("UPDATE courses SET name = ?, price = ?, description = ?, image = ? WHERE id = ?", 
-                       name, int(price), description, image_path, course_id)
+            course_model.update(course_id, name, int(price), description, image_path)
             flash(f"კურსი '{name}' წარმატებით განახლდა!")
             return redirect("/admin/courses")
     
     return render_template("admin_edit_course.html", course=course[0])
 
+
 # Admin - Delete course
 @app.route("/admin/courses/delete/<int:course_id>")
 @admin_required
 def admin_delete_course(course_id):
-    course = db.execute("SELECT name FROM courses WHERE id = ?", course_id)
+    course = course_model.get_by_id(course_id)
     if course:
-        db.execute("DELETE FROM courses WHERE id = ?", course_id)
-        db.execute("DELETE FROM users_courses WHERE course_id = ?", course_id)
+        course_model.delete(course_id)
         flash(f"კურსი '{course[0]['name']}' წაიშალა!")
     else:
         flash("კურსი ვერ მოიძებნა")
     
     return redirect("/admin/courses")
 
+
 # Admin - Delete user
 @app.route("/admin/users/delete/<int:user_id>")
 @admin_required
 def admin_delete_user(user_id):
     # Prevent deleting admin users
-    user = db.execute("SELECT username, admin FROM users WHERE id = ?", user_id)
+    user = user_model.get_by_id(user_id)
 
     if not user:
         flash("მომხმარებელი ვერ მოიძებნა")
@@ -590,18 +577,18 @@ def admin_delete_user(user_id):
         return redirect("/admin/users")
 
     # Delete user and their enrollments
-    db.execute("DELETE FROM users_courses WHERE user_id = ?", user_id)
-    db.execute("DELETE FROM users WHERE id = ?", user_id)
+    user_model.delete(user_id)
     flash(f"მომხმარებელი '{user[0]['username']}' წარმატებით წაიშალა!")
 
     return redirect("/admin/users")
+
 
 # Create admin user (temporary route)
 @app.route("/create_admin_user")
 def create_admin_user():
     # Check if admin already exists
-    existing_admin = db.execute("SELECT * FROM users WHERE username = 'admin'")
-    
+    existing_admin = user_model.get_by_username("admin")
+
     if len(existing_admin) == 0:
         # Create admin user with simple password
         admin_hash = generate_password_hash("admin123")
@@ -614,45 +601,36 @@ def create_admin_user():
         db.execute("UPDATE users SET admin = 1, hash = ? WHERE username = 'admin'", admin_hash)
         return "Admin user updated! Username: admin, Password: admin123"
 
+
 # Account Settings
 @app.route("/settings", methods=["GET", "POST"])
 @login_required
 def settings():
-
     """Change account settings"""
 
     # POST
     if request.method == "POST":
-
         # Ensure the password was submitted
         if not request.form.get("password"):
             flash("Must provide password")
             return redirect("/settings")
 
-
         # Delete account
         elif request.form.get("delete") != None:
             # Query database for username
             # Ensure username exists and password is correct
-            rows = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
-
-            if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-                print(rows)
+            if not user_model.verify_password(session["user_id"], request.form.get("password")):
                 flash("Wrong Password!")
                 return redirect("/settings")
 
             # Delete account
             else:
-
-                db.execute("DELETE FROM users WHERE id = ?", session["user_id"])
-                db.execute("DELETE FROM users_courses WHERE user_id = ?", session["user_id"])
-
+                user_model.delete(session["user_id"])
                 flash("Account deleted")
                 return redirect("/logout")
 
         # Change User Image
         elif request.form.get("image"):
-
             # check if the post request has the file part
             if 'file' not in request.files:
                 flash('No file part')
@@ -666,19 +644,18 @@ def settings():
                 return redirect("/settings")
 
             if file and allowed_file(file.filename):
-
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
 
                 os.rename(os.path.join(app.config["UPLOAD_FOLDER"], filename), os.path.join(app.config["UPLOAD_FOLDER"], str(session["user_id"]) + ".png"))
 
-                db.execute("UPDATE users SET img = ? WHERE id = ?", os.path.join(app.config["UPLOAD_FOLDER"], str(session["user_id"]) + ".png"), session["user_id"])
+                image_path = os.path.join(app.config["UPLOAD_FOLDER"], str(session["user_id"]) + ".png")
+                user_model.update_image(session["user_id"], image_path)
 
                 return redirect("/settings")
 
         # Check if users wants to change password
         elif request.form.get("button_pass") != None:
-
             # Ensure new password was submitted
             if not request.form.get("password_new"):
                 flash("Must provide new password")
@@ -698,17 +675,13 @@ def settings():
             else:
                 password_new = request.form.get("password_new")
                 if password_check(password_new):
-
-                    # Query database for username
-                    rows = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
-
-                    # Ensure username exists and password is correct
-                    if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+                    # Verify current password
+                    if not user_model.verify_password(session["user_id"], request.form.get("password")):
                         flash("Wrong Password!")
                         return redirect("/settings")
 
-                    # Insert new password into database
-                    db.execute("UPDATE users SET hash = ? WHERE id = ?", generate_password_hash(password_new), session["user_id"])
+                    # Update password
+                    user_model.update_password(session["user_id"], password_new)
                     flash("Password changed!")
                     return redirect("/settings")
 
@@ -717,7 +690,7 @@ def settings():
 
     # GET
     else:
-        name = db.execute("SELECT * FROM users WHERE id = ?", session["user_id"])
+        name = user_model.get_by_id(session["user_id"])
         return render_template("account_settings.html", name=name)
 
 if __name__ == "__main__":
