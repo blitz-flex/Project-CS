@@ -30,7 +30,11 @@
                             <label for="image" class="form-label">კურსის ფოტო</label>
                             {% if course.image and course.image != '' %}
                                 <div class="mb-2">
-                                    <img src="/{{ course.image }}" alt="მიმდინარე ფოტო" class="img-thumbnail" style="max-width: 200px;" onerror="console.log('Edit form image failed: /{{ course.image }}');">
+                                    {% if course.image.startswith('http') %}
+                                        <img src="{{ course.image }}" alt="მიმდინარე ფოტო" class="img-thumbnail" style="max-width: 200px;">
+                                    {% else %}
+                                        <img src="{{ url_for('static', filename=course.image) }}" alt="მიმდინარე ფოტო" class="img-thumbnail" style="max-width: 200px;">
+                                    {% endif %}
                                     <p class="text-muted small">მიმდინარე ფოტო</p>
                                 </div>
                             {% endif %}

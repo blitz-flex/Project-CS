@@ -82,10 +82,17 @@
                                                 <div class="list-group-item">
                                                     <div class="d-flex align-items-center">
                                                         {% if course.image %}
-                                                        <img src="{{ url_for('static', filename=course.image.replace('src/static/', '')) }}"
-                                                             alt="{{ course.name }}"
-                                                             style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;"
-                                                             class="me-3">
+                                                        {% if course.image.startswith('http') %}
+                                                            <img src="{{ course.image }}"
+                                                                 alt="{{ course.name }}"
+                                                                 style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;"
+                                                                 class="me-3">
+                                                        {% else %}
+                                                            <img src="{{ url_for('static', filename=course.image) }}"
+                                                                 alt="{{ course.name }}"
+                                                                 style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;"
+                                                                 class="me-3">
+                                                        {% endif %}
                                                         {% endif %}
                                                         <div>
                                                             <h6 class="mb-1">{{ course.name }}</h6>

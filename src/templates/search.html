@@ -6,53 +6,106 @@ Search
 
 {% block main %}
 
+<style>
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
 
+.image-item {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
 
-<div class="album py-5 bg-light">
-    <div class="container">
-      <p class="fs-5 fw-semibold text-center">Search Results:</p>
+.image-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
 
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+.course-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
 
+.image-placeholder {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: #a0aec0;
+}
 
-        
-{% for id in ids %}
+.course-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    color: white;
+    padding: 20px 15px 15px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
 
-        <form action="/info" method="get">
+.image-item:hover .course-overlay {
+    transform: translateY(0);
+}
 
-        <div class="col">
-          <div class="card shadow-sm">
-            {% if id.image and id.image != '' %}
-              <img src="/{{ id.image }}" class="bd-placeholder-img card-img-top" width="100%" height="225" alt="{{ id.name }}" style="object-fit: cover;">
-            {% else %}
-              <div class="bd-placeholder-img card-img-top d-flex align-items-center justify-content-center" style="width: 100%; height: 225px; background: #f8f9fa; color: #6c757d; font-size: 3rem;">
-                📚
-              </div>
-            {% endif %}
+.course-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+</style>
 
-            <div class="card-body">
-              <p class="card-text fw-bold">{{ id.name }}</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button class="btn btn-sm btn-outline-secondary" name="id" value="{{ id.id }}">Enroll</button>
+<div class="container py-4">
+    <h3 class="text-center mb-4">🔍 ძიების შედეგები</h3>
+
+    {% if ids %}
+        <div class="image-grid">
+            {% for id in ids %}
+                <div class="image-item" onclick="window.location.href='/info?id={{ id.id }}'">
+                    {% if id.image and id.image != '' %}
+                        {% if id.image.startswith('http') %}
+                            <img src="{{ id.image }}" alt="{{ id.name }}" class="course-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        {% else %}
+                            <img src="{{ url_for('static', filename=id.image) }}" alt="{{ id.name }}" class="course-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        {% endif %}
+                        <div class="image-placeholder" style="display: none;">
+                            📚
+                        </div>
+                    {% else %}
+                        <div class="image-placeholder">
+                            📚
+                        </div>
+                    {% endif %}
+
+                    <div class="course-overlay">
+                        <p class="course-name">{{ id.name }}</p>
+                    </div>
                 </div>
-                <small class="fs-6 fw-semibold">{% if id.price == 0 %}Free{% else %}${{ id.price }}{% endif %}</small>
-              </div>
-            </div>
-          </div>
+            {% endfor %}
         </div>
-
-      </form>
-
-        {% endfor %}
-
-
-        
-    </div>
+    {% else %}
+        <div class="text-center py-5">
+            <div style="font-size: 4rem; color: #a0aec0; margin-bottom: 1rem;">🔍</div>
+            <h4 style="color: #4a5568;">შედეგები ვერ მოიძებნა</h4>
+            <p class="text-muted">სცადეთ სხვა საძიებო სიტყვები</p>
+        </div>
+    {% endif %}
 </div>
-</div>
-
-
 
 
 {% endblock %}

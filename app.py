@@ -89,6 +89,11 @@ def account():
 @app.route("/buy", methods=["GET", "POST"])
 @register_required
 def buy():
+    # Prevent admins from buying courses
+    if session.get("admin"):
+        flash("ადმინებს არ შეუძლიათ კურსების შეძენა")
+        return redirect("/admin")
+
     if "cart" not in session:
         session["cart"] = []
 
@@ -185,9 +190,22 @@ def courses():
     # Query database for all courses and return them
     try:
         courses = course_model.get_all()
+
+        # Check which courses the user has enrolled in (if logged in)
+        enrolled_course_ids = []
+        if session.get("user_id"):
+            user_courses = course_model.get_user_courses(session["user_id"])
+            enrolled_course_ids = [course['course_id'] for course in user_courses]
+
+        # Add enrollment status to each course
+        for course in courses:
+            course['is_enrolled'] = course['id'] in enrolled_course_ids
+
         print(f"Found {len(courses)} courses")
         for course in courses:
-            print(f"Course: {course['name']}, Image: {course.get('image', 'No image')}")
+            enrolled_status = "✓ Enrolled" if course.get('is_enrolled') else "Not enrolled"
+            print(f"Course: {course['name']}, Status: {enrolled_status}")
+
         return render_template("courses.html", ids=courses)
     except Exception as e:
         print(f"Error loading courses: {e}")
@@ -222,26 +240,7 @@ def contact():
     return render_template("contact.html")
 
 
-# Courses Info
-@app.route("/info", methods=["GET", "POST"])
-def info():
-    # Delete all cart information
-    session["cart"] = []
-
-    # Try to get course ID if exists
-    try:
-        id = int(request.args.get("id"))
-        course = course_model.get_by_id(id)
-        all_courses = course_model.get_all()
-
-        if int(id) < 0 or int(id) > len(all_courses):
-            return redirect("/courses")
-
-        return render_template("info.html", ids=course)
-
-    # If it's not a valid input redirect the page
-    except ValueError:
-       return redirect("/courses")
+# Courses Info - Route removed (using new course_details route instead)
 
 
 # Login
@@ -480,7 +479,8 @@ def admin_add_course():
                     
                     file_path = os.path.join(app.config["COURSE_UPLOAD_FOLDER"], unique_filename)
                     file.save(file_path)
-                    image_path = f"src/static/images/courses/{unique_filename}"
+                    # Save only relative path from static folder
+                    image_path = f"images/courses/{unique_filename}"
                     print(f"Image saved to: {image_path}")
                 except Exception as e:
                     print(f"Error saving image: {e}")
@@ -527,7 +527,7 @@ def admin_edit_course(course_id):
                         os.remove(image_path)
                     except:
                         pass
-                
+
                 filename = secure_filename(file.filename)
                 import time
                 unique_filename = f"{int(time.time())}_{filename}"
@@ -538,7 +538,7 @@ def admin_edit_course(course_id):
                 file_path = os.path.join(app.config["COURSE_UPLOAD_FOLDER"], unique_filename)
                 file.save(file_path)
                 image_path = f"src/static/images/courses/{unique_filename}"
-        
+
         if name and price is not None:
             course_model.update(course_id, name, int(price), description, image_path)
             flash(f"კურსი '{name}' წარმატებით განახლდა!")
@@ -692,6 +692,68 @@ def settings():
     else:
         name = user_model.get_by_id(session["user_id"])
         return render_template("account_settings.html", name=name)
+
+# Course Details/Info Page
+@app.route("/info")
+def info():
+    course_id = request.args.get("id")
+
+    if not course_id:
+        flash("კურსი ვერ მოიძებნა")
+        return redirect("/courses")
+
+    try:
+        course = course_model.get_by_id(course_id)
+        if not course:
+            flash("კურსი ვერ მოიძებნა")
+            return redirect("/courses")
+
+        # Get the first course from the result (since get_by_id returns a list)
+        course_data = course[0] if course else None
+
+        if not course_data:
+            flash("კურსი ვერ მოიძებნა")
+            return redirect("/courses")
+
+        return render_template("course_details.html", course=course_data)
+
+    except Exception as e:
+        print(f"Error loading course details: {e}")
+        flash("შეცდომა კურსის ჩატვირთვისას")
+        return redirect("/courses")
+
+
+# Remove course from user's account
+@app.route("/remove_course", methods=["POST"])
+@login_required
+def remove_course():
+    course_id = request.form.get("course_id")
+
+    if not course_id:
+        flash("შეცდომა: კურსი ვერ მოიძებნა")
+        return redirect("/account")
+
+    try:
+        # Check if user is enrolled in this course
+        if course_model.is_user_enrolled(session["user_id"], course_id):
+            # Remove enrollment
+            db.execute("DELETE FROM users_courses WHERE user_id = ? AND course_id = ?",
+                      session["user_id"], course_id)
+
+            # Get course name for flash message
+            course = course_model.get_by_id(course_id)
+            course_name = course[0]["name"] if course else "კურსი"
+
+            flash(f"კურსი '{course_name}' წარმატებით წაიშალა თქვენი ანგარიშიდან")
+        else:
+            flash("თქვენ არ ხართ ჩარიცხული ამ კურსში")
+
+    except Exception as e:
+        print(f"Error removing course: {e}")
+        flash("შეცდომა კურსის წაშლისას")
+
+    return redirect("/account")
+
 
 if __name__ == "__main__":
     app.run(debug=True)

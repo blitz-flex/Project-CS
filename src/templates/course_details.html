@@ -24,7 +24,11 @@
         <div class="position-sticky" style="top: 5rem;">
           <div class="card shadow-sm">
             {% if course.image %}
-              <img src="{{ url_for('static', filename=course.image) }}" class="card-img-top" alt="{{ course.name }}">
+              {% if course.image.startswith('http') %}
+                <img src="{{ course.image }}" class="card-img-top" alt="{{ course.name }}">
+              {% else %}
+                <img src="{{ url_for('static', filename=course.image) }}" class="card-img-top" alt="{{ course.name }}">
+              {% endif %}
             {% endif %}
             <div class="card-body">
               <h5 class="card-title">{{ course.name }}</h5>

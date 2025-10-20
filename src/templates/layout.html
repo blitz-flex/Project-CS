@@ -39,8 +39,7 @@
                     <li><a href="/admin" class="nav-link px-2 text-danger fw-bold">🛠️ Admin</a></li>
                   </ul>
 
-                  <div class="text-end d-flex align-items-center gap-2">
-                    <span class="admin-badge">🛡️ Admin</span>
+                  <div class="text-end">
                     <a class="btn btn-danger" href="/logout" role="button">Logout</a>
                   </div>
 
@@ -80,20 +79,7 @@
             </div>
           </header>
 
-        <!-- Show Error Messages -->
-        
-        {% with messages = get_flashed_messages (with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category or 'info' }} alert-dismissible fade show text-center mb-0" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
-
-        <!-- End -->
+        <!-- Flash messages removed -->
 
         <main>
             {% block main %}{% endblock %}

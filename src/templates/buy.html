@@ -1,248 +1,293 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends "layout.html" %}
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/checkout/">
+{% block title %}
+ყიდვა - კალათა
+{% endblock %}
 
+{% block main %}
+<style>
+.cart-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
 
-    <!-- BOOTSTRAP CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+.cart-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
 
+.cart-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
 
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
+.cart-item {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #f1f3f4;
+}
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
+.cart-item:last-child {
+    border-bottom: none;
+}
 
-      .b-example-divider {
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-      }
+.course-image {
+    width: 80px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 1rem;
+}
 
-      .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
-      }
+.course-placeholder {
+    width: 80px;
+    height: 60px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 1.5rem;
+}
 
-      .bi {
-        vertical-align: -.125em;
-        fill: currentColor;
-      }
+.course-info {
+    flex: 1;
+}
 
-      .nav-scroller {
-        position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
-      }
+.course-name {
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0;
+}
 
-      .nav-scroller .nav {
-        display: flex;
-        flex-wrap: nowrap;
-        padding-bottom: 1rem;
-        margin-top: -1px;
-        overflow-x: auto;
-        text-align: center;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
-    </style>
+.course-price {
+    font-weight: 700;
+    color: #667eea;
+    font-size: 1.1rem;
+}
 
+.total-section {
+    background: #f8f9fa;
+    padding: 2rem;
+    text-align: center;
+}
 
-    <!-- Custom styles for this template -->
-    <link href="../src/static/form-validation.css" rel="stylesheet">
-  </head>
-  <body class="bg-light">
+.total-price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 1rem;
+}
 
-<div class="container">
-  <main>
-    <div class="py-5 text-center">
-      <img class="d-block mx-auto mb-4" src="../static/images/logo/logo2.png" alt="" width="72" height="57">
-      <h2>Checkout form</h2>
-    </div>
+.checkout-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    min-width: 200px;
+}
 
-    <div class="row g-5">
-      <div class="col-md-5 col-lg-4 order-md-last">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
-          <span class="text-primary">Your cart</span>
-          <span class="badge bg-primary rounded-pill">{% if count %}{{ count }}{% else %}0{% endif %}</span>
-        </h4>
-        <ul class="list-group mb-3">
+.checkout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    color: white;
+}
 
-          {% for cart in cart %}
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">{{ cart.name }}</h6>
-              <small class="text-muted">Brief description</small>
-            </div>
-            <span class="text-muted">${{ cart.price }}</span>
-          </li>
-          {% endfor %}
+.empty-cart {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #718096;
+}
 
-          {% for promo in promo %}
-          <li class="list-group-item d-flex justify-content-between bg-light">
-            <div class="text-success">
-              <h6 class="my-0">Promo code</h6>
-              <h6 class="my-0">{{ promo.name }}</h6>
-            </div>
-            <span class="text-muted">-${{ promo.value }}</span>
-          </li>
-          {% endfor %}
+.empty-cart i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
 
-          {% if total %}
-          <li class="list-group-item d-flex justify-content-between">
-            <span>Total (USD)</span>
-            <strong>${{ total }}</strong>
-          </li>
-          {% else %}
-          <li class="list-group-item d-flex justify-content-between">
-            <span>Total (USD)</span>
-            <strong>$0</strong>
-          </li>
-          {% endif %}
+.promo-section {
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-top: 1px solid #e2e8f0;
+}
 
-        </ul>
+.promo-form {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 300px;
+    margin: 0 auto;
+}
 
-        <form class="card p-2" action="/buy" method="post">
-          <div class="input-group">
-            <input type="text" class="form-control" id="promo" name="promo" placeholder="Promo code">
-            <button name="promo" type="submit" class="btn btn-secondary">Redeem</button>
-          </div>
-        </form>
-      </div>
+.promo-input {
+    flex: 1;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+}
 
+.promo-btn {
+    background: #48bb78;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
 
-      <div class="col-md-7 col-lg-8">
-        <h4 class="mb-3">Billing address</h4>
-        <form action="/buy" method="post" class="needs-validation" novalidate>
-          <div class="row g-3">
-            <div class="col-sm-6">
-              <label for="firstName" class="form-label">First name</label>
-              <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
-              <div class="invalid-feedback">
-                Valid first name is required.
-              </div>
-            </div>
+.promo-btn:hover {
+    background: #38a169;
+}
+</style>
 
-            <div class="col-sm-6">
-              <label for="lastName" class="form-label">Last name</label>
-              <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
-              <div class="invalid-feedback">
-                Valid last name is required.
-              </div>
-            </div>
-
-
-            <div class="col-12">
-              <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com">
-              <div class="invalid-feedback">
-                Please enter a valid email address for shipping updates.
-              </div>
-            </div>
-
-
-            <div class="col-md-5">
-              <label for="country" class="form-label">Country</label>
-              <select class="form-select" id="country" required>
-                <option value="">Choose...</option>
-                <option>United States</option>
-                <option>United Kingdom</option>
-              </select>
-              <div class="invalid-feedback">
-                Please select a valid country.
-              </div>
+<div class="cart-container">
+    {% if cart and cart|length > 0 %}
+        <div class="cart-card">
+            <!-- Header -->
+            <div class="cart-header">
+                <h2>🛒 თქვენი კალათა</h2>
+                <p class="mb-0">{{ count if count else 0 }} კურსი</p>
             </div>
 
-            <div class="col-md-4">
-              <label for="state" class="form-label">State</label>
-              <select class="form-select" id="state" required>
-                <option value="">Choose...</option>
-                <option>California</option>
-                <option>Chicago</option>
-                <option>New York</option>
-              </select>
-              <div class="invalid-feedback">
-                Please provide a valid state.
-              </div>
+            <!-- Cart Items -->
+            <div class="cart-items">
+                {% for item in cart %}
+                <div class="cart-item">
+                    {% if item.image and item.image != '' %}
+                        {% if item.image.startswith('http') %}
+                            <img src="{{ item.image }}" alt="{{ item.name }}" class="course-image">
+                        {% else %}
+                            <img src="{{ url_for('static', filename=item.image) }}" alt="{{ item.name }}" class="course-image">
+                        {% endif %}
+                    {% else %}
+                        <div class="course-placeholder">
+                            📚
+                        </div>
+                    {% endif %}
+
+                    <div class="course-info">
+                        <h5 class="course-name">{{ item.name }}</h5>
+                        <p class="text-muted mb-0">{{ item.description[:80] if item.description else 'კურსის აღწერა' }}...</p>
+                    </div>
+
+                    <div class="course-price">
+                        {% if item.price == 0 %}უფასო{% else %}{{ item.price }}₾{% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <!-- Promo codes if any -->
+                {% if promo and promo|length > 0 %}
+                    {% for promo_item in promo %}
+                    <div class="cart-item" style="background: #f0fff4;">
+                        <div class="course-placeholder" style="background: #48bb78; color: white;">
+                            🎁
+                        </div>
+                        <div class="course-info">
+                            <h5 class="course-name" style="color: #48bb78;">{{ promo_item.name }}</h5>
+                            <p class="text-muted mb-0">პრომო კოდი</p>
+                        </div>
+                        <div class="course-price" style="color: #48bb78;">
+                            -{{ promo_item.value }}₾
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
             </div>
 
-            <div class="col-md-3">
-              <label for="zip" class="form-label">Zip</label>
-              <input type="text" class="form-control" id="zip" placeholder="" required>
-              <div class="invalid-feedback">
-                Zip code required.
-              </div>
+            <!-- Promo Code Section -->
+            <div class="promo-section">
+                <form action="/buy" method="post" class="promo-form">
+                    <input type="text" name="promo" placeholder="პრომო კოდი" class="promo-input">
+                    <button type="submit" class="promo-btn">გამოყენება</button>
+                </form>
             </div>
-          </div>
 
-          <hr class="my-4">
+            <!-- Total Section -->
+            <div class="total-section">
+                <div class="total-price">
+                    სულ: {% if total is defined %}{{ total }}₾{% else %}0₾{% endif %}
+                </div>
 
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="same-address">
-            <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
-          </div>
+                <form action="/buy" method="post" style="max-width: 400px; margin: 0 auto;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
+                        <input type="text" name="firstName" placeholder="სახელი"
+                               style="padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px;" required>
+                        <input type="text" name="lastName" placeholder="გვარი"
+                               style="padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px;" required>
+                    </div>
 
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="save-info">
-            <label class="form-check-label" for="save-info">Save this information for next time</label>
-          </div>
+                    <input type="email" name="email" placeholder="ელ-ფოსტა"
+                           style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px; margin-bottom: 1rem;" required>
 
+                    <input type="text" name="address" placeholder="მისამართი"
+                           style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px; margin-bottom: 1rem;" required>
 
-          {% if total == 0 %}
-          {% else %}
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 0.75rem; margin-bottom: 1.5rem;">
+                        <input type="text" name="city" placeholder="ქალაქი"
+                               style="padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px;" required>
+                        <input type="text" name="postalCode" placeholder="ინდექსი"
+                               style="padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px;" required>
+                    </div>
 
-          <hr class="my-4">
+                    <!-- ბარათის მონაცემები -->
+                    <div style="border-top: 2px solid #e2e8f0; padding-top: 1.5rem; margin-bottom: 1.5rem;">
+                        <h6 style="color: #4a5568; margin-bottom: 1rem; font-weight: 600;">💳 ბარათის მონაცემები</h6>
 
-          <h4 class="mb-3">Payment</h4>
+                        <input type="text" name="cardName" placeholder="ბარათის მფლობელის სახელი"
+                               style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px; margin-bottom: 1rem;" required>
 
-          <div class="my-3">
+                        <input type="text" name="cardNumber" placeholder="ბარათის ნომერი (1234 5678 9012 3456)"
+                               style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px; margin-bottom: 1rem;"
+                               maxlength="19" pattern="[0-9\s]{13,19}" required>
 
-            <div class="form-check">
-              <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
-              <label class="form-check-label" for="paypal">PayPal</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <input type="text" name="cardExpiry" placeholder="MM/YY"
+                                   style="padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px;"
+                                   maxlength="5" pattern="[0-9]{2}/[0-9]{2}" required>
+                            <input type="text" name="cardCVV" placeholder="CVV"
+                                   style="padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px;"
+                                   maxlength="4" pattern="[0-9]{3,4}" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="checkout-btn">
+                        💳 ყიდვა
+                    </button>
+                </form>
+
+                <div class="mt-3">
+                    <a href="/courses" class="text-muted" style="text-decoration: none;">← კურსებზე დაბრუნება</a>
+                </div>
             </div>
-          </div>
+        </div>
 
-          <div class="row gy-3">
-
-          </div>
-
-
-          {% endif %}
-
-
-          <hr class="my-4">
-
-          <button id="payment" name="payment" class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
-        </form>
-      </div>
-    </div>
-  </main>
-
-  <footer class="my-5 pt-5 text-muted text-center text-small">
-    <p class="mb-1">&copy; 2024 Copyright: Designed By tech-flex</p>
-
-  </footer>
+    {% else %}
+        <!-- Empty Cart -->
+        <div class="cart-card">
+            <div class="empty-cart">
+                <div style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.5;">🛒</div>
+                <h3 style="color: #4a5568; margin-bottom: 1rem;">თქვენი კალათა ცარიელია</h3>
+                <p style="margin-bottom: 2rem;">დაამატეთ კურსები კალათაში ყიდვის დასაწყებად</p>
+                <a href="/courses" class="checkout-btn" style="text-decoration: none;">
+                    📚 კურსების ნახვა
+                </a>
+            </div>
+        </div>
+    {% endif %}
 </div>
 
-<!-- BOOTSTRAP JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-</body>
-</html>
+{% endblock %}
+

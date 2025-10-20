@@ -53,6 +53,34 @@
     background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
 }
 
+.enrolled-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    box-shadow: 0 2px 10px rgba(72, 187, 120, 0.3);
+    z-index: 10;
+}
+
+.enrolled-price {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    opacity: 0.9;
+}
+
+.course-card.enrolled {
+    border: 2px solid #48bb78;
+    box-shadow: 0 4px 20px rgba(72, 187, 120, 0.15);
+}
+
+.course-card.enrolled:hover {
+    box-shadow: 0 8px 30px rgba(72, 187, 120, 0.25);
+}
+
 .course-title {
     font-size: 1.1rem;
     font-weight: 700;
@@ -82,6 +110,16 @@
 .enroll-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    color: white;
+}
+
+.enrolled-btn {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+}
+
+.enrolled-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(72, 187, 120, 0.4);
     color: white;
 }
 
@@ -179,14 +217,33 @@
         <div class="col-lg-4 col-md-6">
             <form action="/info" method="get">
                 <div class="course-card card h-100 position-relative">
-                    <!-- Price Badge -->
+                    <!-- Enrolled Badge -->
+                    {% if id.is_enrolled %}
+                    <div class="enrolled-badge">
+                        ✓ შეძენილია
+                    </div>
+                    {% endif %}
+
+                    <!-- Price Badge - Only show for non-enrolled courses -->
+                    {% if not id.is_enrolled %}
                     <div class="price-badge {% if id.price == 0 %}free-badge{% endif %}">
                         {% if id.price == 0 %}უფასო{% else %}{{ id.price }}₾{% endif %}
                     </div>
-                    
+                    {% endif %}
+
                     <!-- Course Image -->
                     {% if id.image and id.image != '' %}
-                        <img src="/{{ id.image }}" class="course-image" alt="{{ id.name }}">
+                        {% if id.image.startswith('http') %}
+                            <img src="{{ id.image }}" class="course-image" alt="{{ id.name }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="placeholder-icon" style="display: none;">
+                                📚
+                            </div>
+                        {% else %}
+                            <img src="{{ url_for('static', filename=id.image) }}" class="course-image" alt="{{ id.name }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="placeholder-icon" style="display: none;">
+                                📚
+                            </div>
+                        {% endif %}
                     {% else %}
                         <div class="placeholder-icon">
                             📚
@@ -204,9 +261,19 @@
                         {% endif %}
                         
                         <div class="mt-auto">
-                            <button class="enroll-btn" name="id" value="{{ id.id }}">
-                                {% if id.price == 0 %}🎓 უფასო ჩარიცხვა{% else %}💳 ყიდვა{% endif %}
-                            </button>
+                            {% if session.admin %}
+                                <a href="/info?id={{ id.id }}" class="enroll-btn" style="text-decoration: none; background: linear-gradient(135deg, #718096 0%, #4a5568 100%);">
+                                    ნახვა
+                                </a>
+                            {% elif id.is_enrolled %}
+                                <a href="/info?id={{ id.id }}" class="enroll-btn enrolled-btn" style="text-decoration: none;">
+                                    📖 კურსის ნახვა
+                                </a>
+                            {% else %}
+                                <button class="enroll-btn" name="id" value="{{ id.id }}">
+                                    {% if id.price == 0 %}🎓 უფასო ჩარიცხვა{% else %}💳 ყიდვა{% endif %}
+                                </button>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
