@@ -53,7 +53,6 @@
                   </ul>
 
                   <div class="text-end d-flex align-items-center gap-2">
-                    <span class="user-badge">👤 User</span>
                     <a href="/account" class="nav-link px-2 text-dark">Account</a>
                     <a class="btn btn-danger" href="/logout" role="button">Logout</a>
                   </div>
@@ -79,7 +78,7 @@
             </div>
           </header>
 
-        <!-- Flash messages removed -->
+
 
         <main>
             {% block main %}{% endblock %}
@@ -161,19 +160,7 @@
             border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
-        .user-badge {
-            background: linear-gradient(135deg, rgba(81, 83, 90, 0.77));
-            color: #e5e8ec;
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
+
 
 
         .hover-opacity-100:hover {
