@@ -15,22 +15,24 @@
                 <table class="table table-hover">
                     <thead class="table-dark">
                         <tr>
-                            <th>ID</th>
                             <th>ფოტო</th>
                             <th>სახელი</th>
                             <th>ფასი</th>
                             <th>აღწერა</th>
-                            <th>მოქმედება</th>
+                            <th class="text-center">მოქმედება</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% if courses %}
                             {% for course in courses %}
                             <tr>
-                                <td>{{ course.id }}</td>
                                 <td>
                                     {% if course.image and course.image != '' %}
-                                        <img src="/{{ course.image }}" alt="{{ course.name }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;" onerror="console.log('Image failed to load: /{{ course.image }}'); this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        {% if course.image.startswith('http') %}
+                                            <img src="{{ course.image }}" alt="{{ course.name }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        {% else %}
+                                            <img src="{{ url_for('static', filename=course.image) }}" alt="{{ course.name }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        {% endif %}
                                         <div style="width: 60px; height: 60px; background: #f8f9fa; border-radius: 8px; display: none; align-items: center; justify-content: center; color: #6c757d;">
                                             📚
                                         </div>
@@ -43,8 +45,8 @@
                                 <td><strong>{{ course.name }}</strong></td>
                                 <td>{{ course.price }}₾</td>
                                 <td><small class="text-muted">{{ course.description[:50] if course.description else '' }}{% if course.description and course.description|length > 50 %}...{% endif %}</small></td>
-                                <td>
-                                    <a href="/admin/courses/edit/{{ course.id }}" class="btn btn-sm btn-outline-primary">რედაქტირება</a>
+                                <td class="text-center">
+                                    <a href="/admin/courses/edit/{{ course.id }}" class="btn btn-sm btn-outline-primary me-1">რედაქტირება</a>
                                     <a href="/admin/courses/delete/{{ course.id }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('დარწმუნებული ხართ?')">წაშლა</a>
                                 </td>
                             </tr>
