@@ -14,102 +14,69 @@
                 <table class="table table-hover">
                     <thead class="table-dark">
                         <tr>
-                            <th>ID</th>
                             <th>მომხმარებელი</th>
                             <th>სტატუსი</th>
-                            <th>ჩარიცხვები</th>
-                            <th>მოქმედება</th>
+                            <th>ჩარიცხული კურსები</th>
+                            <th class="text-center">მოქმედება</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% if users %}
                             {% for user in users %}
                             <tr>
-                                <td>{{ user.id }}</td>
                                 <td><strong>{{ user.username }}</strong></td>
-                                <td>
+                                <td class="align-middle">
                                     {% if user.admin %}
-                                        <span class="badge bg-danger">ადმინი</span>
+                                        <span class="badge bg-danger me-1">🛡️ ადმინი</span>
                                     {% else %}
-                                        <span class="badge bg-success">მომხმარებელი</span>
+                                        <span class="badge bg-success me-1">👤 მომხმარებელი</span>
                                     {% endif %}
                                 </td>
-                                <td>
-                                    <span class="badge bg-info">{{ user.enrollments }} კურსი</span>
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#userModal{{ user.id }}">
-                                        <i class="fas fa-eye"></i> დეტალები
-                                    </button>
-                                    {% if not user.admin %}
-                                        <a href="/admin/users/delete/{{ user.id }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('დარწმუნებული ხართ, რომ გსურთ {{ user.username }}-ის წაშლა?')">
-                                            <i class="fas fa-trash"></i> წაშლა
-                                        </a>
+                                <td class="align-middle">
+                                    {% if user.enrollments and user.enrollments > 0 %}
+                                        <span class="badge bg-info me-1">📚 {{ user.enrollments }} კურსი</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary me-1">📚 0 კურსი</span>
                                     {% endif %}
+                                </td>
+                                <td class="text-center align-middle">
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#userModal{{ user.id }}">
+                                            დეტალები
+                                        </button>
+                                        {% if not user.admin %}
+                                            <a href="/admin/users/delete/{{ user.id }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('დარწმუნებული ხართ, რომ გსურთ {{ user.username }}-ის წაშლა?')">
+                                                წაშლა
+                                            </a>
+                                        {% endif %}
+                                    </div>
                                 </td>
                             </tr>
 
-                            <!-- User Details Modal -->
+                            <!-- User Details Modal - Minimalist -->
                             <div class="modal fade" id="userModal{{ user.id }}" tabindex="-1">
-                                <div class="modal-dialog modal-lg">
+                                <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">👤 {{ user.username }} - დეტალები</h5>
+                                        <div class="modal-header border-0 pb-1">
+                                            <h5 class="modal-title">{{ user.username }}</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                         </div>
-                                        <div class="modal-body">
-                                            <div class="row mb-3">
-                                                <div class="col-md-6">
-                                                    <p><strong>ID:</strong> {{ user.id }}</p>
-                                                    <p><strong>მომხმარებელი:</strong> {{ user.username }}</p>
-                                                    <p><strong>სტატუსი:</strong>
-                                                        {% if user.admin %}
-                                                            <span class="badge bg-danger">ადმინი</span>
-                                                        {% else %}
-                                                            <span class="badge bg-success">მომხმარებელი</span>
-                                                        {% endif %}
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p><strong>ჩარიცხული კურსები:</strong> {{ user.enrollments }}</p>
-                                                </div>
+                                        <div class="modal-body pt-2">
+                                            <div class="text-center mb-3">
+                                                {% if user.admin %}
+                                                    <span class="badge bg-danger fs-6 px-3 py-2">🛡️ ადმინი</span>
+                                                {% else %}
+                                                    <span class="badge bg-success fs-6 px-3 py-2">👤 მომხმარებელი</span>
+                                                {% endif %}
                                             </div>
 
-                                            {% if user.courses %}
-                                            <h6 class="mt-4 mb-3">📚 ჩარიცხული კურსები:</h6>
-                                            <div class="list-group">
-                                                {% for course in user.courses %}
-                                                <div class="list-group-item">
-                                                    <div class="d-flex align-items-center">
-                                                        {% if course.image %}
-                                                        {% if course.image.startswith('http') %}
-                                                            <img src="{{ course.image }}"
-                                                                 alt="{{ course.name }}"
-                                                                 style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;"
-                                                                 class="me-3">
-                                                        {% else %}
-                                                            <img src="{{ url_for('static', filename=course.image) }}"
-                                                                 alt="{{ course.name }}"
-                                                                 style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;"
-                                                                 class="me-3">
-                                                        {% endif %}
-                                                        {% endif %}
-                                                        <div>
-                                                            <h6 class="mb-1">{{ course.name }}</h6>
-                                                            <small class="text-muted">{{ course.price }}₾</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {% endfor %}
+                                            <div class="text-center">
+                                                <h6 class="text-muted mb-1">ჩარიცხული კურსები</h6>
+                                                <h3 class="mb-0">{{ user.enrollments }}</h3>
                                             </div>
-                                            {% else %}
-                                            <div class="alert alert-info mt-3">
-                                                <i class="fas fa-info-circle"></i> მომხმარებელს ჯერ არ აქვს ჩარიცხული კურსები
-                                            </div>
-                                            {% endif %}
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">დახურვა</button>
+                                        <div class="modal-footer border-0 pt-1">
+                                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">დახურვა</button>
                                         </div>
                                     </div>
                                 </div>
@@ -117,8 +84,8 @@
                             {% endfor %}
                         {% else %}
                             <tr>
-                                <td colspan="5" class="text-center py-4">
-                                    მომხმარებლები არ არის
+                                <td colspan="4" class="text-center py-4">
+                                    📭 მომხმარებლები არ არის რეგისტრირებული
                                 </td>
                             </tr>
                         {% endif %}

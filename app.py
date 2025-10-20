@@ -436,7 +436,26 @@ def admin_courses():
 @app.route("/admin/users")
 @admin_required
 def admin_users():
-    users = user_model.get_all()
+    # Get detailed user information with enrollment counts
+    users_query = """
+    SELECT 
+        u.id, 
+        u.username, 
+        u.admin,
+        COUNT(uc.course_id) as enrollments
+    FROM users u
+    LEFT JOIN users_courses uc ON u.id = uc.user_id
+    GROUP BY u.id, u.username, u.admin
+    ORDER BY u.id DESC
+    """
+
+    users = db.execute(users_query)
+
+    # Ensure admin users always have 0 enrollments
+    for user in users:
+        if user['admin']:
+            user['enrollments'] = 0
+
     return render_template("admin_users.html", users=users)
 
 
