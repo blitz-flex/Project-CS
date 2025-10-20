@@ -6,142 +6,189 @@
 
 {% block main %}
 <style>
+/* Hero Section */
+.contact-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 3rem 0 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.contact-hero h1 {
+    color: white;
+    font-weight: 600;
+    font-size: 2.2rem;
+    margin-bottom: 0.8rem;
+}
+
+.contact-hero p {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.05rem;
+}
+
+/* Contact Cards */
 .contact-card {
     border: none;
     border-radius: 12px;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
-    transition: transform 0.2s ease;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    background: white;
+    height: 100%;
 }
 
 .contact-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
 }
 
 .contact-icon {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.contact-card .card-title {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #2d3748;
+}
+
+.contact-card .card-text {
+    line-height: 2;
+    font-size: 0.9rem;
+}
+
+.contact-card .card-text strong {
+    color: #4a5568;
+    font-weight: 600;
+}
+
+/* Contact Form */
+.contact-form {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+.contact-form .card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 1.8rem 2rem;
+    border-radius: 16px 16px 0 0;
+}
+
+.contact-form .card-header h3 {
+    color: white;
+    font-weight: 600;
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+.contact-form .card-body {
+    padding: 2rem;
+}
+
+/* Form Elements */
+.form-label {
+    font-weight: 500;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
 }
 
 .form-control, .form-select {
     border-radius: 8px;
-    border: 1px solid #e0e0e0;
-    padding: 12px 16px;
-    transition: border-color 0.2s ease;
+    border: 2px solid #e2e8f0;
+    padding: 0.7rem 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    font-size: 0.95rem;
 }
 
 .form-control:focus, .form-select:focus {
-    border-color: #0d6efd;
-    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.1);
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    outline: none;
 }
 
-.btn-primary {
+.form-control::placeholder {
+    color: #a0aec0;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Submit Button */
+.btn-submit {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
     border-radius: 8px;
-    padding: 12px 24px;
-    font-weight: 500;
-    transition: all 0.2s ease;
+    padding: 0.9rem 2rem;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.btn-primary:hover {
+.btn-submit:hover {
     transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
-.contact-form {
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+.btn-submit:active {
+    transform: translateY(0);
 }
 
-.alert {
-    border-radius: 12px;
-    border: none;
+/* Info Text */
+.info-text {
+    color: #718096;
+    font-size: 0.85rem;
+    margin-top: 1rem;
 }
 
-.section-title {
-    position: relative;
-    padding-bottom: 1rem;
-}
+/* Responsive */
+@media (max-width: 768px) {
+    .contact-hero h1 {
+        font-size: 1.8rem;
+    }
 
-.section-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 60px;
-    height: 3px;
-    background: #0d6efd;
-    border-radius: 2px;
+    .contact-hero {
+        padding: 2rem 0 1.5rem;
+    }
+
+    .contact-form .card-body {
+        padding: 1.5rem;
+    }
 }
 </style>
 
-<div class="container py-5">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="h2 section-title mb-4">კონტაქტი</h1>
-            <p class="lead text-muted mb-5">დაგვიკავშირდით ნებისმიერი კითხვისთვის. ჩვენ აქ ვართ თქვენი დასახმარებლად.</p>
-        </div>
+<!-- Hero Section -->
+<div class="contact-hero">
+    <div class="container text-center">
+        <h1>დაგვიკავშირდით</h1>
+        <p>ჩვენ აქ ვართ თქვენი დასახმარებლად</p>
     </div>
-    
+</div>
+
+<div class="container pb-5">
+    <!-- Contact Form -->
     <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="card contact-card h-100">
-                <div class="card-body text-center">
-                    <div class="contact-icon text-primary">📧</div>
-                    <h5 class="card-title">ელ-ფოსტა</h5>
-                    <p class="card-text text-muted">
-                        <strong>ზოგადი:</strong> info@highschool.com<br>
-                        <strong>მხარდაჭერა:</strong> support@highschool.com<br>
-                        <strong>კურსები:</strong> courses@highschool.com
-                    </p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-4 mb-4">
-            <div class="card contact-card h-100">
-                <div class="card-body text-center">
-                    <div class="contact-icon text-success">📞</div>
-                    <h5 class="card-title">ტელეფონი</h5>
-                    <p class="card-text text-muted">
-                        <strong>ნომერი:</strong> +995 32 2 25 00 05<br>
-                        <strong>საათები:</strong> 10:00 - 18:00<br>
-                        <strong>დღეები:</strong> ორშაბათი - პარასკევი
-                    </p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-4 mb-4">
-            <div class="card contact-card h-100">
-                <div class="card-body text-center">
-                    <div class="contact-icon text-warning">📍</div>
-                    <h5 class="card-title">მისამართი</h5>
-                    <p class="card-text text-muted">
-                        თბილისის N1<br>
-                        თბილისი <br>
-                        საქართველო
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="row mt-5">
         <div class="col-lg-8 mx-auto">
             <div class="card contact-form">
-                <div class="card-header bg-white border-0 pb-0">
-                    <h3 class="card-title section-title mb-0">გამოგვიგზავნეთ შეტყობინება</h3>
+                <div class="card-header border-0">
+                    <h3>✉️ გამოგვიგზავნეთ შეტყობინება</h3>
                 </div>
-                <div class="card-body pt-4">
+                <div class="card-body">
                     <form method="POST" action="{{ url_for('contact') }}">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="name" class="form-label">სახელი და გვარი *</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="სახელი გვარი" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="email" class="form-label">ელ-ფოსტა *</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="example@gmail.com" required>
                             </div>
                         </div>
                         
@@ -159,17 +206,20 @@
                         
                         <div class="mb-3">
                             <label for="message" class="form-label">შეტყობინება *</label>
-                            <textarea class="form-control" id="message" name="message" rows="5" placeholder="დაწერეთ თქვენი შეტყობინება აქ..." required></textarea>
+                            <textarea class="form-control" id="message" name="message" rows="5" placeholder="დაწერეთ თქვენი შეტყობინება..." required></textarea>
                         </div>
                         
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-lg">📤 გაგზავნა</button>
+                            <button type="submit" class="btn btn-submit">
+                                გაგზავნა
+                            </button>
                         </div>
                         
-                        <small class="text-muted mt-2 d-block">* აუცილებელი ველები</small>
+                        <p class="info-text text-center mt-2">* აუცილებელი ველები</p>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
