@@ -1,12 +1,12 @@
 # Project-CS
 
-ონლაინ კურსების პლატფორმა Flask-ზე.
+Online course platform built with Flask.
 
-## ტექნოლოგიები
+## Technologies
 
 Python, Flask, SQLite, cs50, Flask-Session, Werkzeug
 
-## დაყენება
+## Installation
 
 ```bash
 python3 -m venv venv
@@ -16,12 +16,12 @@ mkdir -p src/static/images/{courses,users}
 python app.py
 ```
 
-აპლიკაცია: http://127.0.0.1:5000/
+Application: http://127.0.0.1:5000/
 
-## ფუნქციონალი
+## Features
 
-**მომხმარებლები:** რეგისტრაცია, ავტორიზაცია, კურსების დათვალიერება, ძიება, შეძენა, პროფილის მართვა
+**Users:** Registration, authentication, course browsing, search, purchase, profile management
 
-**ადმინი:** კურსების და მომხმარებლების მართვა, სტატისტიკა
+**Admin:** Course and user management, statistics
 
 
