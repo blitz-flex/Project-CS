@@ -16,38 +16,59 @@ def create_app():
                template_folder='templates',
                static_folder='static')
 
-    # Configure SQLAlchemy
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(app.instance_path, "project.db")
+    # ── Database ──────────────────────────────────────────────────────────────
+    # Production: DATABASE_URL env var (PostgreSQL on Render)
+    # Development: local SQLite fallback
+    database_url = os.environ.get("DATABASE_URL")
+
+    if database_url:
+        # Render provides postgres:// but SQLAlchemy 2.x requires postgresql://
+        if database_url.startswith("postgres://"):
+            database_url = database_url.replace("postgres://", "postgresql://", 1)
+        app.config["SQLALCHEMY_DATABASE_URI"] = database_url
+    else:
+        os.makedirs(app.instance_path, exist_ok=True)
+        app.config["SQLALCHEMY_DATABASE_URI"] = (
+            "sqlite:///" + os.path.join(app.instance_path, "project.db")
+        )
+
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    
-    # Initialize extensions
+
+    # ── Extensions ────────────────────────────────────────────────────────────
     db.init_app(app)
-    
-    # Configure upload folders
+
+    # ── Upload Folders ────────────────────────────────────────────────────────
     UPLOAD_FOLDER = os.path.join(app.root_path, "static/images/users")
     COURSE_UPLOAD_FOLDER = os.path.join(app.root_path, "static/images/courses")
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+    os.makedirs(COURSE_UPLOAD_FOLDER, exist_ok=True)
     app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
     app.config["COURSE_UPLOAD_FOLDER"] = COURSE_UPLOAD_FOLDER
 
-    # Ensure templates are auto-reloaded
-    app.config["TEMPLATES_AUTO_RELOAD"] = True
-
-    # Configure session
+    # ── Session ───────────────────────────────────────────────────────────────
+    # sqlalchemy type → sessions stored in DB → persistent across restarts
     app.config["SESSION_PERMANENT"] = False
-    app.config["SESSION_TYPE"] = "filesystem"
-    app.secret_key = "your-secret-key-here"
+    app.config["SESSION_TYPE"] = "sqlalchemy"
+    app.config["SESSION_SQLALCHEMY"] = db
+
+    # Secret key from environment variable (set in Render dashboard)
+    app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-key-change-in-production")
     Session(app)
 
-    # Register Blueprints
+    # ── Templates ─────────────────────────────────────────────────────────────
+    app.config["TEMPLATES_AUTO_RELOAD"] = True
+
+    # ── Blueprints ────────────────────────────────────────────────────────────
     app.register_blueprint(auth_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(main_bp)
     app.register_blueprint(account_bp)
     app.register_blueprint(courses_bp)
 
+    # ── After Request ─────────────────────────────────────────────────────────
     @app.after_request
     def after_request(response):
-        """Ensure responses aren't cached"""
+        """Disable client-side caching for all responses."""
         response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
         response.headers["Expires"] = 0
         response.headers["Pragma"] = "no-cache"
