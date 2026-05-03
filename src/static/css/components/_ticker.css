@@ -1,0 +1,24 @@
+/* ==========================================================================
+   COMPONENTS / TICKER
+   Horizontally scrolling announcement ticker (news-style marquee).
+   ========================================================================== */
+
+.ticker-wrapper {
+    background: rgba(0, 0, 0, 0.5);
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    padding: 12px 0;
+    overflow: hidden;
+}
+
+.ticker-content {
+    display: flex;
+    gap: 50px;
+    white-space: nowrap;
+    animation: ticker-scroll 30s linear infinite;
+}
+
+@keyframes ticker-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}

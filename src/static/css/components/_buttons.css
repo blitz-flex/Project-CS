@@ -1,0 +1,74 @@
+/* ==========================================================================
+   COMPONENTS / BUTTONS
+   All button variants: solid gold, outline gold, and the high-specificity
+   premium-gold variant (used where Bootstrap overrides must be defeated).
+   ========================================================================== */
+
+/* --- Solid Gold Button --- */
+.btn-gold {
+    background-color: var(--primary-gold);
+    color: #000 !important;
+    border: none;
+    border-radius: 14px;
+    padding: 1rem 3rem;
+    font-weight: 800;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-gold:hover {
+    background-color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+}
+
+/* --- Outline Gold Button --- */
+.btn-outline-gold {
+    background: transparent;
+    color: var(--primary-gold) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 14px;
+    padding: 1rem 3rem;
+    font-weight: 800;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-outline-gold:hover {
+    background: rgba(212, 175, 55, 0.08);
+    border-color: var(--primary-gold);
+    transform: translateY(-2px);
+}
+
+/* --- Premium Gold Button (high-specificity override for Bootstrap) --- */
+.btn-premium-gold {
+    background: rgba(212, 175, 55, 0.08) !important;
+    color: #D4AF37 !important;
+    border: 1px solid rgba(212, 175, 55, 0.5) !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    padding: 0.7rem 2rem !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    transition: all 0.3s ease !important;
+    z-index: 9999 !important;
+}
+
+.btn-premium-gold:hover {
+    background: #D4AF37 !important;
+    color: #000 !important;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.4) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* --- Shadow Utility for Buttons / Elements --- */
+.shadow-gold {
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3),
+                0 0 15px rgba(212, 175, 55, 0.1);
+}

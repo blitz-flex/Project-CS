@@ -1,0 +1,133 @@
+{% extends "layouts/admin.html" %}
+
+{% block title %}Dashboard{% endblock %}
+{% block header %}სისტემური პანელი{% endblock %}
+
+{% block main %}
+
+<div class="row g-4 mb-5">
+    <div class="col-lg-3 col-md-6">
+        <div class="admin-stat-card">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <span class="admin-stat-label">მომხმარებლები</span>
+                <i class="fas fa-users text-gold opacity-50"></i>
+            </div>
+            <p class="admin-stat-value">{{ user_count if user_count else 0 }}</p>
+            <div class="mt-2 small text-success">
+                <i class="fas fa-caret-up me-1"></i> 12% ზრდა
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="admin-stat-card">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <span class="admin-stat-label">აქტიური კურსები</span>
+                <i class="fas fa-book-open text-gold opacity-50"></i>
+            </div>
+            <p class="admin-stat-value">{{ course_count if course_count else 0 }}</p>
+            <div class="mt-2 small text-muted">
+                სისტემა ოპტიმიზებულია
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="admin-stat-card">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <span class="admin-stat-label">რეგისტრაციები</span>
+                <i class="fas fa-graduation-cap text-gold opacity-50"></i>
+            </div>
+            <p class="admin-stat-value">{{ enrollment_count if enrollment_count else 0 }}</p>
+            <div class="mt-2 small text-success">
+                <i class="fas fa-caret-up me-1"></i> 8% ზრდა
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="admin-stat-card">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <span class="admin-stat-label">სერვერის დატვირთვა</span>
+                <i class="fas fa-microchip text-gold opacity-50"></i>
+            </div>
+            <p class="admin-stat-value" style="color: #22c55e;">24%</p>
+            <div class="mt-2 small text-muted">
+                სტაბილური
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-5">
+    <div class="col-lg-8">
+        <div class="admin-card-header mb-4">
+            <h5 class="text-white fw-bold mb-0 cyber-glow">ლაივ აქტივობა</h5>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table-minimal">
+                <thead>
+                    <tr>
+                        <th>აქტივობის პროტოკოლი</th>
+                        <th>სტატუსი</th>
+                        <th>დრო</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="p-2 rounded-3 bg-gold bg-opacity-5"><i
+                                        class="fas fa-user-plus text-gold small"></i></div>
+                                <span>მომხმარებელი <span class="text-white fw-bold">giorgi_88</span>
+                                    ავტორიზებულია</span>
+                            </div>
+                        </td>
+                        <td><span class="admin-badge badge-blue">რეგისტრირებული</span></td>
+                        <td class="opacity-50 small">2 წთ წინ</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="p-2 rounded-3 bg-gold bg-opacity-5"><i
+                                        class="fas fa-shopping-cart text-gold small"></i></div>
+                                <span>ტრანზაქცია: <span class="text-white fw-bold">Ethical Hacking v2</span></span>
+                            </div>
+                        </td>
+                        <td><span class="admin-badge badge-gold">შესყიდვა</span></td>
+                        <td class="opacity-50 small">15 წთ წინ</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="p-2 rounded-3 bg-gold bg-opacity-5"><i
+                                        class="fas fa-ticket-alt text-gold small"></i></div>
+                                <span>პრომო კოდი <span class="text-white fw-bold">SUMMER25</span> გამოყენებულია</span>
+                            </div>
+                        </td>
+                        <td><span class="admin-badge badge-green">წარმატებული</span></td>
+                        <td class="opacity-50 small">1 სთ წინ</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <!-- სწრაფი წვდომა ამოშლილია -->
+
+
+        <div class="mt-5 p-4 rounded-4"
+            style="background: rgba(212, 175, 55, 0.03); border: 1px solid rgba(212, 175, 55, 0.1);">
+            <h6 class="text-gold small fw-bold text-uppercase tracking-wider mb-3">სისტემის მდგომარეობა</h6>
+            <div class="d-flex align-items-center gap-3 mb-2">
+                <i class="fas fa-database text-muted small"></i>
+                <span class="small text-muted">მონაცემთა ბაზა: <span class="text-success">ჩართული</span></span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <i class="fas fa-shield-alt text-muted small"></i>
+                <span class="small text-muted">უსაფრთხოება: <span class="text-success">აქტიური</span></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

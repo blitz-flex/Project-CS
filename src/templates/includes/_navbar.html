@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-premium sticky-top">
+    <div class="container">
+        <a href="/" class="navbar-brand d-flex align-items-center gap-3">
+            <div class="logo-wrapper position-relative">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Sentinel Academy Logo"
+                    style="height: 50px; width: auto; filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));">
+            </div>
+            <span class="fs-5 fw-bold text-white tracking-tight text-uppercase">SENTINEL<span class="text-gold">
+                    ACADEMY</span></span>
+        </a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <i class="fas fa-bars text-white"></i>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav gap-2">
+                <li class="nav-item"><a href="/"
+                        class="nav-link {% if request.path == '/' %}active{% endif %}">მთავარი</a></li>
+                <li class="nav-item"><a href="/courses"
+                        class="nav-link {% if request.path == '/courses' %}active{% endif %}">კურსები</a></li>
+                <li class="nav-item"><a href="/faq"
+                        class="nav-link {% if request.path == '/faq' %}active{% endif %}">FAQ</a></li>
+                <li class="nav-item"><a href="/contact"
+                        class="nav-link {% if request.path == '/contact' %}active{% endif %}">კონტაქტი</a></li>
+            </ul>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+            {% if session["user_id"] %}
+            {% if session.get("admin") %}
+            <a href="/admin" class="nav-link text-gold p-0" title="ადმინ პანელი">
+                <i class="fas fa-user-shield fs-5"></i>
+            </a>
+            {% else %}
+            <a href="/account" class="nav-link text-white p-0">ანგარიში</a>
+            {% endif %}
+            <a class="btn btn-gold btn-sm px-4" href="/logout">გასვლა</a>
+            {% else %}
+            <a href="/login" class="nav-link text-white p-0">შესვლა</a>
+            <a href="/signup" class="btn btn-gold btn-sm px-4">რეგისტრაცია</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>

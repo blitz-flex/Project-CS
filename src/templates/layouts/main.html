@@ -1,0 +1,17 @@
+{% extends "layouts/base.html" %}
+
+{% block body %}
+    <!-- Navigation -->
+    {% include "includes/_navbar.html" %}
+
+    <!-- Flash Messages -->
+    {% include "includes/_flash.html" %}
+
+    <!-- Main Content -->
+    <main>
+        {% block main %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    {% include "includes/_footer.html" %}
+{% endblock %}

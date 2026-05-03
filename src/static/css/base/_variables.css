@@ -1,0 +1,28 @@
+/* ==========================================================================
+   BASE / VARIABLES
+   Design tokens — single source of truth for all color, spacing, and
+   glass-morphism values used across the design system.
+   ========================================================================== */
+
+:root {
+    /* --- Color Palette --- */
+    --primary-gold:       #D4AF37;   /* Classic Premium Gold  */
+    --primary-gold-hover: #F1C40F;
+    --accent-blue:        #3B82F6;   /* Vibrant Blue          */
+
+    /* --- Backgrounds --- */
+    --bg-deep:  #05070A;   /* Deep Midnight Black */
+    --bg-card:  #0F172A;   /* Dark Navy Card      */
+
+    /* --- Text --- */
+    --text-main:  #F8FAFC;
+    --text-muted: #94A3B8;  /* Slate Blue Muted */
+
+    /* --- Glassmorphism --- */
+    --glass-bg:     rgba(15, 23, 42, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+
+    /* --- Accents --- */
+    --border-accent: rgba(255, 255, 255, 0.08);
+    --gold-glow:     rgba(212, 175, 55, 0.3);
+}

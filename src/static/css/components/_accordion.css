@@ -1,0 +1,40 @@
+/* ==========================================================================
+   COMPONENTS / ACCORDION
+   Full Bootstrap accordion override — forces dark theme and gold accents.
+   Uses !important where necessary to defeat Bootstrap specificity.
+   ========================================================================== */
+
+.accordion-item {
+    background: #0F172A !important;
+    border: 1px solid rgba(212, 175, 55, 0.2) !important;
+    margin-bottom: 1rem;
+    border-radius: 15px !important;
+    overflow: hidden;
+}
+
+.accordion-button {
+    background: #0F172A !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+    padding: 1.5rem !important;
+    font-weight: 700;
+}
+
+.accordion-button:not(.collapsed) {
+    color: var(--primary-gold) !important;
+    background: rgba(212, 175, 55, 0.05) !important;
+}
+
+.accordion-collapse {
+    background-color: #05070A !important;
+    border: none !important;
+}
+
+.accordion-body {
+    background-color: #05070A !important;
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+    line-height: 1.6;
+    color: #ffffff !important;
+    font-size: 1rem;
+    padding: 2.5rem !important;
+}

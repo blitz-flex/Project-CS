@@ -1,0 +1,59 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}FAQ - ხშირად დასმული კითხვები{% endblock %}
+
+{% block main %}
+
+<section class="hero-section text-center py-5 mt-5">
+    <div class="container">
+        <div class="pill-badge">Knowledge Base</div>
+        <h1 class="display-3 fw-bold text-white mb-3">როგორ შეგვიძლია <span class="text-gold">დაგეხმაროთ?</span></h1>
+        <p class="text-muted fs-5 mx-auto" style="max-width: 650px;">იპოვეთ პასუხები პლატფორმის, კურსებისა და სწავლის პროცესის შესახებ.</p>
+    </div>
+</section>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="accordion premium-accordion" id="faqAccordion">
+                {% set faqs = [
+                    ('როგორ შევიძინო კურსი?', 'კურსის შესაძენად გადადით კურსების გვერდზე, აირჩიეთ სასურველი კურსი და დააჭირეთ "შეძენა" ღილაკს. შემდეგ მიჰყევით გადახდის ინსტრუქციებს.'),
+                    ('რამდენი ხნის განმავლობაში მექნება წვდომა კურსზე?', 'ფასიანი კურსების შემთხვევაში წვდომა 3 თვის ვადით იქნება შესაძლებელი. უფასო კურსებზე წვდომა შეუზღუდავია კურსის რეგისტრაციის მომენტიდან.'),
+                    ('შემიძლია კურსის დაბრუნება?', 'ფასიანი კურსის შეძენიდან 7 დღის განმავლობაში შეგიძლიათ მოითხოვოთ თანხის დაბრუნება. თანხის დაბრუნების მოთხოვნა შეგიძლიათ თქვენი პროფილის "შეკვეთები" განყოფილებაში.'),
+                    ('როგორ მივიღო სერტიფიკატი?', 'კურსის წარმატებით დასრულების შემდეგ ავტომატურად მიიღებთ სერტიფიკატს, რომელიც ჩამოტვირთვადია თქვენი პროფილიდან.'),
+                    ('რა ფორმატშია კურსის მასალები?', 'კურსის მასალები მოიცავს ვიდეო ლექციებს, პრაქტიკულ სავარჯიშოებს და დამატებით რესურსებს PDF ფორმატში.'),
+                    ('რა განსხვავებაა ფასიან და უფასო კურსებს შორის?', 'ფასიანი კურსები მოიცავს ღრმა და დეტალურ მასალას, პირადი მენტორის მხარდაჭერას და დამატებით პრაქტიკულ დავალებებს.'),
+                    ('შემიძლია კურსის გადახდა ნაწილ-ნაწილ?', 'კი, ვთავაზობთ გადახდის მოქნილ სისტემას. შეგიძლიათ ისარგებლოთ განვადებით ან გადაიხადოთ რამდენიმე ნაწილად.'),
+                    ('როგორ მივიღო ტექნიკური დახმარება?', 'ტექნიკური პრობლემების შემთხვევაში დაგვიკავშირდით ელ-ფოსტაზე ან ისარგებლოთ ონლაინ ჩათით სამუშაო საათებში.')
+                ] %}
+
+                {% for question, answer in faqs %}
+                <div class="accordion-item bg-transparent border-0 mb-4">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed premium-card p-4 d-flex justify-content-between align-items-center shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" style="border-radius: 20px !important;">
+                            <span class="fw-bold fs-5">{{ question }}</span>
+                        </button>
+                    </h2>
+                    <div id="collapse{{ loop.index }}" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body p-4 pt-0">
+                            <div class="p-4 rounded-4 bg-black bg-opacity-40 border border-white border-opacity-5 text-white leading-relaxed">
+                                {{ answer }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="mt-5 text-center">
+                <div class="premium-card p-5 border-gold border-opacity-20">
+                    <h4 class="text-white fw-bold mb-3">კითხვები კვლავ გაქვთ?</h4>
+                    <p class="text-muted mb-4">თუ ვერ იპოვეთ პასუხი, ჩვენი გუნდი ყოველთვის მზად არის დაგეხმაროთ.</p>
+                    <a href="/contact" class="btn btn-gold px-5">მოგვწერეთ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

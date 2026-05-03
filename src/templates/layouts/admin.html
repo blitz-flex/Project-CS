@@ -1,0 +1,47 @@
+{% extends "layouts/base.html" %}
+
+
+
+
+{% block favicon %}
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='%23D4AF37' d='M466.5 83.7l-192-80a48.15 48.15 0 0 0-36.9 0l-192 80C27.7 91.1 16 108.6 16 128c0 198.5 114.5 335.7 221.5 380.3 11.1 4.8 22.6 4.8 33.7 0C381.5 463.7 496 326.5 496 128c0-19.4-11.7-36.9-30.5-44.3z'/></svg>">
+{% endblock %}
+
+{% block body %}
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        {% include "includes/_sidebar.html" %}
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Top Bar -->
+            <header class="admin-topbar">
+                <div>
+                    <span class="text-gold small fw-bold text-uppercase tracking-widest mb-1 d-block opacity-50">სისტემური კონსოლი</span>
+                    <h2>{% block header %}{% endblock %}</h2>
+                </div>
+                <div class="d-flex align-items-center gap-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="p-1 bg-success rounded-circle animate-pulse-static"></span>
+                        <span class="text-muted smaller">სერვერი ონლაინია</span>
+                    </div>
+                    <div class="pill-badge mb-0">v1.0</div>
+                </div>
+            </header>
+
+            <!-- Flash Messages -->
+            {% include "includes/_flash.html" %}
+
+            <!-- Page Content -->
+            {% block main %}{% endblock %}
+        </main>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+            document.getElementById('adminSidebar').classList.toggle('show');
+        });
+    </script>
+{% endblock %}

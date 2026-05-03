@@ -1,0 +1,46 @@
+/* ==========================================================================
+   BASE / RESET
+   Global element defaults: body background, texture overlay, scrollbar,
+   and text-selection styles.
+   ========================================================================== */
+
+/* --- Body --- */
+body {
+    background-color: var(--bg-deep);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Subtle dark pinstripe texture overlay */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/pinstripe-dark.png');
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* --- Custom Scrollbar --- */
+::-webkit-scrollbar { width: 8px; }
+
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+
+::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover { background: var(--primary-gold); }
+
+/* --- Text Selection --- */
+::selection {
+    background: var(--primary-gold);
+    color: #000;
+}

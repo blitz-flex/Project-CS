@@ -1,0 +1,96 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}
+    კონტაქტი
+{% endblock %}
+
+{% block main %}
+
+<section class="py-5 mt-5">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold text-white mb-3">დაგვიკავშირდით</h1>
+            <p class="text-muted fs-5 mx-auto" style="max-width: 600px;">სენტინელ აკადემიის გუნდი მზად არის გიპასუხოთ ნებისმიერ კითხვაზე.</p>
+        </div>
+
+        <div class="row justify-content-center g-0">
+            <div class="col-lg-10">
+                <div class="premium-card p-0 border-gold border-opacity-25 shadow-sm overflow-hidden" style="background: var(--bg-card);">
+                    <div class="row g-0">
+                        <!-- Left Info Panel -->
+                        <div class="col-lg-4 bg-black bg-opacity-40 p-5 d-flex flex-column border-end border-gold border-opacity-10">
+                            <h4 class="text-white fw-bold mb-5">კონტაქტი</h4>
+                            
+                            <div class="d-flex flex-column gap-4 mb-auto">
+                                <div class="d-flex align-items-center gap-3 py-1">
+                                    <div class="icon-box m-0" style="width: 42px; height: 42px; flex-shrink: 0; background: rgba(197, 160, 89, 0.05); border-color: rgba(197, 160, 89, 0.1);">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <span class="text-white opacity-75 small">თბილისი, საქართველო</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-3 py-1">
+                                    <div class="icon-box m-0" style="width: 42px; height: 42px; flex-shrink: 0; background: rgba(197, 160, 89, 0.05); border-color: rgba(197, 160, 89, 0.1);">
+                                        <i class="fas fa-phone-alt"></i>
+                                    </div>
+                                    <span class="text-white opacity-75 small">+995 555 12 34 56</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-3 py-1">
+                                    <div class="icon-box m-0" style="width: 42px; height: 42px; flex-shrink: 0; background: rgba(197, 160, 89, 0.05); border-color: rgba(197, 160, 89, 0.1);">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <span class="text-white opacity-75 small">info@sentinelacademy.ge</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-5">
+                                <h6 class="text-white small text-uppercase mb-3 opacity-50 letter-spacing-1">სოციალური ქსელები</h6>
+                                <div class="d-flex gap-3">
+                                    <a href="#" class="social-link-gold"><i class="fab fa-discord"></i></a>
+                                    <a href="#" class="social-link-gold"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="#" class="social-link-gold"><i class="fab fa-telegram-plane"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Form Panel -->
+                        <div class="col-lg-8 p-5">
+                            <form method="POST" action="{{ url_for('main.contact') }}">
+                                <div class="row g-4 text-start">
+                                    <div class="col-md-6">
+                                        <label for="name" class="auth-label mb-2">თქვენი სახელი</label>
+                                        <input type="text" class="form-control form-control-premium" id="name" name="name" placeholder="მაგ: გიორგი ბერიძე" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="email" class="auth-label mb-2">ელ-ფოსტა</label>
+                                        <input type="email" class="form-control form-control-premium" id="email" name="email" placeholder="example@mail.com" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="subject" class="auth-label mb-2">თემატიკა</label>
+                                        <select class="form-select form-control-premium" id="subject" name="subject" required>
+                                            <option value="" disabled selected>აირჩიეთ მიმართულება</option>
+                                            <option value="courses">კურსები</option>
+                                            <option value="tech">მხარდაჭერა</option>
+                                            <option value="other">სხვა</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="message" class="auth-label mb-2">შეტყობინება</label>
+                                        <textarea class="form-control form-control-premium" id="message" name="message" rows="5" placeholder="რით შეგვიძლია დაგეხმაროთ?" required></textarea>
+                                    </div>
+                                    <div class="col-12 pt-2">
+                                        <button type="submit" class="btn btn-gold btn-lg w-100 py-3 fw-bold">
+                                            შეტყობინების გაგზავნა
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

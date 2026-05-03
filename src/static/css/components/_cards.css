@@ -1,0 +1,173 @@
+/* ==========================================================================
+   COMPONENTS / CARDS
+   Generic glass card, course card, icon-box, roadmap cards, and
+   admin stat cards.
+   ========================================================================== */
+
+/* --- Glass Premium Card --- */
+.premium-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 2.5rem;
+    height: 100%;
+    transition: border-color 0.2s ease;
+}
+
+.premium-card:hover { border-color: var(--primary-gold); }
+
+.premium-card-floating {
+    animation: float 6s ease-in-out infinite;
+    border-color: rgba(212, 175, 55, 0.2) !important;
+}
+
+/* --- Icon Box (inside cards) --- */
+.icon-box {
+    width: 50px;
+    height: 50px;
+    background: rgba(197, 160, 89, 0.05);
+    color: var(--primary-gold);
+    border: 1px solid rgba(197, 160, 89, 0.2);
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+/* --- Course Card --- */
+.course-card-premium {
+    background: var(--bg-card);
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+}
+
+.course-card-premium:hover { border-color: var(--primary-gold); }
+
+.course-img-wrapper {
+    height: 220px;
+    position: relative;
+    overflow: hidden;
+}
+
+.course-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.course-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 7, 10, 0.6);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 2;
+}
+
+.course-card-premium:hover .course-overlay { opacity: 1; }
+
+/* --- Meta items inside cards --- */
+.meta-item {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.meta-divider {
+    width: 1px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* --- Small Glass Card --- */
+.glass-card-sm {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+/* --- Roadmap Step Card --- */
+.roadmap-step {
+    position: relative;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: all 0.3s ease;
+}
+
+.roadmap-step:hover {
+    border-color: var(--primary-gold);
+    background: rgba(212, 175, 55, 0.02);
+    transform: translateY(-5px);
+}
+
+.roadmap-step::after {
+    content: '\f105';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    right: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-gold);
+    opacity: 0.3;
+    font-size: 1.5rem;
+}
+
+.roadmap-step-last::after { display: none; }
+
+@media (max-width: 768px) {
+    .roadmap-step::after { display: none; }
+}
+
+.roadmap-step-card {
+    position: relative;
+    padding: 3rem 2rem;
+    background: rgba(10, 15, 22, 0.6);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    border-radius: 30px;
+    height: 100%;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+}
+
+.roadmap-step-card:hover {
+    border-color: var(--primary-gold);
+    transform: translateY(-10px);
+    background: rgba(212, 175, 55, 0.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(212, 175, 55, 0.1);
+}
+
+.roadmap-step-card .icon-box {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), transparent);
+    color: var(--primary-gold);
+}
+
+.roadmap-step-card i {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.step-num {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--primary-gold);
+    opacity: 0.05;
+    font-family: 'Inter', sans-serif;
+}

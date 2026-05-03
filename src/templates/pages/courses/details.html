@@ -1,0 +1,286 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}{{ course.name }}{% endblock %}
+
+{% block main %}
+
+<style>
+    /* Compact & Premium Hero */
+    .hero-section-compact {
+        padding: 60px 0 30px 0;
+        background: radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+    }
+    .hero-title-compact { font-size: 2.8rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+    .hero-desc-compact { font-size: 1.1rem; color: rgba(255,255,255,0.5); max-width: 700px; line-height: 1.5; }
+
+    /* Refined Methodology Cards */
+    .methodology-card-refined {
+        background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 20px; padding: 30px; height: 100%; transition: all 0.3s ease;
+        position: relative; overflow: hidden;
+    }
+    .methodology-card-refined::after {
+        content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(circle at top right, rgba(212, 175, 55, 0.1), transparent 70%);
+        opacity: 0; transition: 0.5s;
+    }
+    .methodology-card-refined:hover::after { opacity: 1; }
+    .methodology-card-refined:hover {
+        background: rgba(212, 175, 55, 0.03); border-color: rgba(212, 175, 55, 0.2); transform: translateY(-5px);
+    }
+    .meth-icon {
+        font-size: 1.5rem; color: var(--primary-gold); margin-bottom: 20px;
+        display: inline-block; text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+    }
+    .meth-label {
+        font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px;
+        color: var(--primary-gold); font-weight: 700; margin-bottom: 8px;
+    }
+    .meth-title { font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    .meth-text { font-size: 0.9rem; color: rgba(255,255,255,0.4); line-height: 1.6; }
+
+    /* AI Mentor Floating Button & Chat Window */
+    .ai-floating-btn {
+        position: fixed; bottom: 40px; right: 40px; width: 65px; height: 65px;
+        background: linear-gradient(135deg, var(--primary-gold) 0%, #b8860b 100%);
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4); cursor: pointer; z-index: 10000;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 2px solid rgba(255,255,255,0.2);
+    }
+    .ai-floating-btn:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.6); }
+    .ai-floating-btn i { color: #000; font-size: 1.6rem; }
+
+    .ai-chat-window {
+        position: fixed; bottom: 120px; right: 40px; width: 350px; height: 500px;
+        background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(20px);
+        border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 24px;
+        z-index: 9999; display: none; flex-direction: column; overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.8); transition: all 0.3s ease;
+    }
+    .ai-chat-header {
+        padding: 20px; background: rgba(212, 175, 55, 0.1);
+        border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        display: flex; align-items: center; gap: 12px;
+    }
+    .ai-chat-header img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--primary-gold); }
+    .ai-chat-body { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+    .chat-bubble { padding: 12px 16px; border-radius: 16px; font-size: 0.9rem; max-width: 85%; line-height: 1.5; }
+    .ai-bubble { background: rgba(212, 175, 55, 0.1); color: #fff; align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.1); }
+    .user-bubble { background: var(--primary-gold); color: #000; align-self: flex-end; border-bottom-right-radius: 4px; font-weight: 600; }
+    
+    .ai-chat-footer { padding: 20px; background: rgba(255,255,255,0.02); border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 10px; }
+    .ai-chat-input {
+        flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 12px; padding: 10px 15px; color: #fff; font-size: 0.9rem; outline: none;
+    }
+    .ai-chat-input:focus { border-color: var(--primary-gold); }
+    .ai-send-btn {
+        width: 45px; height: 45px; background: var(--primary-gold); border: none;
+        border-radius: 12px; color: #000; display: flex; align-items: center; justify-content: center;
+        cursor: pointer; transition: 0.3s;
+    }
+    .ai-send-btn:hover { transform: scale(1.05); background: #fff; }
+
+    /* Syllabus */
+    .locked-module { opacity: 0.6; cursor: not-allowed !important; }
+    .ai-mentor-badge {
+        font-size: 0.65rem; background: rgba(212,175,55,0.1); color: var(--primary-gold);
+        border: 1px solid rgba(212,175,55,0.2); padding: 2px 8px; border-radius: 4px;
+        font-weight: 700; margin-left: 10px; text-transform: uppercase;
+    }
+
+    /* Sidebar */
+    .premium-sidebar { position: sticky; top: 100px; }
+    .sidebar-course-name { font-size: 1.5rem; font-weight: 800; color: #fff; margin: 20px 0 15px 0; line-height: 1.2; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; }
+    .enroll-success-badge {
+        display: inline-flex; align-items: center; gap: 8px; background: rgba(40, 167, 69, 0.1); color: #28a745;
+        padding: 8px 16px; border-radius: 100px; font-size: 0.85rem; font-weight: 600; border: 1px solid rgba(40, 167, 69, 0.2); margin-bottom: 15px;
+    }
+    
+    .benefits-toggle-btn {
+        width: 100%; text-align: left; background: none; border: none; padding: 18px 0;
+        color: #fff; font-weight: 700; display: flex; justify-content: space-between; align-items: center;
+        border-top: 1px solid rgba(255,255,255,0.08); transition: all 0.3s ease; margin-top: 10px;
+    }
+    .benefits-toggle-btn:hover { color: var(--primary-gold); }
+    .benefits-toggle-btn[aria-expanded="true"] i { transform: rotate(180deg); color: var(--primary-gold); }
+    .benefits-toggle-btn i { transition: transform 0.3s; font-size: 0.85rem; color: rgba(255,255,255,0.3); }
+    
+    .course-includes-item { display: flex; align-items: center; gap: 15px; color: rgba(255,255,255,0.7); font-size: 0.95rem; margin-bottom: 18px; padding-left: 5px; }
+    .course-includes-item i { color: var(--primary-gold); font-size: 1.1rem; width: 24px; text-align: center; }
+</style>
+
+<!-- Floating AI Assistant & Chat Window -->
+<div class="ai-floating-btn" onclick="toggleAIChat()">
+    <i class="fas fa-comment-dots" id="aiBtnIcon"></i>
+</div>
+
+<div class="ai-chat-window" id="aiChatWindow">
+    <div class="ai-chat-header">
+        <div class="position-relative">
+            <i class="fas fa-robot text-gold fa-2x"></i>
+            <span class="position-absolute bottom-0 end-0 bg-success border border-dark rounded-circle" style="width: 10px; height: 10px;"></span>
+        </div>
+        <div>
+            <h6 class="text-white mb-0">AI მენტორი</h6>
+            <small class="text-success" style="font-size: 0.7rem;">Online & Ready</small>
+        </div>
+        <button class="ms-auto bg-transparent border-0 text-white-50" onclick="toggleAIChat()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="ai-chat-body" id="chatBody">
+        <div class="chat-bubble ai-bubble">გამარჯობა! მე ვარ Sentinel-ის AI მენტორი. რით შემიძლია დაგეხმაროთ დღევანდელი მასალის ათვისებაში?</div>
+        <div class="chat-bubble ai-bubble">შეგიძლიათ მკითხოთ ნებისმიერი რამ ქსელურ უსაფრთხოებაზე ან კონკრეტულ მოდულზე.</div>
+    </div>
+    <div class="ai-chat-footer">
+        <input type="text" class="ai-chat-input" placeholder="დასვით კითხვა..." id="chatInput">
+        <button class="ai-send-btn"><i class="fas fa-paper-plane"></i></button>
+    </div>
+</div>
+
+<script>
+    function toggleAIChat() {
+        const window = document.getElementById('aiChatWindow');
+        const icon = document.getElementById('aiBtnIcon');
+        if (window.style.display === 'flex') {
+            window.style.display = 'none';
+            icon.className = 'fas fa-comment-dots';
+        } else {
+            window.style.display = 'flex';
+            icon.className = 'fas fa-times';
+        }
+    }
+</script>
+
+<section class="hero-section-compact mt-5">
+    <div class="container">
+        <div class="pill-badge mb-2">Academic Excellence</div>
+        <h1 class="hero-title-compact">{{ course.name }}</h1>
+        <p class="hero-desc-compact">
+            {% if "Network Defense" in course.name %}ქსელური უსაფრთხოების ოსტატობა. ფაირვოლები, ტრაფიკის ანალიზი და IDS/IPS.
+            {% else %}დაეუფლეთ თანამედროვე კიბერ-უსაფრთხოების ფუნდამენტურ პრინციპებს და ჩამოაყალიბეთ თავდაცვის მყარი სტრატეგიები.{% endif %}
+        </p>
+    </div>
+</section>
+
+<div class="container py-4">
+    <div class="row g-5">
+        <div class="col-lg-8">
+            <div class="premium-card p-5">
+                <div class="mb-5">
+                    <h4 class="text-white fw-bold mb-3">კურსის შესახებ</h4>
+                    <p class="text-muted" style="line-height: 1.6; font-size: 1.1rem;">{{ course.description | safe if course.description else "სიღრმისეული სწავლება Sentinel Academy-ში." }}</p>
+                </div>
+                
+                <!-- Methodology -->
+                <div class="mt-5 pt-5 border-top border-white border-opacity-5">
+                    <div class="mb-5"><div class="meth-label">Innovative Learning</div><h3 class="text-white fw-bold">როგორ ვსწავლობთ Sentinel-ში?</h3></div>
+                    <div class="row g-4">
+                        <div class="col-md-4"><div class="methodology-card-refined"><i class="fas fa-brain meth-icon"></i><div class="meth-label">თეორია AI-სთან</div><h5 class="meth-title">პერსონალური AI მენტორი</h5><p class="meth-text">ჩვენი პერსონალური AI მენტორი გიხსნით რთულ ცნებებს მარტივი ენით, თქვენს ტემპზე მორგებით.</p></div></div>
+                        <div class="col-md-4"><div class="methodology-card-refined"><i class="fas fa-flask meth-icon"></i><div class="meth-label">რეალური პრაქტიკა</div><h5 class="meth-title">Hands-on Labs</h5><p class="meth-text">გამოსცადეთ საკუთარი თავი მაღალტექნოლოგიურ ლაბორატორიებში რეალური სიმულაციით.</p></div></div>
+                        <div class="col-md-4"><div class="methodology-card-refined"><i class="fas fa-award meth-icon"></i><div class="meth-label">კარიერული ზრდა</div><h5 class="meth-title">Expert Certification</h5><p class="meth-text">მიიღეთ საერთაშორისო სერტიფიკატი და შექმენით პორტფოლიო წარმატებისთვის.</p></div></div>
+                    </div>
+                </div>
+
+                <!-- SYLLABUS -->
+                <div class="course-curriculum-section mt-5 pt-5">
+                    {% set m_count = 12 %}
+                    {% set c_type = "basics" %}
+                    {% if "Ethical Hacking" in course.name %}{% set m_count = 24 %}{% set c_type = "hacking" %}
+                    {% elif "Network Defense" in course.name %}{% set m_count = 18 %}{% set c_type = "network" %}
+                    {% elif "Web Application" in course.name %}{% set m_count = 15 %}{% set c_type = "web" %}
+                    {% elif "Digital Forensics" in course.name %}{% set m_count = 28 %}{% set c_type = "forensics" %}
+                    {% elif "Cloud Security" in course.name %}{% set m_count = 20 %}{% set c_type = "cloud" %}
+                    {% endif %}
+
+                    <div class="d-flex justify-content-between align-items-center mb-4 mt-5">
+                        <h4 class="text-white fw-bold mb-0">აკადემიური სილაბუსი</h4>
+                        <span class="text-muted small">{{ m_count }} მოდული</span>
+                    </div>
+
+                    <div class="accordion" id="curriculumAccordion">
+                        {% for i in range(1, m_count + 1) %}
+                        {% set is_locked = (not is_enrolled and i > 1) %}
+                        <div class="curriculum-item mb-3 {{ 'locked-module' if is_locked else '' }}">
+                            <div class="curriculum-header p-4 d-flex justify-content-between align-items-center" 
+                                 style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; cursor: {{ 'not-allowed' if is_locked else 'pointer' }};"
+                                 {% if not is_locked %}data-bs-toggle="collapse" data-bs-target="#collapse{{ i }}"{% endif %}>
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="fas {{ 'fa-lock' if is_locked else 'fa-chevron-down' }} text-gold small"></i>
+                                    <span class="text-white fw-bold">მოდული {{ i }} - 
+                                        {% if c_type == "network" %}
+                                            {% if i == 1 %}TCP/IP და OSI მოდელის ანალიზი{% elif i == 2 %}Firewalls: Stateless vs Stateful{% elif i == 3 %}VPN და Secure Tunneling{% elif i == 4 %}Intrusion Detection (IDS/IPS){% elif i == 5 %}Network Traffic Analysis (Wireshark){% else %}Network Defense Module #{{ i }}{% endif %}
+                                        {% elif c_type == "hacking" %}
+                                            {% if i == 1 %}Kali Linux გარემოს მომზადება{% elif i == 2 %}OSINT და ინფორმაციის მოპოვება{% elif i == 3 %}Nmap და პორტების სკანირება{% elif i == 4 %}Exploitation საფუძვლები{% elif i == 5 %}Metasploit Framework{% else %}ჰაკინგის ეტაპი #{{ i }}{% endif %}
+                                        {% else %}აკადემიური მოდული #{{ i }}{% endif %}
+                                    </span>
+                                </div>
+                                <span class="text-muted small">6 აქტივობა</span>
+                            </div>
+                            {% if not is_locked %}
+                            <div id="collapse{{ i }}" class="accordion-collapse collapse {{ 'show' if i == 1 else '' }}" data-bs-parent="#curriculumAccordion">
+                                <div class="curriculum-body p-3 border-start border-gold border-opacity-25 ms-4 mt-2">
+                                    <div class="lecture-item d-flex justify-content-between align-items-center p-3 rounded-3 hover-bg-white-5">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <i class="fas fa-brain text-gold"></i>
+                                            <span class="text-white-50 small">
+                                                {% if c_type == "network" %}{% if i == 1 %}1.1 OSI 7 შრის დეტალური განხილვა{% elif i == 2 %}2.1 Packet Filtering პრინციპები{% else %}{{ i }}.1 თეორიული ლექცია{% endif %}
+                                                {% elif c_type == "hacking" %}{% if i == 1 %}1.1 Kali Linux-ის ინსტალაცია VMWare-ზე{% else %}{{ i }}.1 ჰაკინგის თეორია{% endif %}
+                                                {% else %}{{ i }}.1 სიღრმისეული ვიდეო ლექცია{% endif %}
+                                            </span>
+                                            <span class="ai-mentor-badge">AI Assisted</span>
+                                        </div>
+                                        <span class="text-muted smaller">25 წუთი</span>
+                                    </div>
+                                    <div class="lecture-item d-flex justify-content-between align-items-center p-3 rounded-3 hover-bg-white-5">
+                                        <div class="d-flex align-items-center gap-3"><i class="far fa-play-circle text-gold"></i><span class="text-white-50 small">{{ i }}.2 ტექნიკური დემონსტრაცია</span></div>
+                                        <span class="text-muted smaller">15 წუთი</span>
+                                    </div>
+                                    <div class="lecture-item d-flex justify-content-between align-items-center p-3 rounded-3 hover-bg-white-5">
+                                        <div class="d-flex align-items-center gap-3"><i class="fas fa-flask text-gold"></i><span class="text-white-50 small">{{ i }}.3 Hands-on Lab</span></div>
+                                        <span class="text-muted smaller text-gold fw-bold">45 წუთი</span>
+                                    </div>
+                                    <div class="lecture-item d-flex justify-content-between align-items-center p-3 rounded-3 hover-bg-white-5">
+                                        <div class="d-flex align-items-center gap-3"><i class="far fa-play-circle text-gold"></i><span class="text-white-50 small">{{ i }}.4 სიღრმისეული ანალიზი</span></div>
+                                        <span class="text-muted smaller">20 წუთი</span>
+                                    </div>
+                                    <div class="lecture-item d-flex justify-content-between align-items-center p-3 rounded-3 hover-bg-white-5">
+                                        <div class="d-flex align-items-center gap-3"><i class="fas fa-file-pdf text-muted"></i><span class="text-white-50 small">{{ i }}.5 PDF რესურსი</span></div>
+                                        <span class="text-muted smaller">Resource</span>
+                                    </div>
+                                    <div class="lecture-item d-flex justify-content-between align-items-center p-3 rounded-3 hover-bg-white-5">
+                                        <div class="d-flex align-items-center gap-3"><i class="fas fa-question-circle text-muted"></i><span class="text-white-50 small">{{ i }}.6 მოდულის ქვიზი</span></div>
+                                        <span class="text-muted smaller">Quiz</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="premium-sidebar">
+                <div class="premium-card p-4">
+                    <div class="course-img-wrapper mb-3" style="height: 220px; border-radius: 16px; overflow: hidden;">
+                        {% if course.image %}<img src="{{ course.image if course.image.startswith('http') else url_for('static', filename=course.image) }}" alt="{{ course.name }}" style="width: 100%; height: 100%; object-fit: cover;">{% endif %}
+                    </div>
+                    <h2 class="sidebar-course-name">{{ course.name }}</h2>
+                    {% if is_enrolled %}<div class="enroll-success-badge"><i class="fas fa-check-circle"></i> წვდომა გააქტიურებულია</div>
+                    {% else %}<div class="price-tag mb-3"><span class="current-price fs-3 fw-bold text-white">{{ course.price }}₾</span></div>{% endif %}
+                    <div class="d-grid gap-3 mb-3">{% if not is_enrolled %}<form action="/buy" method="post" class="d-grid"><input type="hidden" name="id" value="{{ course.id }}"><button type="submit" class="btn btn-gold py-3 shadow-gold fw-bold"><i class="fas fa-shopping-cart me-2"></i> ყიდვა ახლა</button></form>{% endif %}</div>
+                    <button class="benefits-toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#benefitsCollapse"><span>კურსის სარგებელი</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="collapse" id="benefitsCollapse"><div class="pt-3">
+                        <div class="course-includes-item"><i class="fas fa-video"></i> <span>სრული ვიდეო კურსი</span></div>
+                        <div class="course-includes-item"><i class="fas fa-vial"></i> <span>პრაქტიკული ლაბორატორიები</span></div>
+                        <div class="course-includes-item"><i class="fas fa-award"></i> <span>ოფიციალური სერტიფიკატი</span></div>
+                        <div class="course-includes-item"><i class="fas fa-infinity"></i> <span>უვადო წვდომა მასალებზე</span></div>
+                        <div class="course-includes-item"><i class="fas fa-mobile-alt"></i> <span>Mobile-ready პლატფორმა</span></div>
+                    </div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

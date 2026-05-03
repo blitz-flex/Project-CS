@@ -1,0 +1,53 @@
+/* ==========================================================================
+   UTILITIES / HELPERS
+   Spacing overrides, glow effects, hover interactions, and
+   miscellaneous one-off utilities.
+   ========================================================================== */
+
+/* --- Spacing (100px steps) --- */
+.mt-100 { margin-top:     100px !important; }
+.mb-100 { margin-bottom:  100px !important; }
+.pt-100 { padding-top:    100px !important; }
+.pb-100 { padding-bottom: 100px !important; }
+
+/* --- Display / Layout --- */
+.cursor-pointer { cursor: pointer !important; }
+.border-dashed  { border-style: dashed !important; }
+.z-10           { z-index: 10 !important; }
+.opacity-50     { opacity: 0.5 !important; }
+
+/* --- Glow Effects --- */
+.cyber-glow        { text-shadow:  0 0 10px rgba(212, 175, 55, 0.5); }
+.cyber-border-glow { box-shadow:   0 0 15px rgba(212, 175, 55, 0.1); }
+
+/* --- Interactive Hover Helpers --- */
+.hover-bg-gold-5:hover {
+    background:   rgba(212, 175, 55, 0.05) !important;
+    border-color: rgba(212, 175, 55, 0.2)  !important;
+    transform: translateX(5px);
+}
+
+/* --- Inline Base Styles (pulled from base.html <style> block) --- */
+.hover-gold:hover {
+    color: var(--primary-gold) !important;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    transition: 0.3s ease;
+}
+
+.logo-wrapper {
+    position: relative;
+}
+
+.logo-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    background: var(--primary-gold);
+    filter: blur(40px);
+    opacity: 0.2;
+    z-index: -1;
+}

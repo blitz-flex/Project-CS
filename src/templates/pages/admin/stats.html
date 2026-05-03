@@ -1,0 +1,109 @@
+{% extends "layouts/admin.html" %}
+
+{% block title %}ანალიტიკა{% endblock %}
+{% block header %}სისტემის ანალიტიკა{% endblock %}
+
+{% block main %}
+
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="admin-stat-card">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <span class="admin-stat-label">Total Operatives</span>
+                <i class="fas fa-users-cog text-gold opacity-50"></i>
+            </div>
+            <p class="admin-stat-value">{{ stats.total_users }}</p>
+            <div class="mt-2 small text-muted">Active in network</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="admin-stat-card">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <span class="admin-stat-label">Training Modules</span>
+                <i class="fas fa-layer-group text-gold opacity-50"></i>
+            </div>
+            <p class="admin-stat-value">{{ stats.total_courses }}</p>
+            <div class="mt-2 small text-muted">Available sectors</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="admin-stat-card">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <span class="admin-stat-label">System Accesses</span>
+                <i class="fas fa-key text-gold opacity-50"></i>
+            </div>
+            <p class="admin-stat-value">{{ stats.total_enrollments }}</p>
+            <div class="mt-2 small text-success">Verification successful</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-5">
+    <div class="col-lg-6">
+        <div class="admin-card-header mb-4">
+            <h5 class="text-white fw-bold mb-0">Operative Feed</h5>
+        </div>
+        
+        <table class="table-minimal">
+            <thead>
+                <tr>
+                    <th>Operative</th>
+                    <th class="text-end">Registry ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if stats.recent_users %}
+                    {% for user in stats.recent_users %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="p-2 rounded-3 bg-white bg-opacity-5 small"><i class="fas fa-user-tag text-gold"></i></div>
+                                <span class="text-white fw-bold">{{ user.username }}</span>
+                            </div>
+                        </td>
+                        <td class="text-end small opacity-50 font-monospace">#{{ user.id }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td class="text-muted italic">No recent operative registry.</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="admin-card-header mb-4">
+            <h5 class="text-white fw-bold mb-0">Module Performance</h5>
+        </div>
+        
+        <table class="table-minimal">
+            <thead>
+                <tr>
+                    <th>Module Name</th>
+                    <th class="text-end">Engagement</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if stats.popular_courses %}
+                    {% for course in stats.popular_courses %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="p-2 rounded-3 bg-white bg-opacity-5 small"><i class="fas fa-bolt text-gold"></i></div>
+                                <span class="text-white fw-bold">{{ course.name }}</span>
+                            </div>
+                        </td>
+                        <td class="text-end">
+                            <span class="admin-badge badge-gold" style="font-size: 0.7rem; letter-spacing: 1px;">{{ course.enrollments }} HITS</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr><td class="text-muted italic">No module data detected.</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

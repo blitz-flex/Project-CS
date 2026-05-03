@@ -1,0 +1,684 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}მთავარი{% endblock %}
+
+{% block main %}
+
+<!-- Hero Section -->
+<section class="hero-section overflow-hidden position-relative py-5">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7 text-start">
+                <div class="pill-badge">Next-Gen Cyber Academy</div>
+                <h1 class="display-1 fw-extrabold text-white mb-4" style="letter-spacing: -2px;">
+                    დაეუფლე <span class="text-gold">მომავლის</span> პროფესიას
+                </h1>
+                <p class="lead text-muted mb-5 pe-lg-5" style="font-size: 1.25rem; line-height: 1.8;">
+                    Sentinel Academy არის ადგილი, სადაც თეორია ხვდება პრაქტიკას. ჩვენი AI-ზე დაფუძნებული პლატფორმა
+                    გთავაზობთ პერსონალიზებულ სასწავლო გზას კიბერუსაფრთხოების სამყაროში.
+                </p>
+                <div class="d-flex gap-4">
+                    <a href="/courses" class="btn btn-gold btn-lg shadow-gold">დაიწყე სწავლა</a>
+                    <a href="#methodology" class="btn btn-outline-gold btn-lg">როგორ მუშაობს?</a>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block">
+                <div class="premium-card p-0 overflow-hidden shadow-gold"
+                    style="border-radius: 40px; border-color: rgba(212,175,55,0.2);">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800"
+                        alt="Cybersecurity" class="w-100 opacity-75">
+                    <div class="p-4 bg-black" style="background: rgba(0,0,0,0.8) !important;">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="icon-box m-0 bg-gold text-black border-0"
+                                    style="width: 40px; height: 40px; font-size: 1rem;"><i
+                                        class="fas fa-shield-alt"></i></div>
+                                <div>
+                                    <h6 class="text-white mb-0">Active Lab Instance</h6>
+                                    <small class="text-success">System Online</small>
+                                </div>
+                            </div>
+                            <div class="text-gold smaller font-monospace">10.10.10.1</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Bar -->
+<section class="stats-bar">
+    <div class="container">
+        <div class="row text-center g-4">
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <h2>500+</h2>
+                    <p>სტუდენტი</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <h2>15+</h2>
+                    <p>კურსი</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <h2>24/7</h2>
+                    <p>AI მხარდაჭერა</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <h2>98%</h2>
+                    <p>კმაყოფილება</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    </div>
+</section>
+
+<!-- Global Threat Intel Feed (Original, kept for flow) -->
+<section class="py-3 bg-black border-top border-bottom border-gold border-opacity-10 overflow-hidden">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center gap-4">
+            <div class="badge bg-danger bg-opacity-25 text-white border border-danger border-opacity-50 px-3 py-2 fw-bold"
+                style="font-size: 0.7rem; letter-spacing: 1px;">LIVE THREAT INTEL</div>
+            <div class="ticker-wrapper overflow-hidden flex-grow-1">
+                <div class="ticker-content d-flex text-muted small font-monospace">
+                    <div class="d-flex gap-5 white-space-nowrap">
+                        <span>[CRITICAL] CVE-2024-3094: Backdoor found in XZ Utils. Impact: High</span>
+                        <span class="text-gold">|</span>
+                        <span>[INFO] New ransomware variant 'SENTINEL-X' detected in the wild</span>
+                        <span class="text-gold">|</span>
+                        <span>[ALERT] Phishing campaign targeting fintech sectors in EMEA region</span>
+                        <span class="text-gold">|</span>
+                        <span>[INTEL] Zero-day exploit for popular CMS identified by Red Team Alpha</span>
+                        <span class="text-gold">|</span>
+                        <span>[SYSTEM] Sentinel-OS v2.4 patch deployed to all lab instances</span>
+                        <span class="text-gold">|</span>
+                    </div>
+                    <!-- Duplicate for seamless scroll -->
+                    <div class="d-flex gap-5 white-space-nowrap">
+                        <span>[CRITICAL] CVE-2024-3094: Backdoor found in XZ Utils. Impact: High</span>
+                        <span class="text-gold">|</span>
+                        <span>[INFO] New ransomware variant 'SENTINEL-X' detected in the wild</span>
+                        <span class="text-gold">|</span>
+                        <span>[ALERT] Phishing campaign targeting fintech sectors in EMEA region</span>
+                        <span class="text-gold">|</span>
+                        <span>[INTEL] Zero-day exploit for popular CMS identified by Red Team Alpha</span>
+                        <span class="text-gold">|</span>
+                        <span>[SYSTEM] Sentinel-OS v2.4 patch deployed to all lab instances</span>
+                        <span class="text-gold">|</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Methodology Section -->
+<section id="methodology" class="py-5 mt-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <div class="pill-badge">როგორ ვასწავლით?</div>
+            <h2 class="display-4 fw-bold text-white">3-საფეხურიანი <span class="text-gold">მეთოდოლოგია</span></h2>
+            <p class="text-muted">ჩვენი სისტემა ორიენტირებულია რეალურ შედეგზე</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div
+                    class="premium-card p-5 border-white border-opacity-5 bg-black bg-opacity-20 rounded-5 hover-bg-gold-5 transition-all">
+                    <div class="icon-box mb-4" style="width: 60px; height: 60px; font-size: 1.5rem;"><i
+                            class="fas fa-book-open"></i></div>
+                    <h4 class="text-white fw-bold mb-3">ინტერაქტიული თეორია</h4>
+                    <p class="text-muted small mb-0">არანაირი მშრალი ტექსტები. თითოეული გაკვეთილი მოიცავს მოკლე
+                        ვიდეოებს, ვიზუალურ დიაგრამებს და ინტერაქტიულ ქვიზებს.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="premium-card p-5 border-white border-opacity-5 bg-black bg-opacity-20 rounded-5 hover-bg-gold-5 transition-all"
+                    style="border-color: rgba(212, 175, 55, 0.2) !important;">
+                    <div class="icon-box mb-4 bg-gold bg-opacity-10 text-gold"
+                        style="width: 60px; height: 60px; font-size: 1.5rem;"><i class="fas fa-microchip"></i></div>
+                    <h4 class="text-white fw-bold mb-3">პრაქტიკული ლაბები</h4>
+                    <p class="text-muted small mb-0">თეორიის შემდეგ მომენტალურად გადადიხართ ინტეგრირებულ ლაბორატორიაში,
+                        სადაც რეალურ სისტემებზე ახორციელებთ შეტევას.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div
+                    class="premium-card p-5 border-white border-opacity-5 bg-black bg-opacity-20 rounded-5 hover-bg-gold-5 transition-all">
+                    <div class="icon-box mb-4" style="width: 60px; height: 60px; font-size: 1.5rem;"><i
+                            class="fas fa-shield-alt"></i></div>
+                    <h4 class="text-white fw-bold mb-3">სისტემური გამოცდა</h4>
+                    <p class="text-muted small mb-0">თითოეული მოდულის ბოლოს გაბარებთ რეალურ CTF დავალებას, რაც
+                        ადასტურებს თქვენს მიერ მიღებულ ცოდნას.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Courses Section -->
+<section id="courses" class="py-5 mt-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <div class="pill-badge">ჩვენი კურსები</div>
+            <h2 class="display-4 fw-bold text-white">აირჩიე შენი <span class="text-gold">მიმართულება</span></h2>
+            <p class="text-muted">დაეუფლე კიბერუსაფრთხოებას პროფესიონალებისგან</p>
+        </div>
+
+        <div class="row g-4">
+            {% for course in courses %}
+            <div class="col-lg-4 col-md-6">
+                <div
+                    class="premium-card h-100 p-0 overflow-hidden border-gold border-opacity-10 shadow-sm position-relative">
+                    <a href="/info?id={{ course.id }}" class="stretched-link"></a>
+                    {% if course.image %}
+                    <img src="{{ course.image if course.image.startswith('http') else url_for('static', filename=course.image) }}"
+                        alt="{{ course.name }}" class="w-100 opacity-50" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="bg-black bg-opacity-40 d-flex align-items-center justify-content-center"
+                        style="height: 200px;">
+                        <i class="fas fa-book-open text-gold opacity-50 fa-3x"></i>
+                    </div>
+                    {% endif %}
+                    <div class="p-4 text-center">
+                        <div class="icon-box mx-auto mb-3"
+                            style="width: 50px; height: 50px; font-size: 1.2rem; margin-top: -50px; position: relative; background: #0A0F16; border: 1px solid rgba(212, 175, 55, 0.2); z-index: 2;">
+                            {% if loop.index == 1 %}<i class="fas fa-shield-virus"></i>
+                            {% elif loop.index == 2 %}<i class="fas fa-user-ninja"></i>
+                            {% else %}<i class="fas fa-network-wired"></i>{% endif %}
+                        </div>
+                        <h4 class="text-white fw-bold mb-3">{{ course.name }}</h4>
+                        <p class="text-muted small mb-0">{{ course.description[:100] }}...</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if not courses %}
+            <div class="col-12 text-center py-5">
+                <p class="text-muted">კურსები მალე დაემატება...</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- AI Mentor Highlight -->
+<section class="py-5 mt-5 bg-black bg-opacity-25">
+    <div class="container">
+        <div class="premium-card p-5 border-gold shadow-gold">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <h2 class="display-5 fw-bold text-white mb-4">თქვენი პერსონალური <span class="text-gold">AI
+                            მენტორი</span></h2>
+                    <p class="text-muted mb-4 fs-5">
+                        დაგავიწყდათ Linux ბრძანება? ვერ იგებთ როგორ მუშაობს SQL ინექცია?
+                        ჩვენი AI მენტორი ხელმისაწვდომია 24/7, რათა გიპასუხოთ ნებისმიერ კითხვაზე და მოგცეთ რჩევები
+                        სწავლის პროცესში.
+                    </p>
+                    <ul class="list-unstyled text-white mb-5">
+                        <li class="mb-3"><i class="fas fa-check text-gold me-2"></i> კოდის ანალიზი რეალურ დროში</li>
+                        <li class="mb-3"><i class="fas fa-check text-gold me-2"></i> პერსონალიზებული დავალებები</li>
+                        <li class="mb-3"><i class="fas fa-check text-gold me-2"></i> ენის ბარიერის გარეშე (ქართული
+                            მხარდაჭერა)</li>
+                    </ul>
+                    <a href="/signup" class="btn btn-gold px-5 py-3 fw-bold shadow-gold">სცადე ახლავე</a>
+                </div>
+                <div class="col-lg-6 mt-5 mt-lg-0 text-center">
+                    <div class="icon-box mx-auto shadow-gold"
+                        style="width: 220px; height: 220px; font-size: 6rem; background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 70%);">
+                        <i class="fas fa-robot animate-float"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Roadmap Section -->
+<section class="py-5 mt-5">
+    <div class="container text-center">
+        <div class="mb-5">
+            <div class="pill-badge">სწავლის გზა</div>
+            <h2 class="display-4 fw-bold text-white">თქვენი გზა <span class="text-gold">წარმატებისკენ</span></h2>
+            <p class="text-muted">4 ნაბიჯი კიბერუსაფრთხოების ოსტატობამდე</p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-3 col-md-6">
+                <div class="roadmap-step-card">
+                    <div class="step-num">01</div>
+                    <div class="icon-box mb-4"><i class="fas fa-seedling"></i></div>
+                    <h5 class="text-white fw-bold mb-3">დაწყება</h5>
+                    <p class="text-muted small mb-0">კიბერ-საფუძვლების შესწავლა და გარემოს მოწყობა ნულიდან.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="roadmap-step-card">
+                    <div class="step-num">02</div>
+                    <div class="icon-box mb-4"><i class="fas fa-tools"></i></div>
+                    <h5 class="text-white fw-bold mb-3">ანალიზი</h5>
+                    <p class="text-muted small mb-0">ხარვეზების პოვნა, ქსელის სკანირება და ანალიზი.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="roadmap-step-card">
+                    <div class="step-num">03</div>
+                    <div class="icon-box mb-4"><i class="fas fa-user-ninja"></i></div>
+                    <h5 class="text-white fw-bold mb-3">ექსპლოიტაცია</h5>
+                    <p class="text-muted small mb-0">რეალური შეტევების სიმულაცია და დაცვის მექანიზმები.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="roadmap-step-card">
+                    <div class="step-num">04</div>
+                    <div class="icon-box mb-4"><i class="fas fa-trophy"></i></div>
+                    <h5 class="text-white fw-bold mb-3">ოსტატობა</h5>
+                    <p class="text-muted small mb-0">სერტიფიცირება და კარიერის დაწყება წამყვან კომპანიებში.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technical Stack -->
+<section class="py-5 mt-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <div class="pill-badge">Technical Stack</div>
+            <h2 class="display-5 fw-bold text-white mb-4">ინსტრუმენტები, რომლებსაც <span
+                    class="text-gold">დაეუფლებით</span></h2>
+            <p class="text-muted">ინდუსტრიის სტანდარტი პროგრამული უზრუნველყოფა</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-2 col-md-4 col-6">
+                <div
+                    class="premium-card p-4 text-center border-white border-opacity-5 bg-black bg-opacity-20 grayscale-hover transition-all">
+                    <i class="fab fa-linux fa-3x text-white mb-3"></i>
+                    <h6 class="text-white mb-0 small fw-bold">Kali Linux</h6>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <div
+                    class="premium-card p-4 text-center border-white border-opacity-5 bg-black bg-opacity-20 grayscale-hover transition-all">
+                    <i class="fab fa-python fa-3x text-gold mb-3"></i>
+                    <h6 class="text-white mb-0 small fw-bold">Python</h6>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <div
+                    class="premium-card p-4 text-center border-white border-opacity-5 bg-black bg-opacity-20 grayscale-hover transition-all">
+                    <i class="fas fa-network-wired fa-3x text-info mb-3"></i>
+                    <h6 class="text-white mb-0 small fw-bold">Wireshark</h6>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <div
+                    class="premium-card p-4 text-center border-white border-opacity-5 bg-black bg-opacity-20 grayscale-hover transition-all">
+                    <i class="fab fa-docker fa-3x text-primary mb-3"></i>
+                    <h6 class="text-white mb-0 small fw-bold">Docker</h6>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <div
+                    class="premium-card p-4 text-center border-white border-opacity-5 bg-black bg-opacity-20 grayscale-hover transition-all">
+                    <i class="fas fa-terminal fa-3x text-success mb-3"></i>
+                    <h6 class="text-white mb-0 small fw-bold">Metasploit</h6>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-6">
+                <div
+                    class="premium-card p-4 text-center border-white border-opacity-5 bg-black bg-opacity-20 grayscale-hover transition-all">
+                    <i class="fas fa-shield-alt fa-3x text-danger mb-3"></i>
+                    <h6 class="text-white mb-0 small fw-bold">Burp Suite</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Expert Spotlight -->
+<section class="py-5 mt-5">
+    <div class="container text-center">
+        <div class="mb-5">
+            <div class="pill-badge">ჩვენი გუნდი</div>
+            <h2 class="display-4 fw-bold text-white"> ისწავლე <span class="text-gold">ექსპერტებისგან</span></h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="premium-card h-100">
+                    <div class="icon-box mx-auto mb-3" style="width: 80px; height: 80px; font-size: 2rem;"><i
+                            class="fas fa-user-tie"></i></div>
+                    <h5 class="text-white fw-bold mb-1">ალექსანდრე კაპანაძე</h5>
+                    <p class="text-gold small mb-3">Senior Security Engineer @ Google</p>
+                    <p class="text-muted small">10+ წლიანი გამოცდილება შეღწევადობის ტესტირებაში.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="premium-card h-100">
+                    <div class="icon-box mx-auto mb-3" style="width: 80px; height: 80px; font-size: 2rem;"><i
+                            class="fas fa-user-ninja"></i></div>
+                    <h5 class="text-white fw-bold mb-1">გიორგი მახარაძე</h5>
+                    <p class="text-gold small mb-3">CTF Champion / Security Analyst</p>
+                    <p class="text-muted small">სპეციალიზაცია: Reverse Engineering.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="premium-card h-100">
+                    <div class="icon-box mx-auto mb-3" style="width: 80px; height: 80px; font-size: 2rem;"><i
+                            class="fas fa-shield-virus"></i></div>
+                    <h5 class="text-white fw-bold mb-1">ნინო აბაშიძე</h5>
+                    <p class="text-gold small mb-3">Incident Response Lead</p>
+                    <p class="text-muted small">ექსპერტი ციფრულ ფორენზიკაში.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Platform Features -->
+<section class="py-5 mt-5">
+    <div class="container">
+        <div class="premium-card p-5 border-gold border-opacity-10 bg-black bg-opacity-40 rounded-5 overflow-hidden shadow-lg"
+            style="backdrop-filter: blur(20px);">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                    <div class="pill-badge mb-3">ტექნოლოგიები</div>
+                    <h2 class="display-5 fw-bold text-white mb-4">უახლესი <span class="text-gold">პლატფორმა</span></h2>
+                    <div class="feature-list d-flex flex-column gap-4">
+                        <div class="d-flex gap-4 p-3 rounded-4 hover-bg-gold-5 transition-all">
+                            <div class="icon-box flex-shrink-0 bg-gold bg-opacity-10 text-gold border-gold border-opacity-20"
+                                style="width: 60px; height: 60px;"><i class="fas fa-terminal"></i></div>
+                            <div>
+                                <h5 class="text-white mb-1 fw-bold">ინტეგრირებული ტერმინალი</h5>
+                                <p class="text-muted small mb-0">ისწავლეთ Linux-თან მუშაობა პირდაპირ ბრაუზერში.</p>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-4 p-3 rounded-4 hover-bg-gold-5 transition-all">
+                            <div class="icon-box flex-shrink-0 bg-gold bg-opacity-10 text-gold border-gold border-opacity-20"
+                                style="width: 60px; height: 60px;"><i class="fas fa-infinity"></i></div>
+                            <div>
+                                <h5 class="text-white mb-1 fw-bold">უვადო წვდომა</h5>
+                                <p class="text-muted small mb-0">ერთხელ შეძენილი კურსი სამუდამოდ თქვენია.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div
+                        class="terminal-mockup shadow-gold rounded-4 overflow-hidden border border-white border-opacity-10">
+                        <div class="terminal-header d-flex gap-2 p-3 bg-dark bg-opacity-80">
+                            <div style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56;"></div>
+                            <div style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e;"></div>
+                            <div style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f;"></div>
+                        </div>
+                        <div class="terminal-body p-4 bg-black font-monospace smaller" style="min-height: 250px;">
+                            <p class="text-success mb-2">sentinel@academy:~$ <span class="text-white">nmap -sV
+                                    10.10.10.1</span></p>
+                            <p class="text-muted">Starting Nmap 7.92...</p>
+                            <p class="text-white">PORT STATE SERVICE VERSION</p>
+                            <p class="text-white">22/tcp open ssh OpenSSH 8.2p1</p>
+                            <p class="text-success mt-4">sentinel@academy:~$ <span
+                                    class="text-white animate-pulse">|</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Student Reviews -->
+<section class="py-5 mt-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <div class="pill-badge">სტუდენტების აზრი</div>
+            <h2 class="display-4 fw-bold text-white">წარმატების <span class="text-gold">ისტორიები</span></h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div
+                    class="premium-card p-5 h-100 border-gold border-opacity-10 bg-black bg-opacity-40 hover-glow transition-all rounded-5">
+                    <div class="d-flex gap-1 text-gold mb-4"><i class="fas fa-star smaller"></i><i
+                            class="fas fa-star smaller"></i><i class="fas fa-star smaller"></i><i
+                            class="fas fa-star smaller"></i><i class="fas fa-star smaller"></i></div>
+                    <p class="text-white italic mb-5 fs-5 fw-medium">"სენთინელმა სრულიად შეცვალა ჩემი კარიერა.
+                        პრაქტიკული ლაბორატორიები არის ის, რაც სხვა აკადემიებს აკლიათ."</p>
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="https://ui-avatars.com/api/?name=David+Beridze&background=D4AF37&color=000&bold=true"
+                            class="rounded-circle shadow-gold" style="width: 55px; height: 55px;">
+                        <div>
+                            <h6 class="text-white mb-0 fw-bold">დავით ბერიძე</h6><small class="text-gold opacity-75">SOC
+                                Analyst @ Bank of Georgia</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div
+                    class="premium-card p-5 h-100 border-gold border-opacity-10 bg-black bg-opacity-40 hover-glow transition-all rounded-5">
+                    <div class="d-flex gap-1 text-gold mb-4"><i class="fas fa-star smaller"></i><i
+                            class="fas fa-star smaller"></i><i class="fas fa-star smaller"></i><i
+                            class="fas fa-star smaller"></i><i class="fas fa-star smaller"></i></div>
+                    <p class="text-white italic mb-5 fs-5 fw-medium">"AI მენტორი საოცრებაა. ნებისმიერ დროს, როცა კითხვა
+                        მიჩნდება, პასუხს წამებში ვიღებ."</p>
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="https://ui-avatars.com/api/?name=Ana+Kiknadze&background=D4AF37&color=000&bold=true"
+                            class="rounded-circle shadow-gold" style="width: 55px; height: 55px;">
+                        <div>
+                            <h6 class="text-white mb-0 fw-bold">ანა კიკნაძე</h6><small
+                                class="text-gold opacity-75">Junior Pentester @ TBC Bank</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Sentinel -->
+<section class="py-5 mt-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <div class="pill-badge">Market Positioning</div>
+            <h2 class="display-4 fw-bold text-white mb-4">რატომ <span class="text-gold">Sentinel Academy?</span></h2>
+            <p class="text-muted">ჩვენი ტექნოლოგიური უპირატესობა ტრადიციულ სწავლებასთან შედარებით</p>
+        </div>
+        <div class="row g-4 align-items-stretch">
+            <div class="col-lg-5">
+                <div class="premium-card h-100 p-5 border-white border-opacity-5 bg-black bg-opacity-20 rounded-5">
+                    <h4 class="text-muted mb-4 fw-bold opacity-50">სხვა აკადემიები</h4>
+                    <ul class="list-unstyled d-flex flex-column gap-4">
+                        <li class="d-flex align-items-center gap-3 opacity-50"><i
+                                class="fas fa-times-circle text-danger"></i> <span>ფიქსირებული განრიგი</span></li>
+                        <li class="d-flex align-items-center gap-3 opacity-50"><i
+                                class="fas fa-times-circle text-danger"></i> <span>მხოლოდ თეორია</span></li>
+                        <li class="d-flex align-items-center gap-3 opacity-50"><i
+                                class="fas fa-times-circle text-danger"></i> <span>მხარდაჭერა სამუშაო საათებში</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="premium-card h-100 p-5 border-gold border-opacity-30 bg-black bg-opacity-40 rounded-5 shadow-gold"
+                    style="background: linear-gradient(145deg, rgba(212, 175, 55, 0.05) 0%, rgba(0,0,0,0.5) 100%);">
+                    <div class="mb-5">
+                        <h4 class="text-gold mb-0 fw-black">Sentinel Academy</h4>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="d-flex gap-3">
+                                <div class="icon-box smaller flex-shrink-0 bg-gold bg-opacity-10 text-gold border-0"
+                                    style="width: 45px; height: 45px;"><i class="fas fa-bolt"></i></div>
+                                <div>
+                                    <h6 class="text-white mb-1 fw-bold">პერსონალიზებული</h6>
+                                    <p class="text-muted smaller mb-0">AI არეგულირებს სასწავლო ტემპს.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex gap-3">
+                                <div class="icon-box smaller flex-shrink-0 bg-gold bg-opacity-10 text-gold border-0"
+                                    style="width: 45px; height: 45px;"><i class="fas fa-shield-virus"></i></div>
+                                <div>
+                                    <h6 class="text-white mb-1 fw-bold">რეალური ლაბები</h6>
+                                    <p class="text-muted smaller mb-0">24/7 წვდომა პოლიგონზე.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section (Premium Upgrade) -->
+<section class="py-5 mt-5 position-relative">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-5">
+                <div class="pill-badge mb-3">სადეპოზიტო კითხვები</div>
+                <h2 class="display-3 fw-black text-white mb-4" style="letter-spacing: -2px;">დაგრჩათ <span
+                        class="text-gold-gradient">კითხვები?</span></h2>
+                <p class="text-muted fs-5 mb-5">ჩვენი გუნდი მზადაა დაგეხმაროთ ნებისმიერ დროს. გაეცანით პოპულარულ
+                    პასუხებს.</p>
+                <a href="/faq" class="btn btn-premium-gold px-5 py-3 shadow-gold">ყველა კითხვა</a>
+            </div>
+            <div class="col-lg-7">
+                <div class="accordion accordion-flush" id="faqAccordion">
+                    <!-- Q1 -->
+                    <div class="accordion-item mb-3"
+                        style="background: rgba(255,255,255,0.03) !important; border: 1px solid rgba(212,175,55,0.1) !important; border-radius: 15px; overflow: hidden;">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed py-4 fw-bold" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#f1"
+                                style="background: transparent !important; color: white !important; box-shadow: none !important;">
+                                <i class="fas fa-laptop-code text-gold me-3"></i> მჭირდება სპეციალური ტექნიკა?
+                            </button>
+                        </h2>
+                        <div id="f1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted pt-0 pb-4">
+                                არა, Sentinel Academy-ის პლატფორმა სრულად ბრაუზერში მუშაობს. თქვენ არ გჭირდებათ ძლიერი
+                                კომპიუტერი ან სპეციალური პროგრამების ინსტალაცია.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="accordion-item mb-3"
+                        style="background: rgba(255,255,255,0.03) !important; border: 1px solid rgba(212,175,55,0.1) !important; border-radius: 15px; overflow: hidden;">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed py-4 fw-bold" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#f2"
+                                style="background: transparent !important; color: white !important; box-shadow: none !important;">
+                                <i class="fas fa-certificate text-gold me-3"></i> გავიცემა თუ არა სერტიფიკატი?
+                            </button>
+                        </h2>
+                        <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted pt-0 pb-4">
+                                დიახ, ყოველი კურსის წარმატებით დასრულების შემდეგ თქვენ მიიღებთ Sentinel-ის ვერიფიცირებულ
+                                ციფრულ სერტიფიკატს, რომელიც შეგიძლიათ დაამატოთ თქვენს LinkedIn პროფილზე.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="accordion-item mb-3"
+                        style="background: rgba(255,255,255,0.03) !important; border: 1px solid rgba(212,175,55,0.1) !important; border-radius: 15px; overflow: hidden;">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed py-4 fw-bold" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#f3"
+                                style="background: transparent !important; color: white !important; box-shadow: none !important;">
+                                <i class="fas fa-language text-gold me-3"></i> რა დონეზეა საჭირო ინგლისური?
+                            </button>
+                        </h2>
+                        <div id="f3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted pt-0 pb-4">
+                                მასალების უმრავლესობა ხელმისაწვდომია ქართულ ენაზე. ინგლისური ენის საბაზისო (Elementary)
+                                დონე საკმარისია იმისათვის, რომ წარმატებით გაიაროთ სწავლება.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="accordion-item mb-3"
+                        style="background: rgba(255,255,255,0.03) !important; border: 1px solid rgba(212,175,55,0.1) !important; border-radius: 15px; overflow: hidden;">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed py-4 fw-bold" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#f4"
+                                style="background: transparent !important; color: white !important; box-shadow: none !important;">
+                                <i class="fas fa-users-cog text-gold me-3"></i> როგორ დავუკავშირდე ექსპერტებს?
+                            </button>
+                        </h2>
+                        <div id="f4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted pt-0 pb-4">
+                                რეგისტრაციის შემდეგ თქვენ მიიღებთ წვდომას ჩვენს დახურულ Discord სერვერზე, სადაც
+                                შეგიძლიათ პირდაპირ დაუსვათ კითხვები ინსტრუქტორებს და სხვა სტუდენტებს.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Elite Cyber Shield Hub (Updated Visual & Copy) -->
+<section class="py-4 my-5 position-relative">
+    <!-- Background Decoration -->
+    <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10"
+        style="background-image: radial-gradient(var(--primary-gold) 0.5px, transparent 0.5px); background-size: 50px 50px; z-index: 0; pointer-events: none;">
+    </div>
+
+    <div class="container position-relative" style="z-index: 10;">
+        <div class="premium-card p-0 border-glow-animate overflow-hidden shadow-gold rounded-5"
+            style="background: #05070A;">
+            <div class="row g-0 align-items-center">
+                <!-- Left Side: Visual Shield -->
+                <div class="col-lg-6 position-relative d-none d-lg-block" style="height: 100%; min-height: 500px;">
+                    <div class="scanner-laser"></div>
+                    <img src="{{ url_for('static', filename='img/cyber-shield.png') }}"
+                        class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover opacity-90"
+                        alt="Cyber Shield" style="object-position: center;">
+                    <!-- Smooth Blending Gradient -->
+                    <div class="position-absolute top-0 start-0 w-100 h-100"
+                        style="background: linear-gradient(90deg, rgba(5,7,10,0) 85%, rgba(5,7,10,1) 100%), linear-gradient(0deg, rgba(5,7,10,0.4) 0%, transparent 40%); z-index: 1;">
+                    </div>
+                </div>
+
+                <!-- Right Side: Refined Content -->
+                <div class="col-lg-6 p-4 p-xl-5 d-flex flex-column justify-content-center position-relative"
+                    style="z-index: 3; background: #05070A;">
+                    <h2 class="display-4 fw-black text-white mb-3" style="letter-spacing: -2px; line-height: 1.1;">
+                        გახდი <span class="text-glow-gold text-gold">ელიტარული</span> გუნდის <br>
+                        წევრი და <span class="text-gold-gradient">დაიცავი</span> მომავალი
+                    </h2>
+
+                    <p class="text-muted small mb-5 pe-lg-4" style="line-height: 1.6;">
+                        შემოუერთდი Sentinel Academy-ის ექსკლუზიურ საზოგადოებას. ჩვენთან ერთად თქვენ მიიღებთ წვდომას
+                        უახლეს ტექნოლოგიებთან და პროფესიონალურ ქსელთან.
+                    </p>
+
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="/signup" class="btn btn-premium-gold shadow-gold" style="padding: 1rem 2.5rem;">დაიწყე
+                            ახლავე</a>
+                        <a href="#" class="btn btn-outline-gold px-4 py-3 fw-black rounded-3 small">COMMUNITY HUB</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

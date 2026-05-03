@@ -1,0 +1,105 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}
+    კურსები
+{% endblock %}
+
+{% block main %}
+
+<!-- Courses Hero Section -->
+<section class="hero-section text-center py-5">
+    <div class="container">
+        <div class="pill-badge">Sentinel Academy Catalog</div>
+        <h1 class="display-3 fw-bold text-white mb-4">ჩვენი <span class="text-gold">აკადემიური</span> პროგრამები</h1>
+        <p class="lead text-muted mb-5 mx-auto" style="max-width: 750px;">
+            გაიარეთ ავტორიზებული კურიკულუმები, რომლებიც შექმნილია ინდუსტრიის წამყვანი ექსპერტების მიერ. დაეუფლეთ პრაქტიკულ უნარებს რეალურ ლაბორატორიებში.
+        </p>
+    </div>
+</section>
+
+<div class="container pb-5 mt-5">
+    <div class="row g-4">
+        {% for id in ids %}
+        <div class="col-lg-4 col-md-6">
+            <div class="course-card-premium h-100 p-0 overflow-hidden position-relative">
+                <a href="/info?id={{ id.id }}" class="stretched-link"></a>
+                
+                <!-- Image Wrapper -->
+                <div class="course-img-wrapper">
+                    {% if id.is_enrolled %}
+                        <div class="pill-badge position-absolute top-0 start-0 m-3" style="background: rgba(34, 197, 94, 0.9); border-color: rgba(34, 197, 94, 0.2); z-index: 10; color: #fff;">✓ შეძენილია</div>
+                    {% endif %}
+                    
+                    <div class="pill-badge position-absolute top-0 end-0 m-3 shadow-gold" style="background: var(--primary-gold); color: #000; border: none; z-index: 10; font-weight: 800; padding: 8px 16px;">
+                        {{ id.price }}₾
+                    </div>
+
+                    {% if id.image and id.image != '' %}
+                        {% if id.image.startswith('http') %}
+                            <img src="{{ id.image }}" alt="{{ id.name }}">
+                        {% else %}
+                            <img src="{{ url_for('static', filename=id.image) }}" alt="{{ id.name }}">
+                        {% endif %}
+                    {% else %}
+                        <div class="bg-black bg-opacity-40 d-flex align-items-center justify-content-center h-100">
+                            <i class="fas fa-book-open text-gold opacity-50 fa-3x"></i>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="course-overlay d-flex align-items-center justify-content-center">
+                        <span class="text-white fw-bold small"><i class="fas fa-eye me-2 text-gold"></i>დეტალები</span>
+                    </div>
+                </div>
+                
+                <!-- Content -->
+                <div class="p-4 pt-5 position-relative">
+                    <!-- Icon Mapping based on ID or index -->
+                    <div class="position-absolute top-0 start-0 translate-middle-y ms-4">
+                        <div class="icon-box shadow-gold" style="width: 54px; height: 54px; background: var(--bg-card); border-color: var(--primary-gold); border-width: 2px; z-index: 2; border-radius: 14px;">
+                            {% if loop.index == 1 %}<i class="fas fa-seedling"></i>
+                            {% elif loop.index == 2 %}<i class="fas fa-user-ninja"></i>
+                            {% elif loop.index == 3 %}<i class="fas fa-network-wired"></i>
+                            {% elif loop.index == 4 %}<i class="fas fa-globe"></i>
+                            {% elif loop.index == 5 %}<i class="fas fa-search"></i>
+                            {% else %}<i class="fas fa-cloud-shield"></i>{% endif %}
+                        </div>
+                    </div>
+
+                    <h5 class="text-white fw-bold mb-3 mt-2">{{ id.name }}</h5>
+                    
+                    <p class="text-muted small mb-4" style="line-height: 1.6;">
+                        {{ id.description }}
+                    </p>
+                    
+                    <!-- Meta Info Row -->
+                    <div class="d-flex align-items-center gap-3 mb-4 pt-3 border-top border-white border-opacity-5">
+                        <div class="meta-item"><i class="fas fa-clock text-gold"></i> 
+                            {% if loop.index == 1 %}12 მოდული{% elif loop.index == 2 %}24 მოდული{% elif loop.index == 3 %}18 მოდული{% elif loop.index == 4 %}15 მოდული{% elif loop.index == 5 %}28 მოდული{% else %}20 მოდული{% endif %}
+                        </div>
+                        <div class="meta-divider"></div>
+                        <div class="meta-item"><i class="fas fa-layer-group text-gold"></i> 
+                            {% if loop.index == 1 %}36 ლექცია{% elif loop.index == 2 %}72 ლექცია{% elif loop.index == 3 %}54 ლექცია{% elif loop.index == 4 %}45 ლექცია{% elif loop.index == 5 %}84 ლექცია{% else %}60 ლექცია{% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid position-relative z-index-3">
+                        <a href="/info?id={{ id.id }}" class="btn btn-gold btn-sm shadow-gold fw-bold">🎓 ნახვა</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    {% if not ids %}
+    <div class="text-center py-5">
+        <div class="icon-box mx-auto mb-4" style="width: 100px; height: 100px; font-size: 3rem; opacity: 0.3;">
+            <i class="fas fa-book-reader"></i>
+        </div>
+        <h3 class="text-white">კურსები ჯერ არ არის დამატებული</h3>
+        <p class="text-muted">მალე დაემატება ახალი საინტერესო კურიკულუმები ჩვენს პლატფორმაზე.</p>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

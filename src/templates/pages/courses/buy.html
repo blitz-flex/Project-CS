@@ -1,0 +1,168 @@
+{% extends "layouts/main.html" %}
+
+{% block title %}
+ყიდვა - Checkout
+{% endblock %}
+
+{% block main %}
+
+<section class="hero-section text-center py-5">
+    <div class="container">
+        <div class="pill-badge">Secure Checkout</div>
+        <h1 class="display-4 fw-bold text-white mb-3">გაფორმება</h1>
+        <p class="text-muted">თქვენი მომავალი აქ იწყება. დაასრულეთ შესყიდვა უსაფრთხოდ.</p>
+    </div>
+</section>
+
+<div class="container py-5">
+    {% if cart and cart|length > 0 %}
+    <div class="row g-5">
+        <!-- Order Summary -->
+        <div class="col-lg-5 order-lg-2">
+            <div class="premium-card sticky-top" style="top: 100px;">
+                <div class="p-4 border-bottom border-secondary">
+                    <h5 class="text-white fw-bold mb-0">შეკვეთის შეჯამება</h5>
+                </div>
+                <div class="p-4">
+                    {% for item in cart %}
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="icon-box p-0 overflow-hidden me-3"
+                            style="width: 70px; height: 50px; border-radius: 8px;">
+                            {% if item.image and item.image != '' %}
+                            <img src="{{ item.image if item.image.startswith('http') else url_for('static', filename=item.image) }}"
+                                alt="{{ item.name }}" class="w-100 h-100 object-fit-cover">
+                            {% else %}
+                            <div class="bg-dark d-flex align-items-center justify-content-center h-100"><i
+                                    class="fas fa-book text-gold"></i></div>
+                            {% endif %}
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="text-white mb-0 small fw-bold">{{ item.name }}</h6>
+                            <span class="text-muted small">Lifetime Access</span>
+                        </div>
+                        <div class="text-gold fw-bold">{% if item.price == 0 %}Free{% else %}{{ item.price }}₾{% endif
+                            %}</div>
+                    </div>
+                    {% endfor %}
+
+                    {% if promo and promo|length > 0 %}
+                    {% for promo_item in promo %}
+                    <div class="d-flex justify-content-between align-items-center mb-4 text-success small">
+                        <span><i class="fas fa-tag me-2"></i> {{ promo_item.name }}</span>
+                        <span>-{{ promo_item.value }}₾</span>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <hr class="border-secondary my-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <span class="text-white fs-5 fw-bold">ჯამი:</span>
+                        <span class="text-gold fs-4 fw-bold">{% if total is defined %}{{ total }}₾{% else %}0₾{% endif
+                            %}</span>
+                    </div>
+
+                    <form action="/buy" method="post" class="mb-0 mt-2">
+                        <div class="input-group" style="height: 55px;">
+                            <input type="text" name="promo" placeholder="პრომო კოდი" class="form-control form-control-premium h-100" 
+                                   style="border-top-right-radius: 0 !important; border-bottom-right-radius: 0 !important; border-right: none !important; background: rgba(255,255,255,0.03) !important;">
+                            <button type="submit" class="btn btn-outline-gold px-4 h-100" 
+                                    style="border-top-left-radius: 0 !important; border-bottom-left-radius: 0 !important; border-left: 1px solid rgba(212, 175, 55, 0.3) !important;">
+                                გამოყენება
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout Form -->
+        <div class="col-lg-7 order-lg-1">
+            <div class="premium-card p-5 animate-fade">
+                <form action="/buy" method="post">
+                    <h5 class="text-white fw-bold mb-4"><i class="fas fa-user-shield me-2 text-gold"></i> პერსონალური
+                        ინფორმაცია</h5>
+                    <div class="row g-3 mb-5">
+                        <div class="col-md-6 text-start">
+                            <label class="auth-label">სახელი</label>
+                            <input type="text" name="firstName" class="form-control form-control-premium"
+                                placeholder="თქვენი სახელი" required>
+                        </div>
+                        <div class="col-md-6 text-start">
+                            <label class="auth-label">გვარი</label>
+                            <input type="text" name="lastName" class="form-control form-control-premium"
+                                placeholder="თქვენი გვარი" required>
+                        </div>
+                        <div class="col-12 text-start">
+                            <label class="auth-label">ელ-ფოსტა</label>
+                            <input type="email" name="email" class="form-control form-control-premium"
+                                placeholder="example@mail.com" required>
+                        </div>
+                        <div class="col-12 text-start">
+                            <label class="auth-label">მისამართი</label>
+                            <input type="text" name="address" class="form-control form-control-premium"
+                                placeholder="ქუჩა, ნომერი" required>
+                        </div>
+                        <div class="col-md-8 text-start">
+                            <label class="auth-label">ქალაქი</label>
+                            <input type="text" name="city" class="form-control form-control-premium"
+                                placeholder="თბილისი" required>
+                        </div>
+                        <div class="col-md-4 text-start">
+                            <label class="auth-label">ინდექსი</label>
+                            <input type="text" name="postalCode" class="form-control form-control-premium"
+                                placeholder="0101" required>
+                        </div>
+                    </div>
+
+                    <h5 class="text-white fw-bold mb-4"><i class="fas fa-credit-card me-2 text-gold"></i> გადახდის
+                        მეთოდი</h5>
+                    <div class="p-4 bg-black bg-opacity-50 rounded-4 border border-secondary mb-5">
+                        <div class="mb-4 text-start">
+                            <label class="auth-label">ბარათის მფლობელი</label>
+                            <input type="text" name="cardName" class="form-control form-control-premium"
+                                placeholder="FULL NAME" required>
+                        </div>
+                        <div class="mb-4 text-start">
+                            <label class="auth-label">ბარათის ნომერი</label>
+                            <input type="text" name="cardNumber" class="form-control form-control-premium"
+                                placeholder="0000 0000 0000 0000" maxlength="19" required>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-6 text-start">
+                                <label class="auth-label">ვადა</label>
+                                <input type="text" name="cardExpiry" class="form-control form-control-premium"
+                                    placeholder="MM/YY" maxlength="5" required>
+                            </div>
+                            <div class="col-6 text-start">
+                                <label class="auth-label">CVV</label>
+                                <input type="text" name="cardCVV" class="form-control form-control-premium"
+                                    placeholder="***" maxlength="4" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-gold btn-lg w-100 py-3 shadow-gold">
+                        <i class="fas fa-lock me-2"></i> შეკვეთის დასრულება
+                    </button>
+
+                    <p class="text-center text-muted small mt-4">
+                        <i class="fas fa-shield-alt me-1"></i> თქვენი მონაცემები დაცულია 256-bit SSL შიფრაციით
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="text-center py-5 premium-card">
+        <div class="icon-box mx-auto mb-4" style="width: 100px; height: 100px; font-size: 3rem;">
+            <i class="fas fa-shopping-cart opacity-50"></i>
+        </div>
+        <h3 class="text-white fw-bold mb-3">თქვენი კალათა ცარიელია</h3>
+        <p class="text-muted mb-5">აღმოაჩინეთ პრემიუმ კურსები და დაიწყეთ სწავლა დღესვე.</p>
+        <a href="/courses" class="btn btn-gold px-5 py-3">კურსების ნახვა</a>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

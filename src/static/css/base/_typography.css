@@ -1,0 +1,30 @@
+/* ==========================================================================
+   BASE / TYPOGRAPHY
+   Heading defaults, gradient text helpers, and gold text utilities.
+   ========================================================================== */
+
+/* --- Headings --- */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+/* --- Color Utilities --- */
+.text-gold {
+    color: var(--primary-gold) !important;
+}
+
+.text-gold-gradient {
+    background: linear-gradient(135deg, var(--primary-gold), #A68A4F);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --- Tracking & Spacing --- */
+.tracking-tighter  { letter-spacing: -2px    !important; }
+.tracking-widest   { letter-spacing: 0.2em   !important; }
+.letter-spacing-1  { letter-spacing: 1px     !important; }
+
+/* --- Size --- */
+.smaller { font-size: 0.75rem !important; }

@@ -1,0 +1,43 @@
+/* ==========================================================================
+   LAYOUT / FOOTER
+   Footer background, top border, links, and social icon buttons.
+   ========================================================================== */
+
+.footer-premium {
+    background: #05070A;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 80px 0 40px;
+    margin-top: 100px;
+}
+
+.footer-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.footer-link:hover {
+    color: var(--primary-gold);
+    padding-left: 5px;
+}
+
+/* --- Social Icon Buttons --- */
+.social-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.social-btn:hover {
+    background: var(--primary-gold);
+    color: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+}

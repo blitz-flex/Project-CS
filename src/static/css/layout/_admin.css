@@ -1,0 +1,203 @@
+/* ==========================================================================
+   LAYOUT / ADMIN
+   Admin dashboard two-column layout: fixed sidebar + scrollable main area,
+   topbar, stat cards, data table, and action buttons.
+   ========================================================================== */
+
+/* --- Wrapper --- */
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background-color: #05070A;
+    overflow-x: hidden;
+}
+
+/* --- Sidebar --- */
+.admin-sidebar {
+    width: 280px;
+    background: rgba(10, 12, 16, 0.8);
+    backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    z-index: 1000;
+}
+
+.sidebar-header {
+    padding: 3rem 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.sidebar-nav { padding: 0 1rem; }
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 22px;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    border-radius: 14px;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+}
+
+.sidebar-link i {
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar-link:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-link.active {
+    color: var(--primary-gold);
+    background: linear-gradient(90deg, rgba(212, 175, 55, 0.1), transparent);
+    border-left: 3px solid var(--primary-gold);
+    border-radius: 0 14px 14px 0;
+    padding-left: 19px; /* compensate for 3px left border */
+    font-weight: 700;
+}
+
+/* --- Main Content Area --- */
+.admin-main {
+    flex-grow: 1;
+    margin-left: 280px;
+    padding: 4rem 5rem;
+}
+
+/* --- Top Bar --- */
+.admin-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4rem;
+    padding: 1.5rem 2.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+}
+
+.admin-topbar h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0;
+}
+
+/* --- Stat Cards --- */
+.admin-stat-card {
+    background: rgba(15, 17, 22, 0.4);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 28px;
+    padding: 2.5rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Top gradient shimmer line */
+.admin-stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+}
+
+.admin-stat-card:hover {
+    border-color: rgba(212, 175, 55, 0.2);
+    background: rgba(20, 22, 28, 0.6);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(212, 175, 55, 0.05);
+}
+
+.admin-stat-label {
+    color: var(--primary-gold);
+    opacity: 0.6;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.admin-stat-value {
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 0;
+    letter-spacing: -1px;
+}
+
+/* --- Data Table --- */
+.table-minimal {
+    width: 100%;
+    background: transparent;
+}
+
+.table-minimal th {
+    padding: 1.5rem;
+    color: var(--primary-gold);
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    border-bottom: 2px solid rgba(212, 175, 55, 0.1);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.table-minimal td {
+    padding: 1.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.table-minimal tr:hover td {
+    background: rgba(212, 175, 55, 0.02);
+    color: #fff;
+}
+
+/* --- Action Button (icon-only) --- */
+.admin-action-btn {
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.4);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.admin-action-btn:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--primary-gold);
+    border-color: rgba(212, 175, 55, 0.2);
+}
+
+/* --- Card Header --- */
+.admin-card-header h5 {
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+}

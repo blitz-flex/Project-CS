@@ -1,0 +1,171 @@
+{% extends "layouts/base.html" %}
+
+{% block body %}
+    <div class="auth-wrapper d-flex align-items-center justify-content-center min-vh-100 py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-8 col-sm-11">
+                    
+                    <!-- Premium Logo Section -->
+                    <div class="text-center mb-4 floating-logo">
+                        <a href="/" class="d-inline-flex align-items-center gap-2 text-decoration-none">
+                            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="main-logo-img">
+                            <h4 class="text-white mb-0 fw-black text-uppercase tracking-tighter">SENTINEL<span class="text-gold">.</span></h4>
+                        </a>
+                    </div>
+
+                    <!-- Enhanced Auth Card -->
+                    <div class="premium-auth-card">
+                        <div class="card-border-animation"></div>
+                        <div class="auth-card-content p-4 p-md-5">
+                            {% include "includes/_flash.html" %}
+                            {% block main %}{% endblock %}
+                        </div>
+                    </div>
+
+                    <div class="mt-5 text-center">
+                        <p class="text-white-50 smaller tracking-widest opacity-25">SECURE ACCESS GATEWAY // ENCRYPTED SESSION</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        :root {
+            --auth-bg: #030508;
+            --card-bg: rgba(15, 23, 42, 0.8);
+            --gold-main: #D4AF37;
+            --gold-glow: rgba(212, 175, 55, 0.4);
+        }
+
+        body {
+            background-color: var(--auth-bg);
+            background-image: linear-gradient(rgba(3, 5, 8, 0.8), rgba(3, 5, 8, 0.8)), url('/static/img/auth_bg.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .premium-auth-card {
+            position: relative;
+            background: var(--card-bg);
+            backdrop-filter: blur(25px);
+            border-radius: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .premium-auth-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.2);
+        }
+
+        /* Border Animation Effect */
+        .card-border-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold-main), transparent);
+            animation: scan-border 3s infinite linear;
+        }
+
+        @keyframes scan-border {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .main-logo-img {
+            height: 50px;
+            filter: drop-shadow(0 0 15px var(--gold-glow));
+        }
+
+        .floating-logo {
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Form Improvements */
+        .auth-label {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.6rem;
+            display: block;
+            text-align: left;
+        }
+
+        .form-control-premium {
+            width: 100% !important;
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 16px !important;
+            padding: 14px 20px !important;
+            color: #fff !important;
+            transition: all 0.3s ease !important;
+            box-sizing: border-box !important;
+        }
+
+        .form-control-premium:focus {
+            background: rgba(255, 255, 255, 0.06) !important;
+            border-color: var(--gold-main) !important;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.1) !important;
+            outline: none;
+        }
+
+        .btn-gold {
+            width: 100% !important;
+            background: linear-gradient(135deg, #D4AF37, #B8860B);
+            border: 1px solid transparent !important;
+            border-radius: 16px;
+            padding: 14px 20px !important;
+            color: #000 !important;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-sizing: border-box !important;
+            display: block !important;
+        }
+
+        .btn-gold:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+            filter: brightness(1.1);
+            color: #000;
+        }
+
+        .smaller { font-size: 0.65rem; letter-spacing: 3px; }
+        .hover-glow:hover {
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            color: #fff !important;
+        }
+        .btn-back-home {
+            background: rgba(212, 175, 55, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            color: rgba(255, 255, 255, 0.5) !important;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+        }
+        .btn-back-home:hover {
+            background: rgba(212, 175, 55, 0.08);
+            border-color: rgba(212, 175, 55, 0.3);
+            color: #fff !important;
+            transform: translateY(-2px);
+        }
+    </style>
+{% endblock %}
