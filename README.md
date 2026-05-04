@@ -1,8 +1,5 @@
 # 🛡️ Sentinel Academy — Enterprise Cyber-Tech Ecosystem
 
-[![Platform: Sentinel](https://img.shields.io/badge/Platform-Sentinel-gold.svg?style=for-the-badge)](https://github.com/)
-[![Environment: Production](https://img.shields.io/badge/Environment-Production-gold.svg?style=for-the-badge)](https://github.com/)
-[![Security: Certified](https://img.shields.io/badge/Security-Certified-gold.svg?style=for-the-badge)](https://github.com/)
 
 **Sentinel Academy** is a sophisticated, high-performance learning ecosystem designed for elite cyber-intelligence training. The platform seamlessly integrates a "Premium Cyber-Tech" aesthetic with robust administrative modules and a user-centric operational interface.
 
@@ -58,5 +55,5 @@
 
 The platform's operational version can be accessed via the following uplink:
 
-### 🎓  [SENTINEL ACADEMY](https://your-live-link.com)
+### 🎓  [SENTINEL ACADEMY](https://sentinel-edu.onrender.com/)
 
