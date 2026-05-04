@@ -10,11 +10,18 @@ from src.routes.account import account_bp
 from src.routes.courses import courses_bp
 
 from src.extensions import db
+from whitenoise import WhiteNoise
+from flask_compress import Compress
 
 def create_app():
     app = Flask(__name__,
                template_folder='templates',
                static_folder='static')
+
+    # ── Optimizations ────────────────────────────────────────────────────────
+    Compress(app)
+    # Efficient static file serving (especially for Render)
+    app.wsgi_app = WhiteNoise(app.wsgi_app, root='src/static/', prefix='static/')
 
     # ── Database ──────────────────────────────────────────────────────────────
     # Production: DATABASE_URL env var (PostgreSQL on Render)
@@ -33,6 +40,13 @@ def create_app():
         )
 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    
+    # Performance tuning for SQLAlchemy
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "pool_size": 10,
+        "pool_recycle": 300,
+        "pool_pre_ping": True,
+    }
 
     # ── Extensions ────────────────────────────────────────────────────────────
     db.init_app(app)
@@ -56,7 +70,8 @@ def create_app():
     Session(app)
 
     # ── Templates ─────────────────────────────────────────────────────────────
-    app.config["TEMPLATES_AUTO_RELOAD"] = True
+    # Disable auto-reload in production for performance
+    app.config["TEMPLATES_AUTO_RELOAD"] = os.environ.get("FLASK_DEBUG") == "1"
 
     # ── Blueprints ────────────────────────────────────────────────────────────
     app.register_blueprint(auth_bp)

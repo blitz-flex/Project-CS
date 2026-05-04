@@ -8,10 +8,6 @@ def index():
     courses = Course.query.limit(3).all()
     return render_template("pages/main/index.html", courses=courses)
 
-@main_bp.route("/faq")
-def faq():
-    return render_template("pages/main/faq.html")
-
 @main_bp.route("/search")
 def search():
     query = request.args.get("q", "")
