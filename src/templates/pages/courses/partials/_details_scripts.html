@@ -1,0 +1,13 @@
+<script>
+    function toggleAIChat() {
+        const window = document.getElementById('aiChatWindow');
+        const icon = document.getElementById('aiBtnIcon');
+        if (window.style.display === 'flex') {
+            window.style.display = 'none';
+            icon.className = 'fas fa-comment-dots';
+        } else {
+            window.style.display = 'flex';
+            icon.className = 'fas fa-times';
+        }
+    }
+</script>

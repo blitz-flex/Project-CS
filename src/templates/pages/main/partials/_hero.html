@@ -1,0 +1,62 @@
+<!-- Hero Section -->
+<section class="hero-section overflow-hidden position-relative pt-5 pb-0" style="min-height: 90vh; display: flex; align-items: center; background: var(--bg-deep);">
+    <!-- Cyber Grid Background -->
+    <div class="position-absolute top-0 start-0 w-100 h-100 opacity-20"
+        style="background-image: linear-gradient(rgba(212, 175, 55, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(212, 175, 55, 0.1) 1px, transparent 1px); background-size: 40px 40px; z-index: 0; pointer-events: none; mask-image: radial-gradient(circle at center, black, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black, transparent 80%);">
+    </div>
+
+    <!-- Background Glows -->
+    <div class="position-absolute rounded-circle" style="width: 60vw; height: 60vw; max-width: 600px; max-height: 600px; background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%); top: -10%; right: -10%; z-index: 0; filter: blur(60px);"></div>
+    <div class="position-absolute rounded-circle" style="width: 50vw; height: 50vw; max-width: 500px; max-height: 500px; background: radial-gradient(circle, rgba(30, 58, 138, 0.2) 0%, transparent 70%); bottom: -10%; left: -10%; z-index: 0; filter: blur(60px);"></div>
+
+    <div class="container position-relative" style="z-index: 10;">
+        <div class="row align-items-center g-5 mt-4 mt-lg-0">
+            <div class="col-lg-6 text-start">
+                <div class="d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill border border-gold border-opacity-25 bg-gold bg-opacity-10 mb-4 animate-float" style="font-size: 0.85rem; letter-spacing: 1px;">
+                    <span class="spinner-grow spinner-grow-sm text-gold" style="width: 8px; height: 8px;"></span>
+                    <span class="text-gold fw-bold text-uppercase">Next-Gen Cyber Academy</span>
+                </div>
+                <h1 class="display-1 fw-extrabold text-white mb-4" style="letter-spacing: -2px; line-height: 1.1;">
+                    დაეუფლე <br><span class="text-gold" style="text-shadow: 0 0 30px rgba(212,175,55,0.4);">მომავლის</span> პროფესიას
+                </h1>
+                <p class="lead text-muted mb-5 pe-lg-5" style="font-size: 1.25rem; line-height: 1.8;">
+                    Sentinel Academy არის ადგილი, სადაც თეორია ხვდება პრაქტიკას. ჩვენი <span class="text-white fw-bold">AI-ზე დაფუძნებული</span> პლატფორმა გთავაზობთ პერსონალიზებულ სასწავლო გზას კიბერუსაფრთხოების სამყაროში.
+                </p>
+                <div class="d-flex flex-wrap gap-4 align-items-center">
+                    <a href="/courses" class="btn btn-gold btn-lg px-5 py-3 fw-bold position-relative overflow-hidden" style="box-shadow: 0 0 20px rgba(212,175,55,0.4);">
+                        <span class="position-relative z-1">დაიწყე სწავლა</span>
+                    </a>
+                    <a href="#methodology" class="text-white text-decoration-none fw-bold hover-gold d-flex align-items-center gap-2 fs-5">
+                        <i class="fas fa-play-circle text-gold fs-3"></i> როგორ მუშაობს?
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block position-relative">
+                <div class="premium-card p-0 overflow-hidden border-0"
+                    style="border-radius: 20px; transform: perspective(1000px) rotateY(-8deg) rotateX(5deg); transition: transform 0.5s ease; box-shadow: 0 30px 60px -15px rgba(0,0,0,0.8), 0 0 40px rgba(212,175,55,0.15) !important; transform-style: preserve-3d;">
+                    
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1000"
+                        alt="Cybersecurity" class="w-100" style="opacity: 0.85; filter: contrast(1.1) brightness(0.9); height: 500px; object-fit: cover;">
+                    
+                    <!-- Floating Tech Badge -->
+                    <div class="position-absolute bottom-0 start-0 m-4 p-3 bg-black bg-opacity-80 rounded-4 border border-white border-opacity-10" style="backdrop-filter: blur(10px); transform: translateZ(30px);">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="icon-box m-0 bg-gold bg-opacity-20 text-gold border-0"
+                                style="width: 45px; height: 45px; font-size: 1.2rem;"><i class="fas fa-shield-alt"></i></div>
+                            <div>
+                                <h6 class="text-white mb-0 fw-bold">Active Lab Instance</h6>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 10px #22c55e;" class="animate-pulse"></div>
+                                    <small class="text-success fw-bold font-monospace">System Online | 10.10.10.1</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scan Line Overlay -->
+                    <div class="scanner-line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

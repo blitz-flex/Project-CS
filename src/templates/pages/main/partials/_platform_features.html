@@ -1,0 +1,66 @@
+<!-- Platform Features -->
+<section class="py-5 mt-5">
+    <div class="container">
+        <div class="premium-card p-5 border-gold border-opacity-10 bg-black bg-opacity-40 rounded-5 overflow-hidden shadow-lg"
+            style="backdrop-filter: blur(20px);">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                    <div class="pill-badge mb-3">ტექნოლოგიები</div>
+                    <h2 class="display-5 fw-bold text-white mb-4">უახლესი <span class="text-gold">პლატფორმა</span></h2>
+                    <div class="feature-list d-flex flex-column gap-4">
+                        <div class="d-flex gap-4 p-3 rounded-4 hover-bg-gold-5 transition-all">
+                            <div class="icon-box flex-shrink-0 bg-gold bg-opacity-10 text-gold border-gold border-opacity-20"
+                                style="width: 60px; height: 60px;"><i class="fas fa-terminal"></i></div>
+                            <div>
+                                <h5 class="text-white mb-1 fw-bold">ინტეგრირებული ტერმინალი</h5>
+                                <p class="text-muted small mb-0">ისწავლეთ Linux-თან მუშაობა პირდაპირ ბრაუზერში.</p>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-4 p-3 rounded-4 hover-bg-gold-5 transition-all">
+                            <div class="icon-box flex-shrink-0 bg-gold bg-opacity-10 text-gold border-gold border-opacity-20"
+                                style="width: 60px; height: 60px;"><i class="fas fa-infinity"></i></div>
+                            <div>
+                                <h5 class="text-white mb-1 fw-bold">უვადო წვდომა</h5>
+                                <p class="text-muted small mb-0">ერთხელ შეძენილი კურსი სამუდამოდ თქვენია.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div
+                        class="terminal-mockup shadow-gold rounded-4 overflow-hidden border border-white border-opacity-10 position-relative group" style="transform: perspective(800px) rotateY(-5deg); transition: transform 0.5s ease;">
+                        
+                        <!-- Terminal Reflection -->
+                        <div class="position-absolute top-0 start-0 w-100 h-100 bg-white opacity-5" style="clip-path: polygon(0 0, 100% 0, 100% 40%, 0 100%); pointer-events: none;"></div>
+                        
+                        <div class="terminal-header d-flex gap-2 p-3 bg-dark bg-opacity-80 border-bottom border-white border-opacity-10">
+                            <div style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; box-shadow: 0 0 10px #ff5f56;"></div>
+                            <div style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e; box-shadow: 0 0 10px #ffbd2e;"></div>
+                            <div style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f; box-shadow: 0 0 10px #27c93f;"></div>
+                            <div class="ms-auto text-muted smaller font-monospace opacity-50">root@sentinel:~</div>
+                        </div>
+                        <div class="terminal-body p-4 bg-black font-monospace smaller position-relative" style="min-height: 280px; box-shadow: inset 0 0 50px rgba(0,0,0,0.8);">
+                            <!-- CRT Scanline effect -->
+                            <div class="position-absolute top-0 start-0 w-100 h-100 pointer-events-none" style="background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px); z-index: 1;"></div>
+                            
+                            <div class="position-relative z-2">
+                                <p class="text-success mb-2" style="text-shadow: 0 0 5px #22c55e;">sentinel@academy:~$ <span class="text-white" style="text-shadow: 0 0 5px #fff;">nmap -sV -A 10.10.10.1</span></p>
+                                <p class="text-muted mb-1">Starting Nmap 7.92 ( https://nmap.org ) at 2026-05-04 12:00 GET</p>
+                                <p class="text-info mb-3">Nmap scan report for 10.10.10.1</p>
+                                
+                                <p class="text-white mb-1 opacity-75">PORT     STATE SERVICE VERSION</p>
+                                <p class="text-white mb-1 fw-bold">22/tcp   <span class="text-success">open</span>  ssh     OpenSSH 8.2p1</p>
+                                <p class="text-white mb-3 fw-bold">80/tcp   <span class="text-success">open</span>  http    Apache httpd 2.4.41</p>
+                                
+                                <p class="text-warning mb-2"><i class="fas fa-exclamation-triangle"></i> Vulnerability detected in Apache 2.4.41</p>
+                                
+                                <p class="text-success mt-4" style="text-shadow: 0 0 5px #22c55e;">sentinel@academy:~$ <span
+                                        class="text-white animate-pulse" style="text-shadow: 0 0 8px #fff;">_</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,36 @@
+<div id="settings" class="tab-content-section">
+    <div class="content-header"><h3>პროფილის მართვა</h3></div>
+    <div class="premium-card p-4 p-md-5">
+        <form>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="premium-form-group">
+                        <label class="premium-form-label">მომხმარებლის სახელი</label>
+                        <input type="text" class="premium-input-field" value="{{ session.user_username }}" placeholder="თქვენი სახელი">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="premium-form-group">
+                        <label class="premium-form-label">ელ-ფოსტა</label>
+                        <input type="email" class="premium-input-field" value="student@sentinel.ge" placeholder="student@sentinel.ge">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="premium-form-group">
+                        <label class="premium-form-label">ახალი პაროლი</label>
+                        <input type="password" class="premium-input-field" placeholder="••••••••">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="premium-form-group">
+                        <label class="premium-form-label">პაროლის დადასტურება</label>
+                        <input type="password" class="premium-input-field" placeholder="••••••••">
+                    </div>
+                </div>
+                <div class="col-12 mt-4">
+                    <button type="button" class="btn btn-gold px-5 py-3 fw-bold shadow-gold">ცვლილებების შენახვა</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<!-- Elite Cyber Shield Hub (Updated Visual & Copy) -->
+<section class="py-4 my-5 position-relative">
+    <!-- Background Decoration -->
+    <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10"
+        style="background-image: radial-gradient(var(--primary-gold) 0.5px, transparent 0.5px); background-size: 50px 50px; z-index: 0; pointer-events: none;">
+    </div>
+
+    <div class="container position-relative" style="z-index: 10;">
+        <div class="premium-card p-0 border-glow-animate overflow-hidden shadow-gold rounded-5"
+            style="background: #05070A;">
+            <div class="row g-0 align-items-center">
+                <!-- Left Side: Visual Shield -->
+                <div class="col-lg-6 position-relative d-none d-lg-block" style="height: 100%; min-height: 500px;">
+                    <div class="scanner-laser"></div>
+                    <img src="{{ url_for('static', filename='img/cyber-shield.png') }}"
+                        class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover opacity-90"
+                        alt="Cyber Shield" style="object-position: center;">
+                    <!-- Smooth Blending Gradient -->
+                    <div class="position-absolute top-0 start-0 w-100 h-100"
+                        style="background: linear-gradient(90deg, rgba(5,7,10,0) 85%, rgba(5,7,10,1) 100%), linear-gradient(0deg, rgba(5,7,10,0.4) 0%, transparent 40%); z-index: 1;">
+                    </div>
+                </div>
+
+                <!-- Right Side: Refined Content -->
+                <div class="col-lg-6 p-4 p-xl-5 d-flex flex-column justify-content-center position-relative"
+                    style="z-index: 3; background: #05070A;">
+                    <h2 class="display-4 fw-black text-white mb-3" style="letter-spacing: -2px; line-height: 1.1;">
+                        გახდი <span class="text-glow-gold text-gold">ელიტარული</span> გუნდის <br>
+                        წევრი და <span class="text-gold-gradient">დაიცავი</span> მომავალი
+                    </h2>
+
+                    <p class="text-muted small mb-5 pe-lg-4" style="line-height: 1.6;">
+                        შემოუერთდი Sentinel Academy-ის ექსკლუზიურ საზოგადოებას. ჩვენთან ერთად თქვენ მიიღებთ წვდომას
+                        უახლეს ტექნოლოგიებთან და პროფესიონალურ ქსელთან.
+                    </p>
+
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="/signup" class="btn btn-premium-gold shadow-gold" style="padding: 1rem 2.5rem;">დაიწყე
+                            ახლავე</a>
+                        <a href="#" class="btn btn-outline-gold px-4 py-3 fw-black rounded-3 small">COMMUNITY HUB</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

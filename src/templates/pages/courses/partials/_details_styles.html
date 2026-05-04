@@ -1,0 +1,160 @@
+<style>
+    /* Compact & Premium Hero */
+    .hero-section-compact {
+        padding: 60px 0 30px 0;
+        background: radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+    }
+    .hero-title-compact { font-size: 2.8rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+    .hero-desc-compact { font-size: 1.1rem; color: rgba(255,255,255,0.5); max-width: 700px; line-height: 1.5; }
+
+    /* Refined Methodology Cards */
+    .methodology-card-refined {
+        background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 20px; padding: 30px; height: 100%; transition: all 0.3s ease;
+        position: relative; overflow: hidden; cursor: pointer !important;
+        z-index: 1;
+    }
+    .methodology-card-refined::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 300%;
+        height: 300%;
+        background: conic-gradient(
+            from 0deg,
+            transparent 0deg,
+            transparent 160deg,
+            var(--primary-gold) 180deg,
+            transparent 200deg,
+            transparent 360deg
+        );
+        transform: translate(-50%, -50%) rotate(0deg);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: -2;
+        pointer-events: none;
+    }
+    .methodology-card-refined:hover::before {
+        opacity: 1;
+        animation: border-beam-rotate 3s linear infinite;
+    }
+    .methodology-card-refined::after {
+        content: '';
+        position: absolute;
+        inset: 2px;
+        background: #0F172A; /* Darker slate for details page cards */
+        border-radius: 19px;
+        z-index: -1;
+    }
+    .methodology-card-refined:hover {
+        background: rgba(212, 175, 55, 0.03); 
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    }
+    .meth-icon {
+        font-size: 1.5rem; color: var(--primary-gold); margin-bottom: 20px;
+        display: inline-block; text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        position: relative; z-index: 2;
+    }
+    .meth-label {
+        font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px;
+        color: var(--primary-gold); font-weight: 700; margin-bottom: 8px;
+        position: relative; z-index: 2;
+    }
+    .meth-title { font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 12px; position: relative; z-index: 2; }
+    .meth-text { font-size: 0.9rem; color: rgba(255,255,255,0.4); line-height: 1.6; position: relative; z-index: 2; }
+
+    /* AI Mentor Floating Button & Chat Window */
+    .ai-floating-btn {
+        position: fixed; bottom: 40px; right: 40px; width: 65px; height: 65px;
+        background: linear-gradient(135deg, var(--primary-gold) 0%, #b8860b 100%);
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4); cursor: pointer; z-index: 10000;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 2px solid rgba(255,255,255,0.2);
+    }
+    .ai-floating-btn:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.6); }
+    .ai-floating-btn i { color: #000; font-size: 1.6rem; }
+
+    .ai-chat-window {
+        position: fixed; bottom: 120px; right: 40px; width: 350px; height: 500px;
+        background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(20px);
+        border-radius: 24px; border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5); z-index: 9999;
+        display: none; flex-direction: column; overflow: hidden;
+    }
+    .ai-chat-header { background: rgba(212, 175, 55, 0.1); padding: 15px 20px; border-bottom: 1px solid rgba(212,175,55,0.1); }
+    .ai-chat-body { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+    .ai-chat-footer { padding: 15px; background: rgba(255,255,255,0.03); border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 10px; }
+    .ai-input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; color: #fff; padding: 10px 15px; flex: 1; outline: none; }
+    .ai-send-btn { background: var(--primary-gold); border: none; border-radius: 12px; width: 45px; height: 45px; color: #000; }
+    .ai-msg { padding: 12px 16px; border-radius: 16px; font-size: 0.9rem; max-width: 85%; }
+    .ai-msg.bot { background: rgba(212, 175, 55, 0.08); color: #fff; border-bottom-left-radius: 4px; align-self: flex-start; border: 1px solid rgba(212,175,55,0.1); }
+    .ai-msg.user { background: rgba(255,255,255,0.05); color: #fff; border-bottom-right-radius: 4px; align-self: flex-end; }
+
+    /* Syllabus Accordion */
+    .curriculum-item { border-radius: 16px; overflow: hidden; }
+    .curriculum-header-premium {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 12px;
+        cursor: pointer !important;
+    }
+    .curriculum-header-premium.is-locked {
+        cursor: not-allowed;
+    }
+    .curriculum-header-premium:hover { background: rgba(255,255,255,0.05) !important; }
+    .lecture-item {
+        padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.03);
+        transition: 0.3s; color: rgba(255,255,255,0.6);
+    }
+    .lecture-item:hover { background: rgba(212, 175, 55, 0.03); color: #fff; }
+    .lecture-item:last-child { border-bottom: none; }
+    .locked-module { opacity: 0.6; pointer-events: none; }
+    .locked-module .curriculum-header { filter: grayscale(1); }
+
+    /* Sidebar Refined */
+    .premium-sidebar { position: sticky; top: 100px; }
+    .enroll-success-badge {
+        background: rgba(40, 167, 69, 0.1); color: #28a745;
+        padding: 12px; border-radius: 12px; border: 1px solid rgba(40, 167, 69, 0.2);
+        font-weight: 700; text-align: center; margin-bottom: 15px; font-size: 0.9rem;
+    }
+    .sidebar-course-name { font-size: 1.4rem; font-weight: 800; color: #fff; margin-bottom: 15px; }
+    .benefits-toggle-btn {
+        width: 100%; background: transparent; border: 1px solid rgba(255,255,255,0.1);
+        padding: 12px 15px; border-radius: 12px; color: #fff; font-size: 0.85rem;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .course-includes-item { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+    .course-includes-item i { color: var(--primary-gold); font-size: 1.1rem; width: 24px; text-align: center; }
+
+    /* Mobile Responsiveness for Course Details */
+    @media (max-width: 991px) {
+        .hero-section-compact { padding: 40px 0 20px 0; }
+        .hero-title-compact { font-size: 1.8rem; }
+        .hero-desc-compact { font-size: 1rem; }
+        
+        .ai-floating-btn { width: 50px; height: 50px; bottom: 20px; right: 20px; }
+        .ai-floating-btn i { font-size: 1.2rem; }
+        .ai-chat-window { width: calc(100% - 40px); height: 70vh; bottom: 85px; right: 20px; }
+        
+        .premium-card.p-5 { padding: 1.5rem !important; }
+        .methodology-card-refined { padding: 20px; }
+        
+        .curriculum-header { padding: 15px !important; }
+        .curriculum-header span { font-size: 0.85rem; }
+        .curriculum-body { margin-left: 0 !important; border-left: none !important; padding-left: 0 !important; }
+        .lecture-item { padding: 10px !important; flex-wrap: wrap; gap: 10px; }
+        .lecture-item .d-flex.align-items-center { width: 100%; }
+        .lecture-item > span:last-child { margin-left: 38px; font-size: 0.7rem; }
+        
+        .premium-sidebar { position: static; margin-top: 2rem; }
+        
+        .course-curriculum-section .d-flex.justify-content-between {
+            flex-direction: column;
+            align-items: flex-start !important;
+            gap: 10px;
+        }
+    }
+</style>

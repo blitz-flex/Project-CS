@@ -1,0 +1,21 @@
+<!-- AI Mentor UI -->
+<div class="ai-floating-btn" onclick="toggleAIChat()">
+    <i class="fas fa-comment-dots" id="aiBtnIcon"></i>
+</div>
+
+<div class="ai-chat-window" id="aiChatWindow">
+    <div class="ai-chat-header d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-2">
+            <div class="bg-gold rounded-circle" style="width: 8px; height: 8px; box-shadow: 0 0 10px var(--primary-gold);"></div>
+            <span class="text-white fw-bold small">AI MENTOR</span>
+        </div>
+        <button class="bg-transparent border-0 text-white-50" onclick="toggleAIChat()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="ai-chat-body">
+        <div class="ai-msg bot">გამარჯობა! მე ვარ შენი AI მენტორი. გაქვს რაიმე კითხვა ამ კურსთან ან კონკრეტულ მოდულთან დაკავშირებით?</div>
+    </div>
+    <div class="ai-chat-footer">
+        <input type="text" class="ai-input" placeholder="ჰკითხე მენტორს...">
+        <button class="ai-send-btn"><i class="fas fa-paper-plane"></i></button>
+    </div>
+</div>

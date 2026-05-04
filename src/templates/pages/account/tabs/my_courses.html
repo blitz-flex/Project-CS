@@ -1,0 +1,33 @@
+<div id="my-courses" class="tab-content-section active">
+    <div class="content-header d-flex justify-content-between align-items-center">
+        <h3 class="mb-0">ჩემი კურიკულუმები</h3>
+        <a href="/courses" class="btn btn-gold btn-sm px-4 fw-bold shadow-gold">ახალი კურსი</a>
+    </div>
+    {% if ids %}
+    <div class="row g-4">
+        {% for course in ids %}
+        <div class="col-md-6">
+            <div class="account-course-card">
+                <div class="course-delete-btn-wrapper">
+                    <form action="/remove_course" method="post"><input type="hidden" name="course_id" value="{{ course.id }}"><button type="submit" class="btn-action-delete" onclick="return confirm('ამოვშალოთ სილაბუსიდან?')"><i class="fas fa-trash-alt"></i></button></form>
+                </div>
+                <div style="height: 160px; overflow: hidden; position: relative;">
+                    {% if course.image %}<img src="{{ course.image if course.image.startswith('http') else url_for('static', filename=course.image) }}" alt="{{ course.name }}" style="width: 100%; height: 100%; object-fit: cover;">{% endif %}
+                    <div class="position-absolute top-0 start-0 m-3"><span class="badge-green px-2 py-1" style="font-size: 0.6rem; border-radius: 6px; font-weight: 800;">ACTIVE</span></div>
+                </div>
+                <div class="p-4">
+                    <h5 class="text-white fw-bold mb-3">{{ course.name }}</h5>
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2 small"><span class="text-white-50">პროგრესი</span><span class="text-gold fw-bold">35%</span></div>
+                        <div class="progress" style="height: 5px; background: rgba(255,255,255,0.05); border-radius: 10px;"><div class="progress-bar" style="width: 35%; background: var(--primary-gold); box-shadow: 0 0 10px rgba(212,175,55,0.4);"></div></div>
+                    </div>
+                    <div class="d-grid"><a href="/info?id={{ course.id }}" class="btn btn-outline-gold py-2 fw-bold">გაგრძელება</a></div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="premium-card p-5 text-center text-muted">აქტიური კურსები არ არის</div>
+    {% endif %}
+</div>

@@ -1,0 +1,10 @@
+<script>
+    // Simple search filter
+    document.getElementById('couponSearch')?.addEventListener('input', function(e) {
+        const term = e.target.value.toLowerCase();
+        document.querySelectorAll('.coupon-row-premium').forEach(row => {
+            const name = row.getAttribute('data-name').toLowerCase();
+            row.style.display = name.includes(term) ? 'block' : 'none';
+        });
+    });
+</script>
