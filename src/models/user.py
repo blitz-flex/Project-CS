@@ -10,6 +10,11 @@ class User(db.Model):
     admin = db.Column(db.Integer, default=0)
     img = db.Column(db.String(255), default='default_user.jpg')
 
+    @property
+    def enrollments(self):
+        from src.models.course import users_courses
+        return db.session.query(users_courses).filter_by(user_id=self.id).count()
+
     def set_password(self, password):
         self.hash = generate_password_hash(password)
 

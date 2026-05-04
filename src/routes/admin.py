@@ -18,24 +18,39 @@ def allowed_file(filename):
 @admin_required
 def admin():
     """Admin dashboard"""
-    stats = {
-        "users": User.query.filter_by(admin=0).count(),
-        "courses": Course.query.count(),
-        "revenue": 0 # Placeholder logic could be added here
-    }
-    return render_template("pages/admin/dashboard.html", stats=stats)
+    user_count = User.query.filter_by(admin=0).count()
+    course_count = Course.query.count()
+    enrollment_count = db.session.query(users_courses).count()
+    
+    # Fetch recent activity (e.g., last 5 enrollments)
+    recent_activity = db.session.query(
+        User.username, 
+        Course.name.label('course_name'),
+        # Since users_courses is an association table, we join User and Course
+    ).join(users_courses, User.id == users_courses.c.user_id) \
+     .join(Course, Course.id == users_courses.c.course_id) \
+     .order_by(db.desc(users_courses.c.user_id)) \
+     .limit(5).all()
+    
+    return render_template("pages/admin/dashboard.html", 
+                           user_count=user_count, 
+                           course_count=course_count, 
+                           enrollment_count=enrollment_count,
+                           recent_activity=recent_activity)
 
 @admin_bp.route("/admin/courses")
 @admin_required
 def admin_courses():
-    courses = Course.query.all()
-    return render_template("pages/admin/courses.html", courses=courses)
+    page = request.args.get('page', 1, type=int)
+    courses_pagination = Course.query.order_by(Course.id.desc()).paginate(page=page, per_page=10, error_out=False)
+    return render_template("pages/admin/courses.html", courses=courses_pagination.items, pagination=courses_pagination)
 
 @admin_bp.route("/admin/users")
 @admin_required
 def admin_users():
-    users = User.query.all()
-    return render_template("pages/admin/users.html", users=users)
+    page = request.args.get('page', 1, type=int)
+    users_pagination = User.query.order_by(User.id.desc()).paginate(page=page, per_page=10, error_out=False)
+    return render_template("pages/admin/users.html", users=users_pagination.items, pagination=users_pagination)
 
 @admin_bp.route("/admin/stats")
 @admin_required

@@ -72,40 +72,25 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for activity in recent_activity %}
                     <tr>
                         <td data-label="აქტივობის პროტოკოლი">
                             <div class="d-flex align-items-center justify-content-start gap-3">
                                 <div class="p-2 rounded-3 bg-gold bg-opacity-5"><i
                                         class="fas fa-user-plus text-gold small"></i></div>
-                                <span class="text-start">მომხმარებელი <span class="text-white fw-bold">giorgi_88</span>
-                                    ავტორიზებულია</span>
-                            </div>
-                        </td>
-                        <td data-label="სტატუსი" class="text-end"><span class="admin-badge badge-blue">რეგისტრირებული</span></td>
-                        <td data-label="დრო" class="text-end opacity-50 small">2 წთ წინ</td>
-                    </tr>
-                    <tr>
-                        <td data-label="აქტივობის პროტოკოლი">
-                            <div class="d-flex align-items-center justify-content-start gap-3">
-                                <div class="p-2 rounded-3 bg-gold bg-opacity-5"><i
-                                        class="fas fa-shopping-cart text-gold small"></i></div>
-                                <span class="text-start">ტრანზაქცია: <span class="text-white fw-bold">Ethical Hacking v2</span></span>
+                                <span class="text-start">მომხმარებელი <span class="text-white fw-bold">{{ activity.username }}</span>
+                                    დაეუფლა <span class="text-gold">{{ activity.course_name }}</span></span>
                             </div>
                         </td>
                         <td data-label="სტატუსი" class="text-end"><span class="admin-badge badge-gold">შესყიდვა</span></td>
-                        <td data-label="დრო" class="text-end opacity-50 small">15 წთ წინ</td>
+                        <td data-label="დრო" class="text-end opacity-50 small">ახლახანს</td>
                     </tr>
+                    {% endfor %}
+                    {% if not recent_activity %}
                     <tr>
-                        <td data-label="აქტივობის პროტოკოლი">
-                            <div class="d-flex align-items-center justify-content-start gap-3">
-                                <div class="p-2 rounded-3 bg-gold bg-opacity-5"><i
-                                        class="fas fa-ticket-alt text-gold small"></i></div>
-                                <span class="text-start">პრომო კოდი <span class="text-white fw-bold">SUMMER25</span> გამოყენებულია</span>
-                            </div>
-                        </td>
-                        <td data-label="სტატუსი" class="text-end"><span class="admin-badge badge-green">წარმატებული</span></td>
-                        <td data-label="დრო" class="text-end opacity-50 small">1 სთ წინ</td>
+                        <td colspan="3" class="text-center py-4 text-muted small">აქტივობა არ ფიქსირდება</td>
                     </tr>
+                    {% endif %}
                 </tbody>
             </table>
         </div>

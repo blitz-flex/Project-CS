@@ -368,3 +368,45 @@
         height: calc(100% - 100px);
     }
 }
+
+/* --- Pagination --- */
+.admin-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 3rem;
+}
+
+.pagination-btn {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.pagination-btn:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--primary-gold);
+    border-color: rgba(212, 175, 55, 0.2);
+}
+
+.pagination-btn.active {
+    background: var(--primary-gold);
+    color: #000;
+    border-color: var(--primary-gold);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+.pagination-btn.disabled {
+    opacity: 0.3;
+    pointer-events: none;
+}

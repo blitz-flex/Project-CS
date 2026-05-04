@@ -15,6 +15,13 @@ class Course(db.Model):
     description = db.Column(db.Text, nullable=False)
     image = db.Column(db.String(255), default='default_course.jpg')
 
+    # Relationships
+    students = db.relationship('User', secondary=users_courses, backref=db.backref('enrolled_courses', lazy='dynamic'))
+
+    @property
+    def enrollments(self):
+        return db.session.query(users_courses).filter_by(course_id=self.id).count()
+
     def __repr__(self):
         return f'<Course {self.name}>'
 
