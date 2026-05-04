@@ -66,12 +66,12 @@ def create_app():
     app.register_blueprint(courses_bp)
 
     # ── After Request ─────────────────────────────────────────────────────────
-    @app.after_request
-    def after_request(response):
-        """Disable client-side caching for all responses."""
-        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-        response.headers["Expires"] = 0
-        response.headers["Pragma"] = "no-cache"
-        return response
+    # @app.after_request
+    # def after_request(response):
+    #     """Disable client-side caching for all responses."""
+    #     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    #     response.headers["Expires"] = 0
+    #     response.headers["Pragma"] = "no-cache"
+    #     return response
 
     return app
