@@ -1,6 +1,10 @@
 import os
 from flask import Flask
 from flask_session import Session
+from dotenv import load_dotenv
+
+# Load environment variables from .env file (for local development)
+load_dotenv()
 
 # Import Blueprints
 from src.routes.auth import auth_bp
