@@ -23,6 +23,7 @@
     position: fixed;
     height: 100vh;
     z-index: 1000;
+    transition: transform 0.3s ease;
 }
 
 .sidebar-header {
@@ -31,7 +32,12 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
-.sidebar-nav { padding: 0 1rem; }
+.sidebar-nav { 
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 100px); /* Account for header */
+}
 
 .sidebar-link {
     display: flex;
@@ -46,6 +52,7 @@
     font-weight: 500;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid transparent;
+    min-height: 44px; /* Touch target minimum */
 }
 
 .sidebar-link i {
@@ -73,7 +80,8 @@
 .admin-main {
     flex-grow: 1;
     margin-left: 280px;
-    padding: 4rem 5rem;
+    padding: 2rem 3rem;
+    transition: margin-left 0.3s ease;
 }
 
 /* --- Top Bar --- */
@@ -150,10 +158,11 @@
 .table-minimal {
     width: 100%;
     background: transparent;
+    border-collapse: collapse;
 }
 
 .table-minimal th {
-    padding: 1.5rem;
+    padding: 1rem 1.5rem;
     color: var(--primary-gold);
     font-size: 0.7rem;
     font-weight: 800;
@@ -164,7 +173,7 @@
 }
 
 .table-minimal td {
-    padding: 1.5rem;
+    padding: 1rem 1.5rem;
     color: rgba(255, 255, 255, 0.6);
     font-size: 0.95rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.03);
@@ -177,8 +186,8 @@
 
 /* --- Action Button (icon-only) --- */
 .admin-action-btn {
-    width: 38px;
-    height: 38px;
+    width: 44px; /* Touch target minimum */
+    height: 44px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -200,4 +209,162 @@
     letter-spacing: 1px;
     text-transform: uppercase;
     font-size: 1.1rem;
+}
+
+/* ==========================================================================
+   MOBILE RESPONSIVENESS
+   ========================================================================== */
+@media (max-width: 991px) {
+    /* Hide sidebar by default, show via toggle class */
+    .admin-sidebar {
+        transform: translateX(-100%);
+    }
+    .admin-sidebar.show {
+        transform: translateX(0);
+    }
+
+    /* Main content expands full width */
+    .admin-main {
+        margin-left: 0;
+        padding: 1rem 0.8rem !important;
+    }
+
+    /* Topbar adjustments */
+    .admin-topbar {
+        padding: 0.8rem 1rem !important;
+        margin-bottom: 1.5rem;
+        flex-direction: row !important;
+        justify-content: space-between;
+        align-items: center !important;
+        gap: 0.5rem;
+    }
+
+    .admin-topbar h2 {
+        font-size: 1.1rem !important;
+    }
+    
+    .admin-topbar .text-gold.small {
+        font-size: 0.55rem !important;
+    }
+
+    .admin-topbar .d-flex.align-items-center.gap-4 {
+        gap: 0.5rem !important;
+    }
+
+    .admin-topbar .pill-badge {
+        padding: 4px 8px !important;
+        font-size: 0.6rem !important;
+    }
+
+    /* Hamburger Menu Button */
+    .hamburger-btn {
+        display: block !important;
+        background: transparent;
+        border: none;
+        color: var(--primary-gold);
+        font-size: 1.5rem;
+        cursor: pointer;
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    /* Form Inputs for Mobile */
+    .admin-main input,
+    .admin-main textarea,
+    .admin-main select {
+        font-size: 16px !important; /* Prevent iOS zoom */
+        width: 100% !important;
+    }
+
+    /* Make touch targets larger globally */
+    .btn, a, button {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Stat Cards Mobile Padding */
+    .admin-stat-card {
+        padding: 1.5rem !important;
+    }
+
+    /* Reduce excessive padding on mobile for custom elements */
+    .p-4, .p-md-5 {
+        padding: 1rem !important;
+    }
+
+    /* Table Stacking */
+    .table-responsive {
+        border: none;
+        overflow-x: hidden !important; 
+    }
+    
+    .table-minimal {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .table-minimal thead {
+        display: none;
+    }
+    
+    .table-minimal tbody,
+    .table-minimal tr {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .table-minimal tbody tr {
+        margin-bottom: 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 0.8rem;
+    }
+    
+    .table-minimal td {
+        display: block !important;
+        width: 100% !important;
+        padding: 0.6rem 0 !important;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.05) !important;
+        text-align: left;
+    }
+    
+    .table-minimal td:last-child {
+        border-bottom: none;
+    }
+    
+    .table-minimal td::before {
+        content: attr(data-label);
+        font-weight: 800;
+        color: var(--primary-gold);
+        text-transform: uppercase;
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+        text-align: left;
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Fix flex alignments inside table cells for mobile */
+    .table-minimal td > div,
+    .table-minimal td > span,
+    .table-minimal td div.d-flex {
+        width: 100% !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+        flex-direction: row !important;
+    }
+    
+    .table-minimal td div.d-flex div.text-end {
+        text-align: left !important;
+    }
+
+    /* Sidebar Nav Flex */
+    .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        height: calc(100% - 100px);
+    }
 }

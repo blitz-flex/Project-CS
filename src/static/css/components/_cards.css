@@ -171,3 +171,29 @@
     opacity: 0.05;
     font-family: 'Inter', sans-serif;
 }
+
+/* ==========================================================================
+   MOBILE RESPONSIVENESS
+   ========================================================================== */
+@media (max-width: 991px) {
+    .premium-card {
+        padding: 1.5rem !important;
+    }
+    
+    .roadmap-step-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .p-5 {
+        padding: 1.5rem !important; /* Global override for p-5 inside cards on mobile */
+    }
+
+    .meta-item-row {
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+    }
+    
+    .meta-item {
+        font-size: 0.75rem !important;
+    }
+}

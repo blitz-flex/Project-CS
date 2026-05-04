@@ -5,59 +5,50 @@
 {% block main %}
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <!-- Back Button -->
-            <div class="mb-4">
-                <a href="/admin/courses" class="text-gold text-decoration-none small fw-bold tracking-widest opacity-50 hover-opacity-100 transition-all">
-                    <i class="fas fa-arrow-left me-2"></i> კურიკულუმზე დაბრუნება
+        <div class="col-lg-7">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-end mb-5">
+                <div>
+                    <h2 class="text-white fw-bold mb-1">ახალი მოდული</h2>
+                    <p class="text-muted small mb-0">შექმენით ახალი სასწავლო პროგრამა</p>
+                </div>
+                <a href="/admin/courses" class="text-muted text-decoration-none small hover-gold transition-all">
+                    <i class="fas fa-times me-2"></i> გაუქმება
                 </a>
             </div>
 
-            <h1 class="text-white fw-black mb-5 display-4 tracking-tighter">ახალი მოდულის <span class="text-gold">შექმნა</span></h1>
-
-            <form method="POST" enctype="multipart/form-data" class="premium-form">
-                <div class="premium-card p-5 border-white border-opacity-5" style="background: rgba(15, 23, 42, 0.3);">
-                    
+            <form method="POST" enctype="multipart/form-data">
+                <div class="premium-card p-4 p-md-5 border-white border-opacity-5" style="background: rgba(15, 23, 42, 0.4);">
                     <!-- Module Name -->
                     <div class="mb-5">
-                        <label for="name" class="auth-label opacity-50 mb-3">დასახელება</label>
-                        <input type="text" class="form-control-minimal h2" id="name" name="name" required placeholder="მაგ: კიბერ-უსაფრთხოების საფუძვლები">
+                        <label class="small text-muted text-uppercase letter-spacing-1 fw-bold mb-2 d-block" style="font-size: 0.65rem;">დასახელება</label>
+                        <input type="text" class="minimal-input h3" id="name" name="name" required placeholder="კურსის სახელი">
                     </div>
 
                     <div class="row g-4 mb-5">
                         <!-- Price -->
                         <div class="col-md-6">
-                            <label for="price" class="auth-label opacity-50 mb-3">ღირებულება (₾)</label>
-                            <div class="d-flex align-items-center gap-2">
-                                <input type="number" class="form-control-minimal fw-bold text-gold" id="price" name="price" min="0" required value="0" style="font-size: 1.2rem;">
-                                <span class="text-gold fw-bold">₾</span>
-                            </div>
+                            <label class="small text-muted text-uppercase letter-spacing-1 fw-bold mb-2 d-block" style="font-size: 0.65rem;">ღირებულება (₾)</label>
+                            <input type="number" class="minimal-input" id="price" name="price" min="0" required value="0">
                         </div>
 
                         <!-- Image Upload -->
                         <div class="col-md-6">
-                            <label class="auth-label opacity-50 mb-3">მთავარი ფოტო</label>
-                            <div class="position-relative">
-                                <input type="file" class="form-control-minimal opacity-0 position-absolute w-100 h-100 cursor-pointer" id="image" name="image" accept="image/*" required style="z-index: 10;">
-                                <div class="form-control-minimal d-flex align-items-center justify-content-between px-3">
-                                    <span class="text-muted small">ფაილის არჩევა...</span>
-                                    <i class="fas fa-image text-gold opacity-50"></i>
-                                </div>
-                            </div>
+                            <label class="small text-muted text-uppercase letter-spacing-1 fw-bold mb-2 d-block" style="font-size: 0.65rem;">მთავარი ფოტო</label>
+                            <input type="file" class="minimal-input" id="image" name="image" accept="image/*" required style="font-size: 0.8rem; padding: 10px;">
                         </div>
                     </div>
 
                     <!-- Description -->
                     <div class="mb-5">
-                        <label for="description" class="auth-label opacity-50 mb-3">კურსის აღწერა</label>
-                        <textarea class="form-control-minimal" id="description" name="description" rows="8" placeholder="აღწერეთ კურსის შინაარსი და მიზნები..."></textarea>
+                        <label class="small text-muted text-uppercase letter-spacing-1 fw-bold mb-2 d-block" style="font-size: 0.65rem;">კურსის აღწერა</label>
+                        <textarea class="minimal-input" id="description" name="description" rows="6" placeholder="აღწერეთ კურსის შინაარსი..."></textarea>
                     </div>
 
                     <!-- Submit -->
-                    <div class="pt-4 border-top border-white border-opacity-5 d-flex justify-content-between align-items-center">
-                        <p class="text-muted small mb-0">მონაცემები ავტომატურად დაინახება სისტემაში.</p>
-                        <button type="submit" class="btn btn-gold px-5 py-3 fw-bold tracking-wider rounded-3">
-                            მოდულის დამატება <i class="fas fa-plus ms-2"></i>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-gold py-3 fw-bold shadow-gold">
+                            მოდულის შექმნა <i class="fas fa-plus ms-2"></i>
                         </button>
                     </div>
                 </div>
@@ -67,34 +58,41 @@
 </div>
 
 <style>
-    .form-control-minimal {
+    .minimal-input {
         width: 100%;
+        background: rgba(255, 255, 255, 0.02) !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        border-radius: 14px !important;
+        color: #fff !important;
+        padding: 14px 20px !important;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    .minimal-input:focus {
+        border-color: var(--primary-gold) !important;
+        background: rgba(212, 175, 55, 0.04) !important;
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.05);
+    }
+
+    .minimal-input.h3 {
+        font-size: 1.8rem;
+        font-weight: 800;
         background: transparent !important;
         border: none !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.05) !important;
         border-radius: 0 !important;
-        color: #fff !important;
-        padding: 15px 0 !important;
-        transition: all 0.3s ease;
-        outline: none;
+        padding: 10px 0 !important;
     }
 
-    .form-control-minimal:focus {
+    .minimal-input.h3:focus {
         border-bottom-color: var(--primary-gold) !important;
-        box-shadow: none !important;
     }
 
-    .form-control-minimal.h2 { font-size: 2.5rem; font-weight: 800; }
-    
-    .hover-opacity-100:hover { opacity: 1 !important; }
-    .transition-all { transition: all 0.3s ease; }
-
-    /* Flash overrides for admin */
-    .alert {
-        border-radius: 12px;
-        background: rgba(15, 23, 42, 0.9);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #fff;
+    textarea.minimal-input {
+        resize: none;
     }
+
+    .letter-spacing-1 { letter-spacing: 1px; }
 </style>
 {% endblock %}

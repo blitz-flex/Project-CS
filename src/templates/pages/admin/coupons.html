@@ -1,97 +1,211 @@
 {% extends "layouts/admin.html" %}
 
-{% block title %}კუპონები{% endblock %}
-{% block header %}კუპონების მართვა{% endblock %}
+{% block title %}კუპონების მართვა{% endblock %}
+{% block header %}პროტოკოლები & კუპონები{% endblock %}
 
 {% block main %}
 
-<div class="row">
-    <div class="col-lg-8">
-        <!-- New Coupon Form -->
-        <div class="admin-card-header mb-4 d-flex align-items-baseline gap-3">
-            <h5 class="text-white fw-bold mb-0 cyber-glow text-nowrap"><i class="fas fa-plus-square me-2 opacity-50"></i>ახალი პროტოკოლი</h5>
-            <p class="text-muted smaller mb-0 opacity-50">ახალი ფასდაკლების კოდის გააქტიურება სისტემაში</p>
-        </div>
-
-        <form action="/admin/cupon" method="post" class="mb-5">
-            <div class="p-4 rounded-4" style="background: rgba(212, 175, 55, 0.03); border: 1px solid rgba(212, 175, 55, 0.1); box-shadow: 0 0 30px rgba(212, 175, 55, 0.02);">
-                <div class="row g-3 align-items-end">
-                    <div class="col-md-5">
-                        <label class="auth-label mb-1 text-nowrap">კოდი</label>
-                        <input type="text" class="form-control form-control-premium text-gold" name="name" required placeholder="მაგ: ALPHA" style="font-family: monospace; letter-spacing: 3px; text-transform: uppercase;">
-                    </div>
-                    <div class="col-md-3">
-                        <label class="auth-label mb-1 text-nowrap">ფასდაკლება (₾)</label>
-                        <input type="number" class="form-control form-control-premium" name="value" required placeholder="0">
-                    </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-gold w-100 py-3 fw-bold shadow-gold text-nowrap" name="add" type="submit">გაშვება</button>
-                    </div>
+<div class="row g-5">
+    <!-- Creation Section -->
+    <div class="col-lg-5">
+        <div class="premium-card p-4 border-white border-opacity-5 shadow-2xl" style="background: linear-gradient(145deg, rgba(212, 175, 55, 0.05) 0%, rgba(15, 23, 42, 0.4) 100%); position: sticky; top: 20px; border-radius: 24px;">
+            <div class="mb-4">
+                <div class="d-flex align-items-center gap-2 mb-1">
+                    <span class="p-1 bg-gold rounded-circle"></span>
+                    <h5 class="text-white fw-bold mb-0">გენერატორი</h5>
                 </div>
+                <p class="text-muted smaller">ახალი სისტემური პროტოკოლის ჩაშვება</p>
             </div>
-        </form>
 
-        <div class="admin-card-header mb-4 d-flex align-items-center gap-3">
-            <h5 class="text-white fw-bold mb-0 cyber-glow text-nowrap"><i class="fas fa-database me-2 opacity-50"></i>პროტოკოლების რეესტრი</h5>
-            <div class="h-px bg-white bg-opacity-10 flex-grow-1"></div>
-            <p class="text-muted smaller mb-0 opacity-50 text-nowrap">არსებული კოდების მონიტორინგი</p>
-        </div>
-        
-        {% if cupon %}
-            <div class="d-flex flex-column gap-3">
-                {% for item in cupon %}
-                <form action="/admin/cupon" method="post" class="m-0">
-                    <input name="id" hidden value="{{ item.id }}">
-                    <div class="admin-stat-card p-4">
-                        <div class="row g-4 align-items-start">
-                            <div class="col-md-3">
-                                <label class="auth-label mb-1 text-nowrap">კოდი</label>
-                                <div class="position-relative">
-                                    <input type="text" class="form-control form-control-premium text-white border-0 bg-transparent p-0 fs-5" name="name" value="{{ item.name }}" style="font-family: monospace; letter-spacing: 2px;">
-                                    <div class="smaller text-success opacity-50 mt-1" style="font-size: 0.65rem; white-space: nowrap;"><i class="fas fa-check-circle me-1"></i> აქტიური</div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="auth-label mb-1 text-nowrap">ფასდაკლება (₾)</label>
-                                <input type="text" class="form-control form-control-premium" name="value" value="{{ item.value }}" placeholder="Value">
-                            </div>
-                            <div class="col-md-5">
-                                <label class="auth-label mb-1">&nbsp;</label>
-                                <div class="d-flex gap-2">
-                                    <button class="btn btn-outline-gold flex-grow-1 py-3 fw-bold smaller text-nowrap px-2" name="submit" type="submit">განახლება</button>
-                                    <button class="admin-action-btn h-auto px-3 border-danger border-opacity-20 text-danger flex-shrink-0" name="delete" type="submit" onclick="return confirm('ნამდვილად გსურთ ამ პროტოკოლის წაშლა?')">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </div>
-                            </div>
+            <form action="/admin/cupon" method="post" class="d-flex flex-column gap-4">
+                <div class="minimal-field-group">
+                    <label class="minimal-label">კოდის სახელი</label>
+                    <input type="text" class="minimal-control h3" name="name" required placeholder="მაგ: VIP10" maxlength="10" style="text-transform: uppercase;">
+                </div>
+
+                <div class="row g-4 align-items-end">
+                    <div class="col-5">
+                        <label class="minimal-label">ფასდაკლება</label>
+                        <div class="d-flex align-items-center gap-2 border-bottom border-white border-opacity-5">
+                            <input type="number" class="bg-transparent border-0 text-white w-100 py-2" name="value" required placeholder="0" style="outline: none;">
+                            <span class="text-gold fw-bold">₾</span>
                         </div>
                     </div>
-                </form>
+                    <div class="col-7">
+                        <label class="minimal-label">ვადა</label>
+                        <input type="date" class="minimal-control" name="expiry_date" style="color-scheme: dark;">
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <button class="btn btn-gold w-100 py-3 fw-bold shadow-gold rounded-4 group" name="add" type="submit">
+                        ჩაშვება <i class="fas fa-arrow-right ms-2 transition-all group-hover-translate-x"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Registry Section -->
+    <div class="col-lg-7">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex align-items-center gap-3">
+                <h5 class="text-white fw-bold mb-0 cyber-glow">აქტიური ბაზა</h5>
+                <div class="h-px bg-white bg-opacity-10" style="width: 100px;"></div>
+            </div>
+            <div class="search-box-minimal">
+                <i class="fas fa-search"></i>
+                <input type="text" id="couponSearch" placeholder="ძებნა...">
+            </div>
+        </div>
+
+        {% if cupon %}
+            <div class="d-flex flex-column gap-3" id="couponList">
+                {% for item in cupon %}
+                {% set is_expired = item.expiry_date and item.expiry_date < today %}
+                <div class="coupon-row-premium {{ 'expired-dim' if is_expired else '' }}" data-name="{{ item.name }}">
+                    <form action="/admin/cupon" method="post" class="m-0 w-100">
+                        <input name="id" hidden value="{{ item.id }}">
+                        <div class="row g-0 align-items-center">
+                            <!-- Code Display -->
+                            <div class="col-md-7 p-4">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="coupon-icon-box {{ 'bg-danger' if is_expired else 'bg-gold' }}">
+                                        <i class="fas fa-{{ 'calendar-times' if is_expired else 'tag' }}"></i>
+                                    </div>
+                                    <div class="flex-grow-1" style="min-width: 0;">
+                                        <input type="text" class="coupon-name-input" name="name" value="{{ item.name }}" maxlength="10" style="width: 100%; overflow: visible; font-size: 1.25rem;">
+                                        <div class="status-indicator">
+                                            {% if is_expired %}
+                                                <span class="text-danger"><i class="fas fa-circle smaller me-1"></i> ვადაგასულია</span>
+                                            {% else %}
+                                                <span class="text-success"><i class="fas fa-circle smaller me-1"></i> აქტიური</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Price Section -->
+                            <div class="col-md-3 p-4">
+                                <div class="input-minimal-wrapper">
+                                    <label>ფასი</label>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <input type="number" name="value" value="{{ item.value }}" class="p-0 border-0 bg-transparent text-gold fw-bold" style="width: 100%; min-width: 40px; outline: none; font-size: 1.1rem;">
+                                        <span class="text-gold fw-bold">₾</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Final Actions -->
+                            <div class="col-md-2 p-4 d-flex justify-content-end gap-3">
+                                <button type="submit" name="delete" value="1" class="action-btn-circle delete" onclick="return confirm('წავშალოთ პროტოკოლი?')" title="წაშლა"><i class="fas fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 {% endfor %}
             </div>
         {% else %}
-            <div class="p-5 text-center rounded-4 border border-white border-opacity-5">
-                <i class="fas fa-ticket-alt fa-2x mb-3 text-muted opacity-20"></i>
-                <p class="text-muted italic">აქტიური პროტოკოლები ვერ მოიძებნა.</p>
+            <div class="premium-card p-5 text-center border-dashed border-opacity-10">
+                <p class="text-muted">ბაზა ცარიელია</p>
             </div>
         {% endif %}
     </div>
-    
-    <div class="col-lg-4">
-        <div class="admin-stat-card">
-            <h6 class="admin-stat-label mb-3 cyber-glow">ოპერაციული ინსტრუქცია</h6>
-            <div class="d-flex flex-column gap-3">
-                <div class="p-3 rounded-3 bg-white bg-opacity-5 border border-white border-opacity-5">
-                    <p class="text-muted smaller mb-0"><i class="fas fa-info-circle me-2 text-gold"></i> კოდები ვრცელდება გლობალურად ყველა კურსზე გადახდის მომენტში.</p>
-                </div>
-                <div class="p-3 rounded-3 bg-white bg-opacity-5 border border-white border-opacity-5">
-                    <p class="text-muted smaller mb-0"><i class="fas fa-shield-alt me-2 text-gold"></i> მნიშვნელობა წარმოადგენს პირდაპირ დასაკლებ თანხას (₾).</p>
-                </div>
-                <hr class="border-white border-opacity-5 my-2">
-                <p class="text-danger smaller mb-0 fw-bold"><i class="fas fa-exclamation-triangle me-2"></i> გაფრთხილება: წაშლილი პროტოკოლების აღდგენა შეუძლებელია.</p>
-            </div>
-        </div>
-    </div>
 </div>
+
+<style>
+    /* --- Minimal Controls --- */
+    .minimal-field-group { margin-bottom: 5px; }
+    .minimal-label { font-size: 0.65rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 8px; display: block; }
+    .minimal-control { 
+        width: 100%; background: transparent; border: none; border-bottom: 2px solid rgba(255,255,255,0.05);
+        color: #fff; padding: 10px 0; outline: none; transition: 0.3s;
+    }
+    .minimal-control:focus { border-bottom-color: var(--primary-gold); }
+    .minimal-control.h3 { font-size: 1.75rem; font-weight: 800; color: var(--primary-gold); font-family: 'JetBrains Mono', monospace; }
+
+    /* --- Coupon Row --- */
+    .coupon-row-premium {
+        background: rgba(255,255,255,0.01);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 20px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        overflow: hidden;
+    }
+    .coupon-row-premium:hover {
+        background: rgba(255,255,255,0.03);
+        border-color: rgba(212, 175, 55, 0.2);
+        transform: translateY(-3px) scale(1.01);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+    .expired-dim { opacity: 0.6; grayscale: 0.5; }
+
+    .coupon-icon-box {
+        width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+        font-size: 1.2rem; color: #000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); flex-shrink: 0;
+    }
+    .coupon-name-input { background: transparent; border: none; color: #fff; font-weight: 800; outline: none; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
+    .status-indicator { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; margin-top: 2px; }
+
+    /* --- Input Wrappers --- */
+    .input-minimal-wrapper label { font-size: 0.6rem; color: rgba(255,255,255,0.3); text-transform: uppercase; display: block; margin-bottom: 4px; }
+    .input-minimal-wrapper input { background: transparent; border: none; color: #fff; font-weight: 700; outline: none; width: 100%; }
+
+    /* --- Circle Buttons --- */
+    .action-btn-circle {
+        width: 45px; height: 45px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.05);
+        background: rgba(255,255,255,0.02); color: rgba(255,255,255,0.4); display: flex; align-items: center; justify-content: center;
+        transition: 0.3s; cursor: pointer;
+    }
+    .action-btn-circle:hover { transform: rotate(15deg) scale(1.1); color: #fff; }
+    .action-btn-circle.delete:hover { background: #ff4444; border-color: #ff4444; color: #fff; }
+
+    /* --- Search Box --- */
+    .search-box-minimal {
+        background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 50px; padding: 8px 20px; display: flex; align-items: center; gap: 12px; transition: 0.3s;
+    }
+    .search-box-minimal:focus-within { border-color: var(--primary-gold); background: rgba(212,175,55,0.05); }
+    .search-box-minimal input { background: transparent; border: none; color: #fff; font-size: 0.85rem; outline: none; width: 150px; }
+    .search-box-minimal i { color: rgba(255,255,255,0.2); font-size: 0.8rem; }
+
+    .group:hover .group-hover-translate-x { transform: translateX(4px); }
+
+    /* Mobile overrides for coupons */
+    @media (max-width: 768px) {
+        .d-flex.justify-content-between.align-items-center.mb-4 {
+            flex-direction: column;
+            align-items: flex-start !important;
+            gap: 15px;
+        }
+        .search-box-minimal {
+            width: 100%;
+        }
+        .search-box-minimal input {
+            width: 100%;
+        }
+        .coupon-row-premium .col-md-7,
+        .coupon-row-premium .col-md-3,
+        .coupon-row-premium .col-md-2 {
+            padding: 1rem !important;
+        }
+        .coupon-row-premium .col-md-2 {
+            justify-content: flex-start !important;
+            padding-top: 0 !important;
+        }
+    }
+</style>
+
+<script>
+    // Simple search filter
+    document.getElementById('couponSearch')?.addEventListener('input', function(e) {
+        const term = e.target.value.toLowerCase();
+        document.querySelectorAll('.coupon-row-premium').forEach(row => {
+            const name = row.getAttribute('data-name').toLowerCase();
+            row.style.display = name.includes(term) ? 'block' : 'none';
+        });
+    });
+</script>
 
 {% endblock %}

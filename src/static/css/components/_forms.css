@@ -72,3 +72,14 @@ select.form-control-premium option {
     color: #fff;
     padding: 15px;
 }
+
+/* ==========================================================================
+   MOBILE RESPONSIVENESS
+   ========================================================================== */
+@media (max-width: 991px) {
+    .form-control-premium,
+    input, textarea, select {
+        width: 100% !important;
+        font-size: 16px !important; /* Prevents iOS auto-zoom */
+    }
+}

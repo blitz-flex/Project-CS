@@ -5,11 +5,13 @@
 
 {% block main %}
 
-<div class="admin-card-header mb-4 d-flex align-items-baseline gap-3">
-    <h5 class="text-white fw-bold mb-0 cyber-glow text-nowrap">კურიკულუმის ინვენტარიზაცია</h5>
-    <p class="text-muted smaller mb-0 opacity-50">მართეთ ფასების პროტოკოლები და მოდულების ხელმისაწვდომობა</p>
-    <div class="ms-auto">
-        <a href="/admin/courses/new" class="btn btn-gold px-4 fw-bold shadow-sm">
+<div class="admin-card-header mb-4 d-flex flex-column flex-md-row align-items-md-baseline gap-3">
+    <div>
+        <h5 class="text-white fw-bold mb-1 cyber-glow">კურიკულუმის ინვენტარიზაცია</h5>
+        <p class="text-muted smaller mb-0 opacity-50">მართეთ ფასების პროტოკოლები და მოდულების ხელმისაწვდომობა</p>
+    </div>
+    <div class="ms-md-auto mt-3 mt-md-0 w-100 w-md-auto">
+        <a href="/admin/courses/new" class="btn btn-gold w-100 fw-bold shadow-sm">
             <i class="fas fa-plus me-2"></i> ახალი კურსის დამატება
         </a>
     </div>
@@ -20,8 +22,8 @@
         <thead>
             <tr>
                 <th>სასწავლო მოდული</th>
-                <th>ღირებულება</th>
-                <th>სტუდენტები</th>
+                <th class="text-end">ღირებულება</th>
+                <th class="text-end">სტუდენტები</th>
                 <th class="text-end">მოქმედება</th>
             </tr>
         </thead>
@@ -29,30 +31,30 @@
             {% if courses %}
                 {% for course in courses %}
                 <tr>
-                    <td>
-                        <div class="d-flex align-items-center">
+                    <td data-label="სასწავლო მოდული">
+                        <div class="d-flex align-items-center justify-content-start">
                             <div class="p-3 rounded-4 bg-white bg-opacity-5 me-3 border border-white border-opacity-5">
                                 <i class="fas fa-terminal text-gold"></i>
                             </div>
-                            <div>
+                            <div class="text-start">
                                 <span class="text-white fw-bold">{{ course.name }}</span>
                                 <div class="small opacity-50 text-uppercase letter-spacing-1">სექტორი: Premium Training</div>
                             </div>
                         </div>
                     </td>
-                    <td>
-                        <div class="d-flex align-items-center gap-2">
+                    <td data-label="ღირებულება">
+                        <div class="d-flex align-items-center justify-content-end gap-2">
                             <span class="text-gold opacity-50">₾</span>
                             <span class="text-white fw-bold fs-5">{{ course.price }}</span>
                         </div>
                     </td>
-                    <td>
-                        <div class="d-flex align-items-center gap-2">
+                    <td data-label="სტუდენტები">
+                        <div class="d-flex align-items-center justify-content-end gap-2">
                             <i class="fas fa-user-shield text-muted small"></i>
                             <span class="text-white">{{ course.enrollments if course.enrollments else 0 }}</span>
                         </div>
                     </td>
-                    <td class="text-end">
+                    <td data-label="მოქმედება" class="text-end">
                         <div class="d-flex justify-content-end gap-2">
                             <a href="/admin/courses/edit/{{ course.id }}" class="admin-action-btn" title="რედაქტირება">
                                 <i class="fas fa-sliders-h"></i>

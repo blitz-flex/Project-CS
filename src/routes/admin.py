@@ -1,5 +1,7 @@
 import os
+from sqlalchemy import func
 from flask import Blueprint, render_template, request, session, redirect, flash, current_app
+from datetime import datetime, date
 from werkzeug.utils import secure_filename
 from src.utils.decorators import admin_required
 from src.models.user import User
@@ -38,9 +40,26 @@ def admin_users():
 @admin_bp.route("/admin/stats")
 @admin_required
 def admin_stats():
+    total_users = User.query.count()
+    total_courses = Course.query.count()
+    total_enrollments = db.session.query(users_courses).count()
+    
+    recent_users = User.query.order_by(User.id.desc()).limit(5).all()
+    
+    popular_courses_raw = db.session.query(
+        Course.name, 
+        func.count(users_courses.c.user_id).label('enrollments')
+    ).join(users_courses, Course.id == users_courses.c.course_id) \
+     .group_by(Course.id) \
+     .order_by(func.count(users_courses.c.user_id).desc()) \
+     .limit(5).all()
+    
     stats = {
-        "total_users": User.query.count(),
-        "total_courses": Course.query.count()
+        "total_users": total_users,
+        "total_courses": total_courses,
+        "total_enrollments": total_enrollments,
+        "recent_users": recent_users,
+        "popular_courses": popular_courses_raw
     }
     return render_template("pages/admin/stats.html", stats=stats)
 
@@ -116,16 +135,37 @@ def delete_user(user_id):
         flash("მომხმარებელი წაიშალა!")
     return redirect("/admin/users")
 
+@admin_bp.route("/admin/coupons")
 @admin_bp.route("/admin/cupon", methods=["GET", "POST"])
 @admin_required
 def admin_cupon():
     if request.method == "POST":
         name = request.form.get("name")
-        value = int(request.form.get("value", 0))
-        promo_id = request.form.get("promo_id")
+        try:
+            value = int(request.form.get("value", 0))
+        except ValueError:
+            value = 0
+            
+        promo_id = request.form.get("id") or request.form.get("promo_id")
+        expiry_str = request.form.get("expiry_date")
+        
+        expiry_date = None
+        if expiry_str:
+            try:
+                expiry_date = datetime.strptime(expiry_str, '%Y-%m-%d').date()
+            except ValueError:
+                pass
+
+        if request.form.get("delete"):
+            promo = Promo.query.get(promo_id)
+            if promo:
+                db.session.delete(promo)
+                db.session.commit()
+                flash(f"კუპონი წაიშალა")
+            return redirect("/admin/cupon")
 
         if not promo_id:
-            new_promo = Promo(name=name.upper(), value=value)
+            new_promo = Promo(name=name.upper(), value=value, expiry_date=expiry_date)
             db.session.add(new_promo)
             flash(f"კუპონი '{name}' დაემატა!")
         else:
@@ -133,10 +173,21 @@ def admin_cupon():
             if promo:
                 promo.name = name.upper()
                 promo.value = value
+                promo.expiry_date = expiry_date
                 flash(f"კუპონი '{name}' განახლდა!")
         
         db.session.commit()
         return redirect("/admin/cupon")
     
+    # Sort coupons: Active first, then expired
     coupons = Promo.query.all()
-    return render_template("pages/admin/coupons.html", cupon=coupons)
+    today_date = date.today()
+    
+    # Custom sort: 0 for active, 1 for expired
+    def sort_key(p):
+        is_expired = p.expiry_date and p.expiry_date < today_date
+        return (1 if is_expired else 0, p.name)
+    
+    sorted_coupons = sorted(coupons, key=sort_key)
+    
+    return render_template("pages/admin/coupons.html", cupon=sorted_coupons, today=today_date)

@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, session, redirect, flash
+from datetime import date
 from src.utils.decorators import register_required
 from src.models.course import Course, Promo, users_courses
 from src.models.user import User
@@ -111,6 +112,11 @@ def buy():
             promo = Promo.query.filter_by(name=promo_name.upper()).first()
 
             if promo:
+                # Check expiration
+                if promo.expiry_date and promo.expiry_date < date.today():
+                    flash("პრომო კოდს ვადა გაუვიდა")
+                    return redirect("/buy")
+                
                 if promo.id not in session["promo"]:
                     session["promo"].append(promo.id)
                     session.modified = True
@@ -124,12 +130,15 @@ def buy():
     cart_sum = sum(c.price for c in cart_courses)
 
     promo_codes = Promo.query.filter(Promo.id.in_(session["promo"])).all() if session["promo"] else []
-    promo_sum = sum(p.value for p in promo_codes)
+    
+    # Filter out expired codes from current session display
+    active_promo_codes = [p for p in promo_codes if not p.expiry_date or p.expiry_date >= date.today()]
+    promo_sum = sum(p.value for p in active_promo_codes)
 
     total = max(0, cart_sum - promo_sum)
 
     return render_template("pages/courses/buy.html", 
                          cart=cart_courses, 
-                         promo=promo_codes, 
+                         promo=active_promo_codes, 
                          total=total, 
                          count=len(cart_courses))

@@ -72,3 +72,15 @@
     box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3),
                 0 0 15px rgba(212, 175, 55, 0.1);
 }
+
+/* ==========================================================================
+   MOBILE RESPONSIVENESS
+   ========================================================================== */
+@media (max-width: 991px) {
+    .btn, a, button {
+        min-height: 44px; /* Global touch target size */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
