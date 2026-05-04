@@ -11,12 +11,24 @@
         radial-gradient(circle at bottom left, rgba(212, 175, 55, 0.05), transparent);
 }
 
+.hero-section-sm {
+    padding: 100px 0 40px;
+}
+
+@media (max-width: 991px) {
+    .hero-section { padding: 120px 0 60px; }
+    .hero-section-sm { padding: 80px 0 30px; }
+}
+
 /* --- Stats Bar --- */
 .stats-bar {
     background: var(--bg-card);
-    border-top: 1px solid var(--glass-border);
-    border-bottom: 1px solid var(--glass-border);
-    padding: 40px 0;
+    border: 1px solid var(--glass-border);
+    padding: 3rem 2rem;
+    position: relative;
+    z-index: 5;
+    background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.2) 100%);
+    backdrop-filter: blur(10px);
 }
 
 .stat-item h2 {

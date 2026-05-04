@@ -77,9 +77,7 @@ select.form-control-premium option {
    MOBILE RESPONSIVENESS
    ========================================================================== */
 @media (max-width: 991px) {
-    .form-control-premium,
-    input, textarea, select {
-        width: 100% !important;
+    .form-control-premium {
         font-size: 16px !important; /* Prevents iOS auto-zoom */
     }
 }

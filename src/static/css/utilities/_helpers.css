@@ -24,7 +24,6 @@
 .hover-bg-gold-5:hover {
     background:   rgba(212, 175, 55, 0.05) !important;
     border-color: rgba(212, 175, 55, 0.2)  !important;
-    transform: translateX(5px);
 }
 
 /* --- Inline Base Styles (pulled from base.html <style> block) --- */

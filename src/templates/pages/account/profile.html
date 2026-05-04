@@ -4,313 +4,32 @@
 
 {% block main %}
 
-<style>
-    /* Global Dashboard Layout */
-    .dashboard-wrapper {
-        padding-top: 120px;
-        padding-bottom: 80px;
-        background: radial-gradient(circle at 10% 10%, rgba(212, 175, 55, 0.02) 0%, transparent 40%);
-        min-height: 100vh;
-    }
-
-    /* Navigation Sidebar Refined */
-    .premium-sidebar-nav {
-        background: rgba(255, 255, 255, 0.02);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 24px;
-        padding: 12px;
-        position: sticky;
-        top: 120px;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-    }
-    .account-nav-btn {
-        width: 100%; text-align: left; background: none; border: none;
-        padding: 15px 18px; border-radius: 16px; color: rgba(255,255,255,0.4);
-        font-weight: 600; transition: all 0.3s ease; display: flex; align-items: center; gap: 12px;
-        margin-bottom: 5px; position: relative;
-    }
-    .account-nav-btn:hover { background: rgba(255,255,255,0.03); color: #fff; }
-    .account-nav-btn.active { background: rgba(212, 175, 55, 0.08); color: var(--primary-gold); }
-    .account-nav-btn.active::before {
-        content: ''; position: absolute; left: 0; top: 25%; height: 50%;
-        width: 3px; background: var(--primary-gold); border-radius: 0 4px 4px 0;
-        box-shadow: 0 0 10px var(--primary-gold);
-    }
-
-    .sidebar-footer { margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); }
-    .logout-btn-minimal {
-        display: flex; align-items: center; gap: 12px; padding: 14px 18px;
-        color: rgba(255, 68, 68, 0.6); text-decoration: none; font-weight: 600; font-size: 0.9rem;
-        transition: 0.3s; border-radius: 16px;
-    }
-    .logout-btn-minimal:hover { background: rgba(255, 68, 68, 0.08); color: #ff4444; }
-
-    /* Tabs Content */
-    .tab-content-section { display: none; }
-    .tab-content-section.active { display: block; animation: fadeIn 0.4s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-    .content-header { margin-bottom: 30px; }
-    .content-header h3 { font-size: 1.6rem; font-weight: 800; color: #fff; }
-
-    /* Premium Input Styling */
-    .premium-form-group { margin-bottom: 25px; }
-    .premium-form-label {
-        display: block; color: rgba(255,255,255,0.4); font-size: 0.75rem;
-        font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
-    }
-    .premium-input-field {
-        width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 16px; padding: 15px 20px; color: #fff; font-weight: 500;
-        transition: all 0.3s ease; outline: none;
-    }
-    .premium-input-field:focus {
-        border-color: var(--primary-gold); background: rgba(212,175,55,0.05);
-        box-shadow: 0 0 20px rgba(212,175,55,0.1);
-    }
-    .premium-input-field::placeholder { color: rgba(255,255,255,0.2); }
-
-    /* Course Cards */
-    .account-course-card {
-        background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
-        border-radius: 24px; overflow: hidden; transition: all 0.4s ease;
-        position: relative;
-    }
-    .course-delete-btn-wrapper {
-        position: absolute; top: 12px; right: 12px; z-index: 20;
-        opacity: 0; transform: scale(0.8); transition: all 0.3s;
-    }
-    .account-course-card:hover .course-delete-btn-wrapper { opacity: 1; transform: scale(1); }
-    .btn-action-delete {
-        width: 36px; height: 36px; background: rgba(20, 20, 20, 0.6);
-        backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 12px; color: rgba(255,255,255,0.5); display: flex;
-        align-items: center; justify-content: center; cursor: pointer; transition: 0.3s;
-    }
-    .btn-action-delete:hover { background: #ff4444; color: #fff; border-color: #ff4444; }
-
-    /* Mobile Responsiveness */
-    @media (max-width: 991px) {
-        .dashboard-wrapper {
-            padding-top: 80px;
-            padding-bottom: 40px;
-        }
-        .premium-sidebar-nav {
-            position: sticky;
-            top: 70px;
-            z-index: 100;
-            margin-bottom: 2rem;
-            display: flex;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 8px;
-            gap: 8px;
-            background: rgba(10, 15, 25, 0.9);
-            border-radius: 16px;
-            scrollbar-width: none; /* Hide scrollbar Firefox */
-        }
-        .premium-sidebar-nav::-webkit-scrollbar { display: none; } /* Hide scrollbar Chrome/Safari */
-        
-        .premium-sidebar-nav .mb-3.px-3 {
-            display: none; 
-        }
-        .account-nav-btn {
-            width: auto;
-            margin-bottom: 0;
-            white-space: nowrap;
-            padding: 10px 18px;
-            font-size: 0.85rem;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .account-nav-btn.active {
-            background: var(--primary-gold);
-            color: #000;
-        }
-        .account-nav-btn.active::before {
-            display: none; 
-        }
-        .sidebar-footer {
-            margin-top: 0;
-            padding-top: 0;
-            border-top: none;
-            display: flex;
-        }
-        .logout-btn-minimal {
-            background: rgba(255, 68, 68, 0.1);
-            padding: 10px 18px;
-            white-space: nowrap;
-        }
-        .premium-card.p-4.p-md-5 {
-            padding: 1.25rem !important;
-        }
-        
-        /* Account Course Cards Mobile */
-        .account-course-card {
-            margin-bottom: 10px;
-        }
-        .account-course-card .p-4 {
-            padding: 1.25rem !important;
-        }
-        
-        /* Table Stacking */
-        .table-responsive-mobile thead { display: none; }
-        .table-responsive-mobile tbody tr {
-            display: block;
-            margin-bottom: 1rem;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 1rem;
-        }
-        .table-responsive-mobile td {
-            display: flex !important;
-            flex-direction: row !important;
-            justify-content: space-between !important;
-            align-items: center !important;
-            padding: 0.75rem 0 !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-            text-align: left;
-        }
-        .table-responsive-mobile td:last-child { border-bottom: none !important; }
-        .table-responsive-mobile td::before {
-            content: attr(data-label);
-            font-weight: 800;
-            color: var(--primary-gold);
-            text-transform: uppercase;
-            font-size: 0.65rem;
-            letter-spacing: 1px;
-            margin-bottom: 0;
-        }
-    }
-</style>
+{% include 'pages/account/partials/_styles.html' %}
 
 <div class="dashboard-wrapper">
     <div class="container">
         <div class="row g-4">
             <!-- SIDEBAR -->
             <div class="col-lg-3">
-                <div class="premium-sidebar-nav">
-                    <div class="mb-3 px-3"><small class="text-muted text-uppercase letter-spacing-1 fw-bold" style="font-size: 0.6rem;">აკადემიური მენიუ</small></div>
-                    <button class="account-nav-btn active" onclick="switchTab('my-courses', this)"><i class="fas fa-book-open"></i> ჩემი კურსები</button>
-                    <button class="account-nav-btn" onclick="switchTab('certificates', this)"><i class="fas fa-award"></i> სერტიფიკატები</button>
-                    <button class="account-nav-btn" onclick="switchTab('billing', this)"><i class="fas fa-credit-card"></i> გადახდები</button>
-                    <button class="account-nav-btn" onclick="switchTab('settings', this)"><i class="fas fa-user-cog"></i> პარამეტრები</button>
-                    <div class="sidebar-footer"><a href="/logout" class="logout-btn-minimal"><i class="fas fa-power-off"></i> გასვლა</a></div>
-                </div>
+                {% include 'pages/account/partials/_sidebar.html' %}
             </div>
 
             <!-- MAIN CONTENT -->
             <div class="col-lg-9">
                 <!-- MY COURSES -->
-                <div id="my-courses" class="tab-content-section active">
-                    <div class="content-header d-flex justify-content-between align-items-center">
-                        <h3 class="mb-0">ჩემი კურიკულუმები</h3>
-                        <a href="/courses" class="btn btn-gold btn-sm px-4 fw-bold shadow-gold">ახალი კურსი</a>
-                    </div>
-                    {% if ids %}
-                    <div class="row g-4">
-                        {% for course in ids %}
-                        <div class="col-md-6">
-                            <div class="account-course-card">
-                                <div class="course-delete-btn-wrapper">
-                                    <form action="/remove_course" method="post"><input type="hidden" name="course_id" value="{{ course.id }}"><button type="submit" class="btn-action-delete" onclick="return confirm('ამოვშალოთ სილაბუსიდან?')"><i class="fas fa-trash-alt"></i></button></form>
-                                </div>
-                                <div style="height: 160px; overflow: hidden; position: relative;">
-                                    {% if course.image %}<img src="{{ course.image if course.image.startswith('http') else url_for('static', filename=course.image) }}" alt="{{ course.name }}" style="width: 100%; height: 100%; object-fit: cover;">{% endif %}
-                                    <div class="position-absolute top-0 start-0 m-3"><span class="badge-green px-2 py-1" style="font-size: 0.6rem; border-radius: 6px; font-weight: 800;">ACTIVE</span></div>
-                                </div>
-                                <div class="p-4">
-                                    <h5 class="text-white fw-bold mb-3">{{ course.name }}</h5>
-                                    <div class="mb-4">
-                                        <div class="d-flex justify-content-between mb-2 small"><span class="text-white-50">პროგრესი</span><span class="text-gold fw-bold">35%</span></div>
-                                        <div class="progress" style="height: 5px; background: rgba(255,255,255,0.05); border-radius: 10px;"><div class="progress-bar" style="width: 35%; background: var(--primary-gold); box-shadow: 0 0 10px rgba(212,175,55,0.4);"></div></div>
-                                    </div>
-                                    <div class="d-grid"><a href="/info?id={{ course.id }}" class="btn btn-outline-gold py-2 fw-bold">გაგრძელება</a></div>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    <div class="premium-card p-5 text-center text-muted">აქტიური კურსები არ არის</div>
-                    {% endif %}
-                </div>
+                {% include 'pages/account/tabs/my_courses.html' %}
 
                 <!-- SETTINGS (REFINED) -->
-                <div id="settings" class="tab-content-section">
-                    <div class="content-header"><h3>პროფილის მართვა</h3></div>
-                    <div class="premium-card p-4 p-md-5">
-                        <form>
-                            <div class="row g-4">
-                                <div class="col-md-6">
-                                    <div class="premium-form-group">
-                                        <label class="premium-form-label">მომხმარებლის სახელი</label>
-                                        <input type="text" class="premium-input-field" value="{{ session.user_username }}" placeholder="თქვენი სახელი">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="premium-form-group">
-                                        <label class="premium-form-label">ელ-ფოსტა</label>
-                                        <input type="email" class="premium-input-field" value="student@sentinel.ge" placeholder="student@sentinel.ge">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="premium-form-group">
-                                        <label class="premium-form-label">ახალი პაროლი</label>
-                                        <input type="password" class="premium-input-field" placeholder="••••••••">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="premium-form-group">
-                                        <label class="premium-form-label">პაროლის დადასტურება</label>
-                                        <input type="password" class="premium-input-field" placeholder="••••••••">
-                                    </div>
-                                </div>
-                                <div class="col-12 mt-4">
-                                    <button type="button" class="btn btn-gold px-5 py-3 fw-bold shadow-gold">ცვლილებების შენახვა</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                {% include 'pages/account/tabs/settings.html' %}
 
                 <!-- OTHER TABS -->
-                <div id="certificates" class="tab-content-section"><div class="content-header"><h3>სერტიფიკატები</h3></div><div class="premium-card p-5 text-center text-muted">სერტიფიკატები ჯერ არ გაქვთ</div></div>
-                <div id="billing" class="tab-content-section">
-                    <div class="content-header"><h3>გადახდები</h3></div>
-                    <div class="premium-card p-0 overflow-hidden">
-                        <table class="table table-dark mb-0 table-responsive-mobile">
-                            <thead>
-                                <tr>
-                                    <th class="p-4 small opacity-50 border-0">კურსი</th>
-                                    <th class="p-4 small opacity-50 border-0">ფასი</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for c in ids %}
-                                <tr>
-                                    <td data-label="კურსი" class="p-4 text-white fw-bold">{{ c.name }}</td>
-                                    <td data-label="ფასი" class="p-4 text-gold">{{ c.price }}₾</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                {% include 'pages/account/tabs/certificates.html' %}
+                {% include 'pages/account/tabs/billing.html' %}
             </div>
         </div>
     </div>
 </div>
 
-<script>
-    function switchTab(tabId, btn) {
-        document.querySelectorAll('.tab-content-section').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.account-nav-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        btn.classList.add('active');
-    }
-</script>
+{% include 'pages/account/partials/_scripts.html' %}
 
 {% endblock %}

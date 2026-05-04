@@ -12,6 +12,16 @@
     z-index: 9999 !important;
 }
 
+.navbar-logo-img {
+    height: 45px;
+    width: auto;
+    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));
+}
+
+.navbar-brand-text {
+    font-size: 1.1rem;
+}
+
 .nav-link {
     color: var(--text-main) !important;
     font-weight: 500;
@@ -51,5 +61,13 @@
     .navbar-toggler {
         min-height: 44px;
         min-width: 44px;
+    }
+
+    .navbar-logo-img {
+        height: 35px;
+    }
+
+    .navbar-brand-text {
+        font-size: 0.9rem;
     }
 }

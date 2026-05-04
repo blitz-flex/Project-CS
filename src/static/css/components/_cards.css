@@ -6,16 +6,63 @@
 
 /* --- Glass Premium Card --- */
 .premium-card {
+    position: relative;
     background: var(--glass-bg);
     backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
     border-radius: 24px;
     padding: 2.5rem;
-    height: 100%;
-    transition: border-color 0.2s ease;
+    transition: all 0.3s ease;
+    cursor: pointer !important;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.premium-card:hover { border-color: var(--primary-gold); }
+/* Clockwise Border Animation (Beam) */
+.premium-card::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 250%;
+    height: 250%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        transparent 160deg,
+        var(--primary-gold) 180deg,
+        transparent 200deg,
+        transparent 360deg
+    );
+    transform: translate(-50%, -50%) rotate(0deg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -2;
+    pointer-events: none;
+}
+
+.premium-card:hover::before {
+    opacity: 1;
+    animation: border-beam-rotate 3s linear infinite;
+}
+
+/* Inner cover to create the border effect */
+.premium-card::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: #0A0F16; /* Solid dark background to cover the rotating beam */
+    border-radius: 23px;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+}
+
+.premium-card:hover { 
+    transform: translateY(-5px); 
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
 
 .premium-card-floating {
     animation: float 6s ease-in-out infinite;
@@ -34,6 +81,8 @@
     align-items: center;
     justify-content: center;
     font-size: 1.25rem;
+    position: relative;
+    z-index: 2;
 }
 
 /* --- Course Card --- */
@@ -141,6 +190,8 @@
     height: 100%;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(10px);
+    overflow: hidden;
+    z-index: 1;
 }
 
 .roadmap-step-card:hover {
@@ -152,24 +203,39 @@
 }
 
 .roadmap-step-card .icon-box {
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), transparent);
+    width: 65px;
+    height: 65px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, transparent 100%);
     color: var(--primary-gold);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 18px;
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.roadmap-step-card:hover .icon-box {
+    background: var(--primary-gold);
+    color: #000;
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
 }
 
 .roadmap-step-card i {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0 !important;
 }
 
 .step-num {
     position: absolute;
-    top: 20px;
-    right: 30px;
-    font-size: 3rem;
+    top: 15px;
+    right: 20px;
+    font-size: 3.5rem;
     font-weight: 900;
     color: var(--primary-gold);
-    opacity: 0.05;
+    opacity: 0.15;
     font-family: 'Inter', sans-serif;
+    line-height: 1;
 }
 
 /* ==========================================================================
