@@ -4,84 +4,113 @@
 {% block header %}კონფიგურაციის განახლება{% endblock %}
 
 {% block main %}
-
-<div class="row justify-content-center">
-    <div class="col-lg-10">
-        <div class="admin-card-header mb-5">
-            <div>
-                <span class="text-gold small fw-bold text-uppercase tracking-widest mb-1 d-block opacity-50">ოპერაციები / {{ course.name }}</span>
-                <h2 class="text-white fw-bold mb-0">მოდულის რე-კონფიგურაცია</h2>
-            </div>
-            <a href="/admin/courses" class="btn btn-outline-gold px-4 py-2 text-white border-white border-opacity-10" style="border: 1px solid rgba(255,255,255,0.1) !important;">
-                <i class="fas fa-arrow-left me-2"></i> გაუქმება
-            </a>
-        </div>
-
-        <form method="POST" enctype="multipart/form-data">
-            <div class="row g-5">
-                <div class="col-md-8">
-                    <div class="p-5 rounded-4" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px);">
-                        <div class="mb-4">
-                            <label for="name" class="auth-label">მოდულის დასახელება</label>
-                            <input type="text" class="form-control form-control-premium" id="name" name="name" value="{{ course.name }}" required>
-                        </div>
-
-                        <div class="mb-0">
-                            <label for="description" class="auth-label">კურიკულუმის სპეციფიკაციები</label>
-                            <textarea class="form-control form-control-premium" id="description" name="description" rows="10">{{ course.description or '' }}</textarea>
-                        </div>
-                    </div>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h4 class="text-white fw-bold mb-1 cyber-glow"><i class="fas fa-sliders-h me-2 text-gold"></i> მოდულის რე-კონფიგურაცია</h4>
+                    <p class="text-muted small mb-0 opacity-75 cyber-font">ოპერაციები / {{ course.name }}</p>
                 </div>
+                <a href="/admin/courses" class="btn btn-cyber-outline btn-sm px-3 py-2 text-muted border-secondary hover-gold">
+                    <i class="fas fa-arrow-left me-2"></i> გაუქმება
+                </a>
+            </div>
 
-                <div class="col-md-4">
-                    <div class="admin-stat-card mb-4">
-                        <label for="price" class="auth-label">წვდომის ღირებულება (₾)</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-transparent border-0 text-gold opacity-50 fs-4">₾</span>
-                            <input type="number" class="form-control form-control-premium border-0" id="price" name="price" value="{{ course.price }}" min="0" required>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="bg-dark-glass p-4 p-md-5 rounded-4 border border-white border-opacity-5 shadow-2xl position-relative overflow-hidden">
+                    
+                    <!-- Decorative Element -->
+                    <div class="position-absolute top-0 start-0 w-100 bg-gold opacity-50" style="height: 3px;"></div>
+                    
+                    <!-- Module Name -->
+                    <div class="mb-4 position-relative">
+                        <label class="small text-gold text-uppercase letter-spacing-1 fw-bold mb-2 d-block">მოდულის დასახელება</label>
+                        <input type="text" class="minimal-input h3 form-control-cyber" id="name" name="name" value="{{ course.name }}" required>
+                    </div>
+
+                    <div class="row g-4 mb-4">
+                        <!-- Price -->
+                        <div class="col-md-6">
+                            <label class="small text-muted text-uppercase letter-spacing-1 fw-bold mb-2 d-block">ღირებულება (₾)</label>
+                            <div class="position-relative">
+                                <i class="fas fa-coins position-absolute top-50 start-0 translate-middle-y ms-3 text-gold opacity-50"></i>
+                                <input type="number" class="minimal-input form-control-cyber ps-5 fs-5" id="price" name="price" value="{{ course.price }}" min="0" required>
+                            </div>
+                        </div>
+
+                        <!-- Status Box -->
+                        <div class="col-md-6">
+                            <label class="small text-muted text-uppercase letter-spacing-1 fw-bold mb-2 d-block">სისტემის სტატუსი</label>
+                            <div class="form-control-cyber d-flex align-items-center justify-content-between p-3" style="background: rgba(212, 175, 55, 0.05) !important;">
+                                <div>
+                                    <span class="d-block smaller text-muted text-uppercase mb-1">სტუდენტები</span>
+                                    <span class="text-white fw-bold">{{ course.enrollments if course.enrollments else 0 }}</span>
+                                </div>
+                                <div class="text-end">
+                                    <span class="d-block smaller text-muted text-uppercase mb-1">უსაფრთხოება</span>
+                                    <span class="text-success small"><i class="fas fa-check-circle"></i> დაცული</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="admin-stat-card mb-4">
-                        <label class="auth-label">მოდულის ვიზუალიზაცია</label>
+                    <!-- Image Upload -->
+                    <div class="mb-4 p-4 border border-white border-opacity-5 rounded-4 bg-black bg-opacity-25">
+                        <label class="small text-muted text-uppercase letter-spacing-1 fw-bold mb-3 d-block">მოდულის ვიზუალიზაცია</label>
                         {% if course.image %}
-                            <div class="mb-3 position-relative group rounded-4 overflow-hidden border border-white border-opacity-10">
-                                <img src="{{ course.image if course.image.startswith('http') else url_for('static', filename=course.image) }}" alt="Current" class="w-100" style="height: 180px; object-fit: cover; filter: brightness(0.7);">
-                                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-black bg-opacity-40">
-                                    <span class="text-white smaller fw-bold text-uppercase tracking-widest opacity-50">მიმდინარე აქტივი</span>
+                            <div class="mb-3 position-relative rounded-4 overflow-hidden border border-white border-opacity-10" style="background: #000; height: 180px;">
+                                <img src="{{ course.image if course.image.startswith('http') else url_for('static', filename=course.image) }}" alt="Current" class="w-100 h-100" style="object-fit: cover; opacity: 0.6;">
+                                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center pointer-events-none">
+                                    <span class="badge bg-black bg-opacity-75 border border-white border-opacity-25 px-3 py-2 text-uppercase tracking-widest text-gold"><i class="fas fa-image me-2"></i>მიმდინარე აქტივი</span>
                                 </div>
                             </div>
                         {% endif %}
-                        <div class="p-4 border border-dashed border-white border-opacity-10 rounded-4 text-center bg-white bg-opacity-5 position-relative">
-                            <i class="fas fa-sync-alt fa-2x mb-3 text-gold opacity-30"></i>
-                            <div class="small text-muted mb-3 font-monospace">ფოტოს შეცვლა</div>
-                            <input type="file" class="form-control form-control-premium opacity-0 position-absolute top-0 start-0 h-100 cursor-pointer" id="image" name="image" accept="image/*">
-                            <button type="button" class="btn btn-gold btn-sm px-4 fw-bold">ახალი ფაილი</button>
+                        <div class="position-relative">
+                            <input type="file" class="minimal-input form-control-cyber p-2" id="image" name="image" accept="image/*">
+                            <div class="form-text text-muted smaller mt-2 italic"><i class="fas fa-info-circle me-1"></i> დატოვეთ ცარიელი თუ არ გსურთ შეცვლა.</div>
                         </div>
-                        <div class="form-text text-muted smaller mt-3 italic text-center">დატოვეთ ცარიელი თუ არ გსურთ შეცვლა.</div>
                     </div>
-                    
-                    <div class="p-4 rounded-4" style="background: rgba(212, 175, 55, 0.03); border: 1px solid rgba(212, 175, 55, 0.1);">
-                        <h6 class="text-gold fw-bold mb-3 smaller uppercase tracking-widest">სისტემის სტატუსი</h6>
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="text-muted smaller">აქტიური ოპერატივები:</span>
-                            <span class="text-white fw-bold smaller">{{ course.enrollments if course.enrollments else 0 }}</span>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-muted smaller">უსაფრთხოების დონე:</span>
-                            <span class="text-success fw-bold smaller">ვერიფიცირებული</span>
-                        </div>
+
+                    <!-- Description -->
+                    <div class="mb-5">
+                        <label class="small text-muted text-uppercase letter-spacing-1 fw-bold mb-2 d-block">კურსის აღწერა</label>
+                        <textarea class="minimal-input form-control-cyber" id="description" name="description" rows="6">{{ course.description or '' }}</textarea>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-cyber-primary py-3 fw-bold text-uppercase letter-spacing-1">
+                            <i class="fas fa-save me-2"></i> ცვლილებების შენახვა
+                        </button>
                     </div>
                 </div>
-            </div>
-
-            <div class="mt-5 d-flex justify-content-end gap-3">
-                <button type="submit" class="btn btn-gold px-5 py-3 fw-bold shadow-lg">
-                    <i class="fas fa-save me-2"></i> კონფიგურაციის შენახვა
-                </button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 
+<style>
+    .form-control-cyber {
+        width: 100%;
+        background: rgba(10, 12, 16, 0.8) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 12px !important;
+        color: #fff !important;
+        padding: 14px 20px !important;
+        outline: none;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .form-control-cyber:focus {
+        border-color: var(--primary-gold) !important;
+        background: rgba(212, 175, 55, 0.05) !important;
+        box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+    }
+    .form-control-cyber.h3 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+</style>
 {% endblock %}

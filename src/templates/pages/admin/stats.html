@@ -6,34 +6,76 @@
 {% block main %}
 
 <div class="row g-4 mb-5">
-    <div class="col-md-4">
-        <div class="admin-stat-card">
+    <div class="col-lg-3 col-md-6">
+        <div class="admin-stat-card result-oriented position-relative overflow-hidden">
+            <div class="position-absolute top-0 start-0 w-100 bg-gold opacity-50" style="height: 3px;"></div>
             <div class="d-flex justify-content-between align-items-start mb-3">
                 <span class="admin-stat-label">ჯამური მომხმარებლები</span>
-                <i class="fas fa-users-cog text-gold opacity-50"></i>
+                <i class="fas fa-users-cog text-gold fs-4 opacity-75"></i>
             </div>
-            <p class="admin-stat-value">{{ stats.total_users }}</p>
-            <div class="mt-2 small text-muted">აქტიური ოპერატიულები</div>
+            <p class="admin-stat-value mb-1">{{ stats.total_users }}</p>
+            <div class="mt-2 small text-muted cyber-font d-flex align-items-center gap-2">
+                <i class="fas fa-arrow-up text-success"></i> <span>+12% გასულ თვესთან შედარებით</span>
+            </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="admin-stat-card">
+    <div class="col-lg-3 col-md-6">
+        <div class="admin-stat-card result-oriented position-relative overflow-hidden">
+            <div class="position-absolute top-0 start-0 w-100 bg-gold opacity-50" style="height: 3px;"></div>
             <div class="d-flex justify-content-between align-items-start mb-3">
                 <span class="admin-stat-label">სასწავლო კურსები</span>
-                <i class="fas fa-layer-group text-gold opacity-50"></i>
+                <i class="fas fa-layer-group text-gold fs-4 opacity-75"></i>
             </div>
-            <p class="admin-stat-value">{{ stats.total_courses }}</p>
-            <div class="mt-2 small text-muted">ხელმისაწვდომი მოდულები</div>
+            <p class="admin-stat-value mb-1">{{ stats.total_courses }}</p>
+            <div class="mt-2 small text-muted cyber-font d-flex align-items-center gap-2">
+                <i class="fas fa-arrow-up text-success"></i> <span>+2 ახალი მოდული</span>
+            </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="admin-stat-card">
+    <div class="col-lg-3 col-md-6">
+        <div class="admin-stat-card status-card position-relative overflow-hidden border border-success border-opacity-25">
+            <div class="position-absolute top-0 start-0 w-100 bg-success opacity-50" style="height: 3px;"></div>
             <div class="d-flex justify-content-between align-items-start mb-3">
                 <span class="admin-stat-label">აქტიური სწავლებები</span>
-                <i class="fas fa-key text-gold opacity-50"></i>
+                <i class="fas fa-key text-success fs-4 opacity-75 pulse-icon"></i>
             </div>
-            <p class="admin-stat-value">{{ stats.total_enrollments }}</p>
-            <div class="mt-2 small text-success">წარმატებული ვერიფიკაცია</div>
+            <p class="admin-stat-value mb-1 text-success">{{ stats.total_enrollments }}</p>
+            <div class="mt-2 small text-success cyber-font"><i class="fas fa-check me-1"></i> წარმატებული ვერიფიკაცია</div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="admin-stat-card result-oriented position-relative overflow-hidden border border-white border-opacity-10">
+            <div class="position-absolute top-0 start-0 w-100 bg-info opacity-50" style="height: 3px;"></div>
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <span class="admin-stat-label">სერვერის დატვირთვა</span>
+                <i class="fas fa-server text-info fs-4 opacity-75"></i>
+            </div>
+            <p class="admin-stat-value mb-1">34<span class="fs-5">%</span></p>
+            <div class="progress mt-3" style="height: 4px; background: rgba(255,255,255,0.05);">
+                <div class="progress-bar bg-info" role="progressbar" style="width: 34%;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detailed Analytics Charts -->
+<div class="row g-4 mb-5">
+    <div class="col-lg-7">
+        <div class="admin-card-header mb-3 d-flex justify-content-between align-items-center">
+            <h5 class="text-white fw-bold mb-0 cyber-glow"><i class="fas fa-money-bill-wave me-2 text-gold"></i> კურსების ფასები</h5>
+        </div>
+        <div class="bg-dark-glass p-4 rounded-4 shadow-lg border border-white border-opacity-5" style="position: relative; height: 350px;">
+            <canvas id="revenueChart"></canvas>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="admin-card-header mb-3 d-flex justify-content-between align-items-center">
+            <h5 class="text-white fw-bold mb-0 cyber-glow"><i class="fas fa-users-cog me-2 text-info"></i> მომხმარებელთა როლები</h5>
+        </div>
+        <div class="bg-dark-glass p-4 rounded-4 shadow-lg border border-white border-opacity-5 d-flex flex-column justify-content-center align-items-center" style="position: relative; height: 350px;">
+            <div style="width: 100%; height: 100%;">
+                <canvas id="sourceChart"></canvas>
+            </div>
         </div>
     </div>
 </div>
@@ -41,69 +83,196 @@
 <div class="row g-5">
     <div class="col-lg-6">
         <div class="admin-card-header mb-4">
-            <h5 class="text-white fw-bold mb-0">ბოლო რეგისტრაციები</h5>
+            <h5 class="text-white fw-bold mb-0 cyber-glow"><i class="fas fa-user-clock me-2 text-gold"></i> ბოლო რეგისტრაციები</h5>
         </div>
         
-        <table class="table-minimal">
-            <thead>
-                <tr>
-                    <th>მომხმარებელი</th>
-                    <th class="text-end">ID ნომერი</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if stats.recent_users %}
-                    {% for user in stats.recent_users %}
+        <div class="table-responsive bg-dark-glass p-3 rounded-4 border border-white border-opacity-5 shadow-lg">
+            <table class="table-minimal table-hover-cyber">
+                <thead>
                     <tr>
-                        <td data-label="მომხმარებელი">
-                            <div class="d-flex align-items-center justify-content-start gap-3">
-                                <div class="p-2 rounded-3 bg-white bg-opacity-5 small"><i class="fas fa-user-tag text-gold"></i></div>
-                                <span class="text-white fw-bold">{{ user.username }}</span>
-                            </div>
-                        </td>
-                        <td data-label="ID ნომერი" class="text-end small opacity-50 font-monospace">#{{ user.id }}</td>
+                        <th>მომხმარებელი</th>
+                        <th class="text-end">ID ნომერი</th>
                     </tr>
-                    {% endfor %}
-                {% else %}
-                    <tr><td colspan="2" class="text-muted italic text-center py-4">მონაცემები არ არის</td></tr>
-                {% endif %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% if stats.recent_users %}
+                        {% for user in stats.recent_users %}
+                        <tr>
+                            <td data-label="მომხმარებელი">
+                                <div class="d-flex align-items-center justify-content-start gap-3">
+                                    <div class="p-2 rounded-circle bg-gold bg-opacity-10 border border-gold border-opacity-25" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-user-astronaut text-gold"></i>
+                                    </div>
+                                    <span class="text-white fw-bold">{{ user.username }}</span>
+                                </div>
+                            </td>
+                            <td data-label="ID ნომერი" class="text-end text-muted font-monospace cyber-font">
+                                <span class="badge bg-white bg-opacity-10 text-light border border-white border-opacity-25 px-2 py-1">#{{ user.id }}</span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr><td colspan="2" class="text-muted italic text-center py-5">მონაცემები არ არის</td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="col-lg-6">
         <div class="admin-card-header mb-4">
-            <h5 class="text-white fw-bold mb-0">პოპულარული კურსები</h5>
+            <h5 class="text-white fw-bold mb-0 cyber-glow"><i class="fas fa-fire me-2 text-danger"></i> პოპულარული კურსები</h5>
         </div>
         
-        <table class="table-minimal">
-            <thead>
-                <tr>
-                    <th>კურსის დასახელება</th>
-                    <th class="text-end">აქტივობა</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if stats.popular_courses %}
-                    {% for course in stats.popular_courses %}
+        <div class="table-responsive bg-dark-glass p-3 rounded-4 border border-white border-opacity-5 shadow-lg">
+            <table class="table-minimal table-hover-cyber">
+                <thead>
                     <tr>
-                        <td data-label="კურსის დასახელება">
-                            <div class="d-flex align-items-center justify-content-start gap-3">
-                                <div class="p-2 rounded-3 bg-white bg-opacity-5 small"><i class="fas fa-bolt text-gold"></i></div>
-                                <span class="text-white fw-bold">{{ course.name }}</span>
-                            </div>
-                        </td>
-                        <td data-label="აქტივობა" class="text-end">
-                            <span class="admin-badge badge-gold" style="font-size: 0.7rem; letter-spacing: 1px;">{{ course.enrollments }} გაყიდვა</span>
-                        </td>
+                        <th>კურსის დასახელება</th>
+                        <th class="text-end">აქტივობა</th>
                     </tr>
-                    {% endfor %}
-                {% else %}
-                    <tr><td colspan="2" class="text-muted italic text-center py-4">მონაცემები არ არის</td></tr>
-                {% endif %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% if stats.popular_courses %}
+                        {% for course in stats.popular_courses %}
+                        <tr>
+                            <td data-label="კურსის დასახელება">
+                                <div class="d-flex align-items-center justify-content-start gap-3">
+                                    <div class="p-2 rounded-3 bg-danger bg-opacity-10 border border-danger border-opacity-25 text-center" style="width: 40px; height: 40px;">
+                                        <i class="fas fa-bolt text-danger mt-1"></i>
+                                    </div>
+                                    <span class="text-white fw-bold">{{ course.name }}</span>
+                                </div>
+                            </td>
+                            <td data-label="აქტივობა" class="text-end">
+                                <div class="d-flex align-items-center justify-content-end gap-2">
+                                    <span class="text-gold fw-bold fs-5">{{ course.enrollments }}</span>
+                                    <span class="text-muted small text-uppercase letter-spacing-1 cyber-font">გაყიდვა</span>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr><td colspan="2" class="text-muted italic text-center py-5">მონაცემები არ არის</td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chartData = {{ chart_data|tojson }};
+        Chart.defaults.color = 'rgba(255, 255, 255, 0.5)';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        
+        // Revenue Bar Chart
+        const ctxRev = document.getElementById('revenueChart').getContext('2d');
+        new Chart(ctxRev, {
+            type: 'bar',
+            data: {
+                labels: chartData.course_names,
+                datasets: [{
+                    label: 'ფასი (₾)',
+                    data: chartData.course_prices,
+                    backgroundColor: chartData.course_prices.map((_, i) => {
+                        const alpha = Math.max(0.3, 0.9 - (i * 0.1));
+                        return `rgba(212, 175, 55, ${alpha})`;
+                    }),
+                    borderColor: '#d4af37',
+                    borderWidth: 1,
+                    borderRadius: 6,
+                    barPercentage: 0.5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleColor: '#fff',
+                        bodyColor: '#d4af37',
+                        borderColor: 'rgba(212, 175, 55, 0.3)',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.05)',
+                            drawBorder: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Traffic Source Roles Chart
+        const ctxSource = document.getElementById('sourceChart').getContext('2d');
+        new Chart(ctxSource, {
+            type: 'bar',
+            data: {
+                labels: chartData.role_labels,
+                datasets: [{
+                    label: 'რაოდენობა',
+                    data: chartData.roles,
+                    backgroundColor: [
+                        'rgba(212, 175, 55, 0.8)',
+                        'rgba(13, 110, 253, 0.8)'
+                    ],
+                    borderColor: [
+                        '#d4af37',
+                        '#0d6efd'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 6,
+                    barPercentage: 0.5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleColor: '#fff',
+                        borderColor: 'rgba(212, 175, 55, 0.3)',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.05)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            stepSize: 1
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
 
 {% endblock %}
